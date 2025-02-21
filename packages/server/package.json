@@ -1,11 +1,10 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./dist/index.mjs",
   "exports": "./dist/index.mjs",
   "scripts": {
     "start": "tsx src/index.ts",
-    "compile": "",
     "build": "pkgroll",
     "test": "echo \"Error: no server test specified\" && exit 0"
   },
