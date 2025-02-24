@@ -1,1 +1,1 @@
-console.log("Started server.");
+console.log(`Started server in ${process.env.NODE_ENV} mode.`);
