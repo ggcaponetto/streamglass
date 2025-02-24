@@ -3,6 +3,7 @@ run-name: ${{ github.actor }} is running ${{ github.workflow }} on ${{ github.re
 on: [push, pull_request]
 jobs:
   Print-Action-Info:
+    name: Print GitHub Action Information
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -17,7 +18,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
   Source:
-    name: Run npm on Ubuntu
+    name: Install, Test and Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
