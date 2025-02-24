@@ -1,6 +1,6 @@
 # streamglass
 
-Streaming layers and utilities for Twitch
+Streaming layers and utilities for Twitch/OBS
 
 ## Getting Started
 
