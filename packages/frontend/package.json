@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "echo \"Error: no frontend test specified\" && exit 0",
+    "test": "vitest",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
