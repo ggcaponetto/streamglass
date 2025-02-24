@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx --env-file=.env src/index.ts",
     "build": "pkgroll",
-    "test": "echo \"Error: no server test specified\" && exit 0"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "author": "",
   "license": "ISC",
