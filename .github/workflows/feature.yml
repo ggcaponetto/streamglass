@@ -43,4 +43,4 @@ jobs:
         with:
           node-version: "latest"
       - run: npm i -g vercel
-      - run: vercel deploy --prod packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
+      - run: vercel deploy --target=preview packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
