@@ -1,5 +1,7 @@
 # streamglass
 
+![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
+
 Streaming layers and utilities for Twitch/OBS
 
 ## Getting Started
