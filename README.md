@@ -4,6 +4,12 @@ Streaming layers and utilities for Twitch/OBS
 
 ## Getting Started
 
+Install the Vercel CLI
+
+```bash
+npm i -g vercel && vercel
+```
+
 ```bash
 npm install --workspaces
 ```
