@@ -1,9 +1,7 @@
 name: CI/CD
 run-name: ${{ github.actor }} is running ${{ github.workflow }} on ${{ github.repository }}
 on:
-  push:
-    branches:
-    - main
+  pull_request:
 jobs:
   Print-Action-Info:
     name: Print GitHub Action Information
@@ -33,14 +31,4 @@ jobs:
       - run: npm install
       - run: npm run test
       - run: npm run coverage
-  Deploy:
-    name: Deploy to Vercel
-    runs-on: ubuntu-latest
-    needs: Source
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
-      - run: npm i -g vercel
-      - run: vercel --prod deploy packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
+
