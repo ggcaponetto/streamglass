@@ -4,9 +4,6 @@ on:
     push:
         branches:
         - feature/*
-    pull_request:
-        branches:
-        - feature/*
 jobs:
   Print-Action-Info:
     name: Print GitHub Action Information
