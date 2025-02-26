@@ -1,6 +1,12 @@
 name: CI/CD
 run-name: ${{ github.actor }} is running ${{ github.workflow }} on ${{ github.repository }}
-on: [push, pull_request]
+on:
+  push:
+      branches:
+      - main
+  pull_request:
+      branches:
+      - main
 jobs:
   Print-Action-Info:
     name: Print GitHub Action Information
