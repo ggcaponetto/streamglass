@@ -7,7 +7,7 @@ Streaming layers and utilities for Twitch/OBS
 Install the Vercel CLI
 
 ```bash
-npm i -g vercel && vercel
+npm i -g vercel
 ```
 
 ```bash
