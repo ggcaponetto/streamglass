@@ -1,4 +1,4 @@
-# streamglass: frontend
+# streamglass: server
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |

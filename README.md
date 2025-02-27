@@ -4,6 +4,10 @@
 
 Streaming layers and utilities for Twitch/OBS
 
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](#statements#) | ![Branches](#branches#) | ![Functions](#functions#) | ![Lines](#lines#) |
+
 ## Getting Started
 
 Install the Vercel CLI
@@ -11,6 +15,7 @@ Install the Vercel CLI
 ```bash
 npm i -g vercel
 ```
+
 Install all dependencies
 
 ```bash
