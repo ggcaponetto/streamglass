@@ -11,6 +11,7 @@ Install the Vercel CLI
 ```bash
 npm i -g vercel
 ```
+Install all dependencies
 
 ```bash
 npm install --workspaces
