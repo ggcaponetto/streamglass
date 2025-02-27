@@ -1,1 +1,1 @@
-npm run test-coverage && npm run make-badges
+cat README_ROOT.md >> README.md && npm run test-coverage && npm run make-badges && echo "\n" >> README.md && cat packages/frontend/README.md >> README.md && echo "\n" >> README.md && cat packages/server/README.md >> README.md
