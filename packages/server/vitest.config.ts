@@ -7,9 +7,9 @@ export default defineConfig({
       reporter: ['json-summary'],
       thresholds:{
         autoUpdate: true,
-        functions: 0,
-        branches: 0,
-        statements: 0,
+        functions: 50,
+        branches: 50,
+        statements: 94.11,
       }
     },
   },
