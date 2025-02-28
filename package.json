@@ -6,6 +6,7 @@
   "scripts": {
     "test-coverage": "npm run test-coverage --workspaces",
     "make-badges": "npm run make-badges --workspaces",
+    "generate-docs-from-md": "npx concat-md --toc --decrease-title-levels --ignore \"node_modules,CODE_OF_CONDUCT.md,packages/frontend/TEMPLATE_README.md\" . > README.md",
     "prepare": "husky"
   },
   "author": "Giuseppe Giulio Caponetto",

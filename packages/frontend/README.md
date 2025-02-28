@@ -1,4 +1,7 @@
-# streamglass: frontend
+# StreamGlass: Frontend
+
+This is the main web-application.
+
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |

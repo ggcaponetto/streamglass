@@ -1,4 +1,6 @@
-# streamglass: server
+# StreamGlass: Server
+
+This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
