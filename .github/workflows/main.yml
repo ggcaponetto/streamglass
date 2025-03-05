@@ -32,6 +32,7 @@ jobs:
       - run: npm --version
       - run: npm install
       - run: npm run test-coverage
+      - run: npm run install-playwright-ci --workspace=frontend
       - run: npm run test-playwright --workspace=frontend
   Deploy:
     name: Deploy to Vercel
