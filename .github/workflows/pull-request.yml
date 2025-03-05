@@ -30,4 +30,5 @@ jobs:
       - run: npm --version
       - run: npm install
       - run: npm run test-coverage
+      - run: npm run test-playwright --workspace=frontend
 

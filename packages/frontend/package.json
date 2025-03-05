@@ -8,6 +8,7 @@
     "test": "vitest run",
     "test-coverage": "vitest run --coverage",
     "test-coverage-ui": "vitest run --coverage --ui",
+    "test-playwright": "npx playwright test",
     "make-badges": "istanbul-badges-readme",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -19,6 +20,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.9",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
