@@ -6,9 +6,8 @@
   "scripts": {
     "test-coverage": "npm run test-coverage --workspaces",
     "make-badges": "npm run make-badges --workspaces",
-    "concat-md-docs": "npx concat-md --toc --decrease-title-levels --ignore \"node_modules,CODE_OF_CONDUCT.md,packages/frontend/TEMPLATE_README.md\" . > README.md",
-    "generate-docs": "npm run test-coverage --workspaces && npm run make-badges && npm run concat-md-docs",
-    "prepare": "husky"
+    "concat-md-docs": "npx concat-md --toc --decrease-title-levels --start-title-level-at 1 --ignore \"node_modules,CODE_OF_CONDUCT.md,packages/frontend/TEMPLATE_README.md\" . > README.md",
+    "generate-docs": "npm run test-coverage --workspaces && npm run make-badges && npm run concat-md-docs"
   },
   "author": "Giuseppe Giulio Caponetto",
   "license": "MIT",
@@ -18,7 +17,7 @@
   ],
   "devDependencies": {
     "@vitest/coverage-v8": "^3.0.8",
-    "husky": "^9.1.7",
+    "concat-md": "^0.5.1",
     "vitest": "^3.0.7"
   }
 }
