@@ -3,6 +3,10 @@ import * as path from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+const initCwd = process.env.INIT_CWD;
+const cwd = process.cwd();
+const rootCwd = initCwd || cwd;
+
 /**
  * Shifts all markdown headings in the content by a specified level.
  * @param content - Markdown string content.
@@ -34,14 +38,19 @@ export function shiftHeadings(content: string, shift: number): string {
 export function concatenateMarkdownFiles(inputFiles: string[], outputFile: string, headingShift: number): void {
   let concatenatedContent = '';
 
-  inputFiles.forEach((filePath) => {
-    const absolutePath = path.resolve(process.cwd(), filePath);
+  inputFiles.forEach((filePath, index) => {
+    const absolutePath = path.resolve(rootCwd, filePath);
     const content = fs.readFileSync(absolutePath, 'utf-8');
-    const shiftedContent = shiftHeadings(content, headingShift);
-    concatenatedContent += `\n\n<!-- Source: ${filePath} -->\n\n` + shiftedContent;
+    // We dont shift the content of the first mardown file
+    if(index === 0){
+      concatenatedContent += `\n\n<!-- Source: ${filePath} -->\n\n` + content;
+    } else {
+      const shiftedContent = shiftHeadings(content, headingShift);
+      concatenatedContent += `\n\n<!-- Source: ${filePath} -->\n\n` + shiftedContent;
+    }
   });
 
-  const outputPath = path.resolve(process.cwd(), outputFile);
+  const outputPath = path.resolve(rootCwd, outputFile);
   fs.writeFileSync(outputPath, concatenatedContent.trim());
   console.log(`Successfully written to ${outputPath}`);
 }

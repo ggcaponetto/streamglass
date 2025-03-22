@@ -1,22 +1,4 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [StreamGlass](#streamglass)
-  - [Getting Started](#getting-started)
-    - [Frontend](#frontend)
-    - [Server](#server)
-  - [Testing](#testing)
-- [StreamGlass: Frontend](#streamglass-frontend)
-- [StreamGlass: Server](#streamglass-server)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-
-<a name="readmemd"></a>
-
-
-
-<a name="readme_monorepo_rootmd"></a>
+<!-- Source: ./README_MONOREPO_ROOT.md -->
 
 # StreamGlass
 
@@ -26,8 +8,8 @@ Streaming layers and utilities for Twitch/OBS
 
 The streamglass project is organized in a monorepo structure.
 
-- [StreamGlass: Frontend](#packagesfrontendreadmemd)
-- [StreamGlass: Server](#packagesserverreadmemd)
+- [StreamGlass: Frontend](./packages/frontend/README.md)
+- [StreamGlass: Server](./packages/server/README.md)
 
 ## Getting Started
 
@@ -62,9 +44,9 @@ npm run test --workspaces
 ```
 
 
-<a name="packagesfrontendreadmemd"></a>
+<!-- Source: ./packages/frontend/README.md -->
 
-# StreamGlass: Frontend
+## StreamGlass: Frontend
 
 This is the main web-application.
 
@@ -74,12 +56,30 @@ This is the main web-application.
 | ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-0%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-0%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
 
 
-<a name="packagesserverreadmemd"></a>
+<!-- Source: ./packages/server/README.md -->
 
-# StreamGlass: Server
+## StreamGlass: Server
 
 This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://img.shields.io/badge/statements-94.11%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-50%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-50%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-94.11%25-brightgreen.svg?style=flat) |
+
+
+<!-- Source: ./packages/utilities/README.md -->
+
+## Stramglass: Utilities
+
+Utility to concatenate mardown files.
+
+Usage:
+
+```bash
+npm run-script <command> [-- <args>]
+
+Options:
+[-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+[-ws|--workspaces] [--include-workspace-root] [--if-present] [--ignore-scripts]
+[--foreground-scripts] [--script-shell <script-shell>]
+```

@@ -10,8 +10,6 @@
   "license": "MIT",
   "description": "",
   "dependencies": {
-    "tsx": "^4.19.3",
-    "utilities": "^1.0.0",
-    "yargs": "^17.7.2"
+    "utilities": "^1.0.0"
   }
 }

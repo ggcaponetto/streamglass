@@ -4,10 +4,10 @@
   "description": "Streaming utilities for Twitch/OBS",
   "main": "index.js",
   "scripts": {
-    "test-coverage": "npm run test-coverage --workspaces",
-    "make-badges": "npm run make-badges --workspaces",
-    "concat-md-docs": "npm run concat-md --workspace=utilities --",
-    "generate-docs": "npm run test-coverage --workspaces && npm run make-badges && npm run concat-md-docs"
+    "test-coverage": "npm run test-coverage --workspaces --if-present",
+    "make-badges": "npm run make-badges --workspaces --if-present",
+    "concat-md-docs": "npm run concat-md --workspace=utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/utilities/README.md --output ./README.md",
+    "generate-docs": "npm run test-coverage && npm run make-badges && npm run concat-md-docs"
   },
   "author": "Giuseppe Giulio Caponetto",
   "license": "MIT",
@@ -17,8 +17,13 @@
     "packages/utilities"
   ],
   "devDependencies": {
+    "@types/yargs": "^17.0.33",
     "@vitest/coverage-v8": "^3.0.8",
     "concat-md": "^0.5.1",
     "vitest": "^3.0.7"
+  },
+  "dependencies": {
+    "tsx": "^4.19.3",
+    "yargs": "^17.7.2"
   }
 }
