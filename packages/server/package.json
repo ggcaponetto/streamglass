@@ -26,6 +26,8 @@
   },
   "description": "",
   "dependencies": {
-    "ollama": "^0.5.14"
+    "ollama": "^0.5.14",
+    "utilities": "^1.0.0",
+    "yargs": "^17.7.2"
   }
 }
