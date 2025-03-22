@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CounterContext, CounterContextProvider, CounterContextType } from '../../context/counter/counter-context'
+import { CounterContext, CounterContextProvider } from '../../context/counter/counter-context'
 import './App.css'
 
 function ComponentA(){
