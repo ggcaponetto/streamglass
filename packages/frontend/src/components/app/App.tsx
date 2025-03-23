@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { CounterContext, CounterContextProvider } from '../../context/counter/counter-context'
+import { CounterContext } from '../../context/counter/counter-context'
 import './App.css'
+import { CounterContextProvider } from '../../context/counter/counter-context-provider';
 
 function ComponentA(){
   const counterContext = useContext(CounterContext);

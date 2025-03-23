@@ -13,7 +13,7 @@ const eslintConfig = tseslint.config(
 eslintConfig.unshift(
     {
         // acts as global ignores, due to the absence of other properties
-        ignores: ["**/node_modules/", ".git/", "**/dist/"] 
+        ignores: ["**/node_modules/", ".git/", "**/dist/", "**/packages/frontend/"] 
     },
 )
 

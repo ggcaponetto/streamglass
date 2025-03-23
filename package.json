@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "lint": "npx eslint .",
+    "lint": "npx eslint . && npm run lint --workspaces --if-present",
     "test-coverage": "npm run test-coverage --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",
     "concat-md-docs": "npm run concat-md --workspace=utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/utilities/README.md --output ./README.md",

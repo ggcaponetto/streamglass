@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext } from 'react';
 
 // Define the shape of your context value
 export interface CounterContextType {
@@ -7,12 +7,3 @@ export interface CounterContextType {
 }
 
 export const CounterContext = createContext<null | CounterContextType>(null);
-
-export const CounterContextProvider = ({ children }: { children: ReactNode }) => {
-    const [counter, setCounter] = useState<number | null>(null);
-    return (
-        <CounterContext.Provider value={{counter, setCounter}}>
-            {children}
-        </CounterContext.Provider>
-    )
-}
