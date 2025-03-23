@@ -80,10 +80,16 @@ Utility to concatenate mardown files.
 Usage:
 
 ```bash
-npm run-script <command> [-- <args>]
+md-concat -i <files...> -o <output> [-s <shift>]
 
 Options:
-[-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
-[-ws|--workspaces] [--include-workspace-root] [--if-present] [--ignore-scripts]
-[--foreground-scripts] [--script-shell <script-shell>]
+      --version  Show version number                                   [boolean]
+  -i, --input    Input markdown files                         [array] [required]
+  -o, --output   Output file path                            [string] [required]
+  -s, --shift    Heading shift level                       [number] [default: 1]
+      --help     Show help                                             [boolean]
+```
+
+```bash
+tsx packages/sg-utilities/src/markdown-util.ts --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/sg-utilities/README.md --output ./README.md
 ```
