@@ -55,6 +55,13 @@ export function concatenateMarkdownFiles(inputFiles: string[], outputFile: strin
   console.log(`Successfully written to ${outputPath}`);
 }
 
+// Define types for yargs
+interface Args {
+  input: string[];
+  output: string;
+  shift: number;
+}
+
 export function runCli() {
   const argv = yargs(hideBin(process.argv))
     .scriptName('md-concat')
@@ -63,6 +70,7 @@ export function runCli() {
       alias: 'i',
       describe: 'Input markdown files',
       type: 'array',
+      string: true,
       demandOption: true,
     })
     .option('output', {
@@ -78,7 +86,7 @@ export function runCli() {
       default: 1,
     })
     .help()
-    .argv as any;
+    .parseSync() as unknown as Args; // Yargs doesn't infer array item types well, so we cast to Args
 
   const inputFiles: string[] = argv.input;
   const outputFile: string = argv.output;
@@ -88,7 +96,6 @@ export function runCli() {
 }
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const isRunningDirectly = process.argv[1] === __filename;
 
 if (isRunningDirectly) {

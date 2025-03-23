@@ -44,6 +44,9 @@ describe('concatenateMarkdownFiles', () => {
       }
     });
 
+    // The official docs state that we can disable this rule in testing frameworks
+    // that expect funcitions even if the do nothing.
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     mockWriteFileSync.mockImplementation(() => {});
 
     concatenateMarkdownFiles(inputFiles, outputFile, headingShift);
@@ -112,8 +115,7 @@ describe('runCli', () => {
   });
 
   it('reads input files and writes the output with shifted headings', async () => {
-    const { runCli } = await import('./markdown-util');
-    await runCli();
+    runCli();
 
     expect(mockExit).not.toHaveBeenCalled();
     expect(mockReadFileSync).toHaveBeenCalledTimes(2);

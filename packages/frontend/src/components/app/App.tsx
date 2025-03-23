@@ -3,7 +3,13 @@ import { CounterContext, CounterContextProvider } from '../../context/counter/co
 import './App.css'
 
 function ComponentA(){
-  const {counter, setCounter} = useContext(CounterContext)!;
+  const counterContext = useContext(CounterContext);
+
+  if (!counterContext) {
+    throw new Error("ComponentA must be used within a CounterProvider");
+  }
+
+  const {counter, setCounter} = counterContext;
   console.log("rendered ComponentA");
   return (
     <div>
