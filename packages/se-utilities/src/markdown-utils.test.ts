@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as fs from 'fs';
 import * as path from 'path';
-import { shiftHeadings, concatenateMarkdownFiles, runCli } from './markdown-util';
+import { shiftHeadings, concatenateMarkdownFiles } from './markdown-util';
 
 vi.mock('fs');
 
@@ -115,6 +115,7 @@ describe('runCli', () => {
   });
 
   it('reads input files and writes the output with shifted headings', async () => {
+    const runCli = (await import("./markdown-util")).runCli;
     runCli();
 
     expect(mockExit).not.toHaveBeenCalled();

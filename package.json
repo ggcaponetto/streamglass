@@ -8,7 +8,7 @@
     "lint": "npx eslint . && npm run lint --workspaces --if-present",
     "test-coverage": "npm run test-coverage --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",
-    "concat-md-docs": "npm run concat-md --workspace=utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/utilities/README.md --output ./README.md",
+    "concat-md-docs": "npm run concat-md --workspace=se-utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/se-utilities/README.md --output ./README.md",
     "generate-docs": "npm run test-coverage && npm run make-badges && npm run concat-md-docs"
   },
   "author": "Giuseppe Giulio Caponetto",
@@ -16,7 +16,7 @@
   "workspaces": [
     "packages/frontend",
     "packages/server",
-    "packages/utilities"
+    "packages/se-utilities"
   ],
   "devDependencies": {
     "@eslint/js": "^9.23.0",
