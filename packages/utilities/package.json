@@ -2,9 +2,13 @@
   "name": "utilities",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "concat-md": "tsx src/markdown-util.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test-coverage": "vitest run --coverage",
+    "test-coverage-ui": "vitest run --coverage --ui",
+    "make-badges": "istanbul-badges-readme"
   },
   "author": "Giuseppe Giulio Caponetto",
   "license": "MIT",

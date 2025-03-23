@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
 
 const initCwd = process.env.INIT_CWD;
 const cwd = process.cwd();
@@ -41,8 +42,7 @@ export function concatenateMarkdownFiles(inputFiles: string[], outputFile: strin
   inputFiles.forEach((filePath, index) => {
     const absolutePath = path.resolve(rootCwd, filePath);
     const content = fs.readFileSync(absolutePath, 'utf-8');
-    // We dont shift the content of the first mardown file
-    if(index === 0){
+    if (index === 0) {
       concatenatedContent += `\n\n<!-- Source: ${filePath} -->\n\n` + content;
     } else {
       const shiftedContent = shiftHeadings(content, headingShift);
@@ -55,7 +55,7 @@ export function concatenateMarkdownFiles(inputFiles: string[], outputFile: strin
   console.log(`Successfully written to ${outputPath}`);
 }
 
-if (require.main === module) {
+export function runCli() {
   const argv = yargs(hideBin(process.argv))
     .scriptName('md-concat')
     .usage('$0 -i <files...> -o <output> [-s <shift>]')
@@ -85,4 +85,12 @@ if (require.main === module) {
   const headingShift: number = argv.shift;
 
   concatenateMarkdownFiles(inputFiles, outputFile, headingShift);
+}
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const isRunningDirectly = process.argv[1] === __filename;
+
+if (isRunningDirectly) {
+  runCli();
 }
