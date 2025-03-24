@@ -33,6 +33,7 @@
     "vitest": "^3.0.7"
   },
   "dependencies": {
+    "chalk": "^5.4.1",
     "tsx": "^4.19.3",
     "yargs": "^17.7.2"
   }

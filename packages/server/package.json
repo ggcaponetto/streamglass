@@ -5,7 +5,8 @@
   "main": "./dist/index.mjs",
   "exports": "./dist/index.mjs",
   "scripts": {
-    "start": "tsx --env-file=.env src/index.ts",
+    "start:socket-io": "tsx --env-file=./../../.env src/components/socket-io/index.ts",
+    "start:ollama": "tsx --env-file=.env src/index.ts",
     "build": "pkgroll",
     "test": "vitest run",
     "test-coverage": "vitest run --coverage",
@@ -14,11 +15,15 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "description": "",
   "dependencies": {
     "ollama": "^0.5.14",
+    "socket.io": "^4.8.1",
     "utilities": "^1.0.0",
     "yargs": "^17.7.2"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.9",
+    "utf-8-validate": "^6.0.5"
   }
 }
