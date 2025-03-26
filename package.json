@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\"",
     "lint": "npx eslint . && npm run lint --workspaces --if-present",
     "test-coverage": "npm run test-coverage --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",
@@ -34,6 +35,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
+    "concurrently": "^9.1.2",
     "tsx": "^4.19.3",
     "yargs": "^17.7.2"
   }

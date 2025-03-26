@@ -14,6 +14,12 @@ The streamglass project is organized in a monorepo structure.
 
 ## Getting Started
 
+Setup `.env` files.
+
+```bash
+cp .env-template .env && vim .env
+```
+
 Install the Vercel CLI
 
 ```bash
