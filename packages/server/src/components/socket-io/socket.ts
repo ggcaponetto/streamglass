@@ -20,7 +20,8 @@ export function validateEnv(): void {
  * @returns The port number to start the server on.
  */
 export function getPort(): number {
-  return parseInt(process.env.SERVER_SOCKET_IO_PORT!, 10);
+  validateEnv();
+  return parseInt(process.env.SERVER_SOCKET_IO_PORT || "", 10);
 }
 
 /**

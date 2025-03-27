@@ -7,7 +7,7 @@ import {
   startServer,
 } from "./socket.js";
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, type MockedFunction } from "vitest";
 import { Server } from "socket.io";
 import { Socket } from "socket.io";
 
@@ -83,17 +83,21 @@ describe("socketServer", () => {
 
       handleConnection(socket);
 
-      // Get the 'data' handler and invoke it manually
-      const dataHandler = (socket.on as any).mock.calls.find(
-        ([event]: [string]) => event === "data"
-      )[1];
+      const onMock = socket.on as MockedFunction<typeof socket.on>;
+      const dataHandler = onMock.mock.calls.find(
+        ([event]) => event === "data"
+      )?.[1];
 
-      dataHandler({ foo: "bar" });
+      if (dataHandler) {
+        dataHandler({ foo: "bar" });
 
-      expect(socket.emit).toHaveBeenCalledWith(
-        "data",
-        `Echo back: ${JSON.stringify({ foo: "bar" })}`
-      );
+        expect(socket.emit).toHaveBeenCalledWith(
+          "data",
+          `Echo back: ${JSON.stringify({ foo: "bar" })}`
+        );
+      } else {
+        throw new Error("Data handler not registered");
+      }
     });
   });
 
