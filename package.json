@@ -7,6 +7,7 @@
   "scripts": {
     "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\"",
     "lint": "npx eslint . && npm run lint --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
     "test-coverage": "npm run test-coverage --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",
     "concat-md-docs": "npm run concat-md --workspace=sg-utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/sg-utilities/README.md --output ./README.md",
