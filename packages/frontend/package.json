@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest run",
-    "test-coverage": "vitest run --coverage",
-    "test-coverage-ui": "vitest run --coverage --ui",
+    "test-coverage-html": "vitest run --coverage --reporter=html",
     "install-playwright-ci": "npx playwright install --with-deps",
     "test-playwright": "npx playwright test",
     "make-badges": "istanbul-badges-readme",

@@ -3,3 +3,6 @@ node_modules
 .env
 coverage
 .vercel
+
+# Vite HTML reports
+packages/**/html/

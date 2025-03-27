@@ -1,16 +1,22 @@
-import { configDefaults, defineConfig } from 'vitest/config'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   test: {
-    exclude: [...configDefaults.exclude, 'playwright-tests/*'],
     coverage: {
+      enabled: true,
+      reportsDirectory: './coverage',
+      reportOnFailure: true,
       provider: 'v8',
-      reporter: ['json-summary'],
+      reporter: ['json-summary', 'html', 'text'],
+      include: [
+        "src/**/*"
+      ],
       thresholds:{
         autoUpdate: true,
-        functions: 0,
-        branches: 0,
         statements: 0,
+        branches: 0,
+        functions: 0,
+        lines: 0,
       }
     },
   },
