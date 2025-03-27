@@ -1,27 +1,19 @@
 name: CI/CD
-run-name: ${{ github.actor }} is running ${{ github.workflow }} on ${{ github.repository }}
+
 on:
-  push:
-    branches:
-    - main
+  workflow_call:  # 👈 enables reuse from other workflows
+    inputs:
+      branch:
+        required: true
+        type: string
+
 jobs:
   Print-Action-Info:
-    name: Print GitHub Action Information
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🎉 Triggered by ${{ github.event_name }} on branch ${{ inputs.branch }}"
+
   Source:
-    name: Install, Test and Coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,12 +23,13 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: npm install
+      - run: npm run tsc
       - run: npm run lint
-      - run: npm run test-coverage --workspaces --if-present
+      - run: npm run test-coverage-html --workspaces --if-present
       - run: npm run install-playwright-ci --workspace=frontend
       - run: npm run test-playwright --workspace=frontend
+
   Deploy:
-    name: Deploy to Vercel
     runs-on: ubuntu-latest
     needs: Source
     steps:
@@ -45,4 +38,4 @@ jobs:
         with:
           node-version: "latest"
       - run: npm i -g vercel
-      - run: vercel --prod deploy packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
+      - run: vercel deploy --target=preview packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}

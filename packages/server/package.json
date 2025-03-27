@@ -7,6 +7,7 @@
   "scripts": {
     "start:socket-io": "tsx --env-file=./../../.env src/components/socket-io/index.ts",
     "start:ollama": "tsx --env-file=.env src/index.ts",
+    "tsc": "tsc --noEmit",
     "build": "echo \"nothing to build yet\"",
     "test": "vitest run",
     "test-coverage-html": "vitest run --coverage --reporter=html",

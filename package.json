@@ -7,6 +7,7 @@
   "scripts": {
     "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\"",
     "lint": "npx eslint . && npm run lint --workspaces --if-present",
+    "tsc": "npm run tsc --workspaces",
     "build": "npm run build --workspaces --if-present",
     "test-coverage-html": "npm run test-coverage-html --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",

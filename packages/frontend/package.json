@@ -10,6 +10,7 @@
     "install-playwright-ci": "npx playwright install --with-deps",
     "test-playwright": "npx playwright test",
     "make-badges": "istanbul-badges-readme",
+    "tsc": "tsc --noEmit",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
