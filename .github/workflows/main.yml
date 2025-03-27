@@ -6,7 +6,9 @@ on:
       branch:
         required: true
         type: string
-
+  push:
+    branches:
+      - main # We want this to run on pushes to the main branch too
 jobs:
   Print-Action-Info:
     runs-on: ubuntu-latest
