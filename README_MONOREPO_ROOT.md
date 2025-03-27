@@ -8,6 +8,7 @@ The streamglass project is organized in a monorepo structure.
 
 - [StreamGlass: Frontend](./packages/frontend/README.md)
 - [StreamGlass: Server](./packages/server/README.md)
+- [StreamGlass: Utilities](./packages/sg-utilities/README.md)
 
 ## Getting Started
 

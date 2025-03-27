@@ -1,0 +1,21 @@
+
+> streamglass@1.0.0 lint
+> npx eslint . && npm run lint --workspaces --if-present
+
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+/home/ggcaponetto/repos/streamglass/packages/frontend/coverage/block-navigation.js
+  1:1  warning  Unused eslint-disable directive (no problems were reported)
+
+/home/ggcaponetto/repos/streamglass/packages/frontend/coverage/prettify.js
+  1:1  warning  Unused eslint-disable directive (no problems were reported)
+
+/home/ggcaponetto/repos/streamglass/packages/frontend/coverage/sorter.js
+  1:1  warning  Unused eslint-disable directive (no problems were reported)
+
+✖ 3 problems (0 errors, 3 warnings)
+  0 errors and 3 warnings potentially fixable with the `--fix` option.
+

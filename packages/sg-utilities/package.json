@@ -6,7 +6,7 @@
   "scripts": {
     "concat-md": "tsx src/markdown-util.ts",
     "tsc": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",
     "make-badges": "istanbul-badges-readme"
   },

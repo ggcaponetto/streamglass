@@ -9,11 +9,11 @@
     "start:ollama": "tsx --env-file=.env src/index.ts",
     "tsc": "tsc --noEmit",
     "build": "echo \"nothing to build yet\"",
-    "test": "vitest run",
+    "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",
     "make-badges": "istanbul-badges-readme"
   },
-  "author": "",
+  "author": "Giuseppe Giulio Caponetto",
   "license": "ISC",
   "description": "",
   "dependencies": {
