@@ -31,7 +31,7 @@ jobs:
       - run: npm run install-playwright-ci --workspace=frontend
       - run: npm run test-playwright --workspace=frontend
 
-  Deploy:
+  Deploy-Frontend-Production:
     runs-on: ubuntu-latest
     needs: Source
     steps:
@@ -41,3 +41,69 @@ jobs:
           node-version: "latest"
       - run: npm i -g vercel
       - run: vercel deploy --target=preview packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
+
+  Deploy-Backend-Production:
+    name: "Deploy to production"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # needs: test
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/production.key
+          chmod 600 ~/.ssh/production.key
+          cat >>~/.ssh/config <<END
+          Host production
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/production.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+
+      - name: Simple Echo
+        run: ssh production 'echo "hello world"'
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - run: echo "Running $(docker --version)"
+      - run: docker build --progress=plain --no-cache -f backend/Dockerfile -t p1-backend .
+      - run: docker image tag p1-backend:latest ggcaponetto/p1-backend:latest
+      - run: docker image push ggcaponetto/p1-backend:latest
+      - run: ssh production 'docker stop $(docker ps -a -q) || true'
+      - run: ssh production 'docker rm $(docker ps -a -q) || true'
+      - run: ssh production 'docker container prune -f'
+      - run: ssh production 'docker ps -a'
+      - run: ssh production 'docker network rm p1_network'
+      - run: ssh production 'docker network create p1_network || true'
+      - run: ssh production 'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io/ggcaponetto -u ${{ vars.DOCKERHUB_USERNAME }} --password-stdin'
+      - run: ssh production 'docker pull ggcaponetto/p1-backend:latest'
+      - run: ssh production 'docker run --name p1-backend --network p1_network -d --env PORT=3888 --env GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} --env GOOGLE_SECRET=${{ secrets.GOOGLE_SECRET }} --env STRIPE_API_KEY=${{ secrets.STRIPE_API_KEY }} --env STRIPE_CLIENT_SECRET=${{ secrets.STRIPE_CLIENT_SECRET }} --env AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }} --env AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }} --env GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} --env DATABASE_URL=${{secrets.DATABASE_URL}} -v ~/p1-backend/output:/app/backend/output ggcaponetto/p1-backend:latest'
+      - run: ssh production 'docker run --name postgres --network p1_network -p 5432:5432 -e POSTGRES_PASSWORD=${{ secrets.DOCKER_PASSWORD }} -d -v postgres_data:/var/lib/postgresql/data postgres:17.0'
+      - run: ssh production 'cd /tmp && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && nvm install v20.18.0 && nvm use v20.18.0 && node --version && npm --version'
+      - run: ssh production 'source ~/.nvm/nvm.sh && cd ~/repositories/ && rm -rf ~/repositories/* && git clone git@github.com:ggcaponetto/project-1.git'
+      - run: ssh production 'source ~/.nvm/nvm.sh && cd ~/repositories/project-1/backend && npm install && DATABASE_URL=${{secrets.DATABASE_URL_LOCAL}} node ./node_modules/drizzle-kit/bin.cjs push'
+      - run: ssh production 'docker pull caddy'
+      # Increase buffer size for HTTP/3 (caddy)
+      # https://github.com/nextcloud/all-in-one/discussions/1970
+      - run: ssh production 'sysctl -w net.core.rmem_max=7500000'
+      - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
+      # HTTPS
+      - run: ssh production 'docker run --name caddy --network p1_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.faifai.ch --to p1-backend:3888'
