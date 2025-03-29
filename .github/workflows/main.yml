@@ -100,7 +100,7 @@ jobs:
       - run: ssh production 'docker rm $(docker ps -a -q) || true'
       - run: ssh production 'docker container prune -f'
       - run: ssh production 'docker ps -a'
-      - run: ssh production 'docker network rm stremglass_network'
+      - run: ssh production 'docker network rm stremglass_network || true'
       - run: ssh production 'docker network create stremglass_network || true'
       - run: ssh production 'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io/ggcaponetto -u ${{ vars.DOCKERHUB_USERNAME }} --password-stdin'
       - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
