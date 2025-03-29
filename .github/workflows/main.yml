@@ -67,7 +67,6 @@ jobs:
           SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
           SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
           SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
-
       - name: Simple Echo
         run: ssh production 'echo "hello world"'
       - name: Check out repository code
@@ -102,8 +101,7 @@ jobs:
       - run: ssh production 'docker ps -a'
       - run: ssh production 'docker network rm stremglass_network || true'
       - run: ssh production 'docker network create stremglass_network || true'
-      - run: |
-          ssh production "docker login docker.io -u '${{ vars.DOCKERHUB_USERNAME }}' --password-stdin" <<< "${{ secrets.DOCKERHUB_TOKEN }}"
+      - run: ssh production 'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io/ggcaponetto -u ${{ vars.DOCKERHUB_USERNAME }} --password-stdin'
       - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
       - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 ggcaponetto/streamglass:latest'
       - run: ssh production 'docker pull caddy'
