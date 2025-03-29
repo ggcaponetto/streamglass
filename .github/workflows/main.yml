@@ -34,6 +34,7 @@ jobs:
       - run: npm run test-playwright --workspace=frontend
 
   Deploy-Frontend-Production:
+    needs: Source
     name: "Deploy frontend to production (Vercel)"
     runs-on: ubuntu-latest
     steps:
@@ -43,6 +44,7 @@ jobs:
           node-version: "latest"
       - name: Deploy to Vercel
         run: |
+          ls -lah
           npm i -g vercel
           cd packages/frontend
           vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
@@ -51,8 +53,10 @@ jobs:
 
 
   Deploy-Backend-Production:
+    needs: Source
     name: "Deploy backend to production (Vultr)"
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     # needs: test
     steps:
       - uses: actions/setup-node@v4
