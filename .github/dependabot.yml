@@ -8,7 +8,9 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directories:
       - "/"
+      - "/packages/desktop"
       - "/packages/frontend"
       - "/packages/server"
+      - "/packages/sg-utilities"
     schedule:
       interval: "daily"
