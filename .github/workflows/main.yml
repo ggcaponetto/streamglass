@@ -11,6 +11,7 @@ on:
       - main # We want this to run on pushes to the main branch too
 jobs:
   Print-Action-Info:
+    if: false # 👈 This will skip the job
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 Triggered by ${{ github.event_name }} on branch ${{ inputs.branch }}"
