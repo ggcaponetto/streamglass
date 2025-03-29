@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\"",
+    "start-backend": "npm run start:socket-io --workspace=server",
     "lint": "npx eslint --config eslint.config.mjs . && npm run lint --workspaces --if-present",
     "tsc": "npm run tsc --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",

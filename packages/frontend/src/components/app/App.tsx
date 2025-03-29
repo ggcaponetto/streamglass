@@ -1,9 +1,13 @@
 import './App.css'
 import Connector from '../connector/Connector';
+import {version} from "../../../package.json";
 
 function App() {
   return (
-    <Connector />
+    <div>
+      <Connector />
+      <span>version {version}</span>
+    </div>
   )
 }
 
