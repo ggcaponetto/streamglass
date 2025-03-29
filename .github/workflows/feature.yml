@@ -6,7 +6,25 @@ on:
       - 'feature-*'
 
 jobs:
-  call-main-workflow:
-    uses: ./.github/workflows/main.yml
-    with:
-      branch: ${{ github.ref_name }}
+  Print-Action-Info:
+    if: false # 👈 This will skip the job
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Triggered by ${{github.event_name}} on branch ${{inputs.branch}}"
+
+  Source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+      - run: node --version
+      - run: npm --version
+      - run: npm install
+      - run: npm run tsc
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test-coverage-html --workspaces --if-present
+      - run: npm run install-playwright-ci --workspace=frontend
+      - run: npm run test-playwright --workspace=frontend
