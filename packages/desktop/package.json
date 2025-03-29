@@ -4,12 +4,14 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
+  "type": "module",
   "scripts": {
     "start": "electron-forge start",
+    "tsc": "tsc --noEmit",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --config eslint.config.mjs ."
   },
   "keywords": [],
   "author": {
@@ -30,13 +32,11 @@
     "@types/electron-squirrel-startup": "^1.0.2",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
     "electron": "35.1.2",
-    "eslint": "^8.57.1",
     "eslint-plugin-import": "^2.31.0",
     "ts-node": "^10.9.2",
-    "typescript": "~4.5.4",
     "vite": "^5.4.15"
   },
   "dependencies": {
