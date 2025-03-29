@@ -14,7 +14,7 @@ jobs:
     if: false # 👈 This will skip the job
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 Triggered by ${{ github.event_name }} on branch ${{ inputs.branch }}"
+      - run: echo "🎉 Triggered by ${{github.event_name}} on branch ${{inputs.branch}}"
 
   Source:
     runs-on: ubuntu-latest
@@ -47,9 +47,8 @@ jobs:
           ls -lah
           npm i -g vercel
           cd packages/frontend
-          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-          vercel link --yes --token=${{ secrets.VERCEL_TOKEN }}
-          vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+          vercel link --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
+          vercel deploy --prod --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
 
 
   Deploy-Backend-Production:
@@ -75,14 +74,14 @@ jobs:
             StrictHostKeyChecking no
           END
         env:
-          SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
-          SSH_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
-          SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          SSH_USER: ${{secrets.PRODUCTION_SSH_USER}}
+          SSH_KEY: ${{secrets.PRODUCTION_SSH_KEY}}
+          SSH_HOST: ${{secrets.PRODUCTION_SSH_HOST}}
       - name: Simple Echo
         run: ssh production 'echo "hello world"'
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "💡 The ${{github.repository}} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in current directory
         run: ls -lah
@@ -102,8 +101,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
       - run: echo "Running $(docker --version)"
       - run: docker build --progress=plain --no-cache -f Dockerfile -t streamglass .
       - run: docker image tag streamglass:latest ggcaponetto/streamglass:latest
@@ -114,7 +113,7 @@ jobs:
       - run: ssh production 'docker ps -a'
       - run: ssh production 'docker network rm stremglass_network || true'
       - run: ssh production 'docker network create stremglass_network || true'
-      - run: ssh production 'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io/ggcaponetto -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin'
+      - run: ssh production 'echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login docker.io/ggcaponetto -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin'
       - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
       - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.faifai.ch ggcaponetto/streamglass:latest'
       - run: ssh production 'docker pull caddy'
