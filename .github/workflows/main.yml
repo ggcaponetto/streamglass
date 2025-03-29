@@ -33,8 +33,8 @@ jobs:
       - run: npm run test-playwright --workspace=frontend
 
   Deploy-Frontend-Production:
-    runs-on: ubuntu-latest
     needs: Source
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -44,6 +44,7 @@ jobs:
       - run: vercel deploy --prod packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
 
   Deploy-Backend-Production:
+    needs: Source
     name: "Deploy to production"
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -106,7 +107,7 @@ jobs:
       - run: ssh production 'docker network create stremglass_network || true'
       - run: ssh production 'echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io/ggcaponetto -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin'
       - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
-      - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 ggcaponetto/streamglass:latest'
+      - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=backend.faifai.ch ggcaponetto/streamglass:latest'
       - run: ssh production 'docker pull caddy'
       # Increase buffer size for HTTP/3 (caddy)
       # https://github.com/nextcloud/all-in-one/discussions/1970
