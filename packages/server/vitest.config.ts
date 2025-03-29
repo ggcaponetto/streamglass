@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config'
 
-const thresholds = process.env.ENABLE_COVERAGE_TRESHOLD === 'true' ? {
+const thresholds = import.meta.env.ENABLE_COVERAGE_TRESHOLD === 'true' ? {
   autoUpdate: true,
   statements: 86.56,
   branches: 80,
