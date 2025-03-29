@@ -42,9 +42,11 @@ jobs:
         with:
           node-version: "latest"
       - name: Deploy to Vercel
-      - run: npm i -g vercel
-      - run: vercel link --yes --project streamglass
-      - run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd packages/frontend
+        run: |
+          npm i -g vercel
+          vercel link --yes --project streamglass
+          vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd packages/frontend
+
 
   Deploy-Backend-Production:
     needs: Source
