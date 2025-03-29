@@ -19,7 +19,6 @@ eslintConfig.unshift(
               "**/dist/",
               "**/packages/frontend/**/*",
               "**/packages/server/html",
-              "**/packages/sg-utilities/html",
               "**/packages/sg-utilities/html"
             ] 
     },

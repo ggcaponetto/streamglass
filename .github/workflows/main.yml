@@ -46,7 +46,8 @@ jobs:
         run: |
           npm i -g vercel
           vercel link --yes --project streamglass --token=${{ secrets.VERCEL_TOKEN }}
-          vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd packages/frontend
+          cd packages/frontend
+          vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
 
 
   Deploy-Backend-Production:

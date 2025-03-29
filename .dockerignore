@@ -1,0 +1,8 @@
+.vercel
+.vscode
+coverage
+dist
+node_modules
+html
+playwright-report
+test-results
