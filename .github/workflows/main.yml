@@ -9,16 +9,6 @@ on:
   push:
     branches:
       - main # We want this to run on pushes to the main branch too
-  workflow_dispatch:  # 👈 enables manual trigger from GitHub UI
-    inputs:
-      deploy_frontend:
-        description: 'Deploy frontend to production (Vercel)?'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
 jobs:
   Print-Action-Info:
     if: false # 👈 This will skip the job
@@ -44,7 +34,6 @@ jobs:
       - run: npm run test-playwright --workspace=frontend
 
   Deploy-Frontend-Production:
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_frontend == 'true'
     name: "Deploy frontend to production (Vercel)"
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +53,6 @@ jobs:
   Deploy-Backend-Production:
     name: "Deploy backend to production (Vultr)"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     # needs: test
     steps:
       - uses: actions/setup-node@v4
