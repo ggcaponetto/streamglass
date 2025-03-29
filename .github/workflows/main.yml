@@ -28,6 +28,7 @@ jobs:
       - run: npm install
       - run: npm run tsc
       - run: npm run lint
+      - run: npm run build
       - run: npm run test-coverage-html --workspaces --if-present
       - run: npm run install-playwright-ci --workspace=frontend
       - run: npm run test-playwright --workspace=frontend
