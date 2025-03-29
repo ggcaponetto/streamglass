@@ -9,6 +9,16 @@ on:
   push:
     branches:
       - main # We want this to run on pushes to the main branch too
+  workflow_dispatch:  # 👈 enables manual trigger from GitHub UI
+    inputs:
+      deploy_frontend:
+        description: 'Deploy frontend to production (Vercel)?'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 jobs:
   Print-Action-Info:
     if: false # 👈 This will skip the job
@@ -17,6 +27,7 @@ jobs:
       - run: echo "🎉 Triggered by ${{ github.event_name }} on branch ${{ inputs.branch }}"
 
   Source:
+    if: false # 👈 This will skip the job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,6 +46,7 @@ jobs:
 
   Deploy-Frontend-Production:
     needs: Source
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_frontend == 'true'
     name: "Deploy frontend to production (Vercel)"
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +57,7 @@ jobs:
       - name: Deploy to Vercel
         run: |
           npm i -g vercel
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
           vercel link --yes --project streamglass --token=${{ secrets.VERCEL_TOKEN }}
           cd packages/frontend
           vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
