@@ -13,7 +13,7 @@
     "build": "npm run build --workspaces --if-present",
     "test-coverage-html": "npm run test-coverage-html --workspaces --if-present",
     "make-badges": "npm run make-badges --workspaces --if-present",
-    "concat-md-docs": "npm run concat-md --workspace=sg-utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/sg-utilities/README.md --output ./README.md",
+    "concat-md-docs": "npm run concat-md --workspace=sg-utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/sg-utilities/README.md ./packages/desktop/README.md --output ./README.md",
     "generate-docs": "npm run test-coverage-html && npm run make-badges && npm run concat-md-docs"
   },
   "author": "Giuseppe Giulio Caponetto",
@@ -21,7 +21,8 @@
   "workspaces": [
     "packages/frontend",
     "packages/server",
-    "packages/sg-utilities"
+    "packages/sg-utilities",
+    "packages/desktop"
   ],
   "devDependencies": {
     "@eslint/js": "^9.23.0",
