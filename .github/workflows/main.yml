@@ -41,8 +41,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "latest"
-      - run: npm i -g vercel
       - name: Deploy to Vercel
+      - run: npm i -g vercel
       - run: vercel link --yes --project streamglass
       - run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd packages/frontend
 
