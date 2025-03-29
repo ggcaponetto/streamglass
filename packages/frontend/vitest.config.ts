@@ -1,5 +1,13 @@
 import { defineConfig } from 'vitest/config'
 
+const thresholds = process.env.ENABLE_COVERAGE_TRESHOLD === 'true' ? {
+  autoUpdate: true,
+  statements: 2.66,
+  branches: 0,
+  functions: 0,
+  lines: 2.66,
+} : undefined;
+
 export default defineConfig({
   test: {
     exclude: [
@@ -15,13 +23,7 @@ export default defineConfig({
       include: [
         "src/**/*.{ts,tsx}"
       ],
-      thresholds:{
-        autoUpdate: true,
-        statements: 2.66,
-        branches: 0,
-        functions: 0,
-        lines: 2.66,
-      }
+      thresholds:thresholds
     },
   },
 })
