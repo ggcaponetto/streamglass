@@ -44,7 +44,6 @@ jobs:
       - run: npm run test-playwright --workspace=frontend
 
   Deploy-Frontend-Production:
-    needs: Source
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_frontend == 'true'
     name: "Deploy frontend to production (Vercel)"
     runs-on: ubuntu-latest
@@ -63,7 +62,6 @@ jobs:
 
 
   Deploy-Backend-Production:
-    needs: Source
     name: "Deploy backend to production (Vultr)"
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
