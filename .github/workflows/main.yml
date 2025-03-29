@@ -42,8 +42,9 @@ jobs:
         with:
           node-version: "latest"
       - run: npm i -g vercel
-      - run: vercel deploy --prod packages/frontend/ --yes --token ${{ secrets.VERCEL_TOKEN }}
-
+      - name: Deploy to Vercel
+        run: vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd packages/frontend
+        
   Deploy-Backend-Production:
     needs: Source
     name: "Deploy backend to production (Vultr)"
