@@ -5,8 +5,8 @@
   "main": "./dist/index.mjs",
   "exports": "./dist/index.mjs",
   "scripts": {
-    "start:socket-io": "tsx --env-file=./../../.env src/components/socket-io/index.ts",
-    "start:ollama": "tsx --env-file=.env src/index.ts",
+    "start:socket-io": "tsx --env-file-if-exists=./../../.env src/components/socket-io/index.js",
+    "start:ollama": "tsx --env-file-if-exists=.env src/index.ts",
     "tsc": "tsc --noEmit",
     "build": "echo \"nothing to build yet\"",
     "test": "vitest --config vitest.config.ts run",
