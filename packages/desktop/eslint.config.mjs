@@ -6,7 +6,7 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 const configBase = tseslint.config(
   {
-    ignores: ['dist', 'coverage', 'html', "out", "/.vite", "node_modules"],
+    ignores: ['dist', 'coverage', 'html', "out", "/.vite"],
   },
   {
     files: ['**/*.{ts,tsx}'],
@@ -20,11 +20,21 @@ const configBase = tseslint.config(
       },
       parser: tseslint.parser,
       parserOptions: {
-        project: './tsconfig.json',
+        project: [
+          './tsconfig.json'
+        ],
       },
     },
     plugins: {
       import: importPlugin,
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          moduleDirectory: ['node_modules', require('path').resolve(__dirname, '../../node_modules')],
+        }
+      },
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -35,7 +45,7 @@ const configBase = tseslint.config(
       ...importPlugin.configs.typescript?.rules,
       "no-unused-vars": "warn",
       "no-undef": "warn",
-    },
+    }
   }
 )
 

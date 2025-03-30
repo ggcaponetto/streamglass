@@ -6,6 +6,9 @@
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
+    "test": "vitest --config vitest.config.ts run",
+    "test-coverage-html": "vitest run --coverage --reporter=html",
+    "make-badges": "istanbul-badges-readme",
     "tsc": "tsc --noEmit",
     "package": "electron-forge package",
     "make": "electron-forge make",

@@ -1,18 +1,18 @@
-import { Server, Socket } from "socket.io";
-import { createServer, Server as HTTPServer } from "http";
-import chalk from "chalk";
+import { Server, Socket } from 'socket.io'
+import { createServer, Server as HTTPServer } from 'http'
+import chalk from 'chalk'
 
 /**
  * Validates required environment variables for the Socket.IO server.
  * Throws an error if any are missing.
  */
 export function validateEnv(): void {
-  if (!process.env.SERVER_SOCKET_IO_PORT) {
-    throw new Error("Please specify a SERVER_SOCKET_IO_PORT env variable.");
-  }
-  if (!process.env.SERVER_CLIENT_ORIGIN) {
-    throw new Error("Please specify a SERVER_CLIENT_ORIGIN env variable.");
-  }
+    if (!process.env.SERVER_SOCKET_IO_PORT) {
+        throw new Error('Please specify a SERVER_SOCKET_IO_PORT env variable.')
+    }
+    if (!process.env.SERVER_CLIENT_ORIGIN) {
+        throw new Error('Please specify a SERVER_CLIENT_ORIGIN env variable.')
+    }
 }
 
 /**
@@ -20,8 +20,8 @@ export function validateEnv(): void {
  * @returns The port number to start the server on.
  */
 export function getPort(): number {
-  validateEnv();
-  return parseInt(process.env.SERVER_SOCKET_IO_PORT || "", 10);
+    validateEnv()
+    return parseInt(process.env.SERVER_SOCKET_IO_PORT || '', 10)
 }
 
 /**
@@ -29,7 +29,7 @@ export function getPort(): number {
  * @returns A new Node.js HTTP server.
  */
 export function createHttpServer(): HTTPServer {
-  return createServer();
+    return createServer()
 }
 
 /**
@@ -38,15 +38,15 @@ export function createHttpServer(): HTTPServer {
  * @returns The configured Socket.IO server.
  */
 export function createSocketServer(httpServer: HTTPServer): Server {
-  const io = new Server(httpServer, {
-    cors: {
-      origin: process.env.SERVER_CLIENT_ORIGIN,
-    },
-  });
+    const io = new Server(httpServer, {
+        cors: {
+            origin: process.env.SERVER_CLIENT_ORIGIN,
+        },
+    })
 
-  io.on("connection", handleConnection);
+    io.on('connection', handleConnection)
 
-  return io;
+    return io
 }
 
 /**
@@ -54,20 +54,23 @@ export function createSocketServer(httpServer: HTTPServer): Server {
  * @param socket - The connected socket.
  */
 export function handleConnection(socket: Socket): void {
-  console.log(chalk.green("Connection established", socket.id));
+    console.log(chalk.green('Connection established', socket.id))
 
-  socket.on("disconnect", (reason) => {
-    console.log(
-      chalk.yellow(`Disconnected from ${socket.id}`, JSON.stringify({ reason }))
-    );
-  });
+    socket.on('disconnect', (reason) => {
+        console.log(
+            chalk.yellow(
+                `Disconnected from ${socket.id}`,
+                JSON.stringify({ reason })
+            )
+        )
+    })
 
-  socket.on("data", (data) => {
-    console.log(
-      chalk.white(`Got data from ${socket.id}`, JSON.stringify(data))
-    );
-    socket.emit("data", `Echo back: ${JSON.stringify(data)}`);
-  });
+    socket.on('data', (data) => {
+        console.log(
+            chalk.white(`Got data from ${socket.id}`, JSON.stringify(data))
+        )
+        socket.emit('data', `Echo back: ${JSON.stringify(data)}`)
+    })
 }
 
 /**
@@ -76,6 +79,6 @@ export function handleConnection(socket: Socket): void {
  * @param port - The port number to listen on.
  */
 export function startServer(io: Server, port: number): void {
-  io.listen(port);
-  console.log(chalk.blue(`Socket.IO server listening on port ${port}`));
+    io.listen(port)
+    console.log(chalk.blue(`Socket.IO server listening on port ${port}`))
 }

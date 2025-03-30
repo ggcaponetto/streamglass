@@ -8,6 +8,7 @@
     "tsc": "tsc --noEmit",
     "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",
+    "prettier": "npx prettier src/**/*.{ts,tsx}",
     "make-badges": "istanbul-badges-readme"
   },
   "author": "Giuseppe Giulio Caponetto",

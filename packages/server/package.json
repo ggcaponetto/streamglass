@@ -8,6 +8,7 @@
     "start:socket-io": "tsx --env-file-if-exists=./../../.env src/components/socket-io/index.js",
     "start:ollama": "tsx --env-file-if-exists=.env src/index.ts",
     "tsc": "tsc --noEmit",
+    "prettier": "npx prettier src/**/*.{ts,tsx}",
     "build": "echo \"nothing to build yet\"",
     "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",

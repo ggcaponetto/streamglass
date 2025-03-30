@@ -5,6 +5,9 @@ import started from 'electron-squirrel-startup'
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string
 declare const MAIN_WINDOW_VITE_NAME: string
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+console.log(`The main.ts is running in ${process.env.NODE_ENV} mode.`)
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
     app.quit()
@@ -33,7 +36,9 @@ const createWindow = () => {
     }
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools()
+    if (isDevelopment) {
+        mainWindow.webContents.openDevTools()
+    }
 }
 
 // This method will be called when Electron has finished

@@ -1,5 +1,5 @@
 // ollamaClient.ts
-import ollama from 'ollama';
+import ollama from 'ollama'
 
 /**
  * Fetches a chat response from the Ollama service using the specified model
@@ -11,18 +11,19 @@ import ollama from 'ollama';
  * @throws Will throw an error if the request fails.
  */
 export async function chatWithModel(
-  model: string,
-  userMessage: string
+    model: string,
+    userMessage: string
 ): Promise<string> {
-  try {
-    const response = await ollama.chat({
-      model,
-      messages: [{ role: 'user', content: userMessage }],
-    });
+    try {
+        const response = await ollama.chat({
+            model,
+            messages: [{ role: 'user', content: userMessage }],
+        })
 
-    return response.message.content;
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    throw new Error(`Failed to fetch chat response: ${errorMessage}`);
-  }
+        return response.message.content
+    } catch (error: unknown) {
+        const errorMessage =
+            error instanceof Error ? error.message : String(error)
+        throw new Error(`Failed to fetch chat response: ${errorMessage}`)
+    }
 }
