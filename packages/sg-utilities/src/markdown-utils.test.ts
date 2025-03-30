@@ -50,7 +50,7 @@ describe('concatenateMarkdownFiles', () => {
 
         // The official docs state that we can disable this rule in testing frameworks
         // that expect funcitions even if the do nothing.
-         
+
         mockWriteFileSync.mockImplementation(() => {})
 
         concatenateMarkdownFiles(inputFiles, outputFile, headingShift)
