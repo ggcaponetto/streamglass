@@ -3,6 +3,10 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 import importPlugin from 'eslint-plugin-import'
 import eslintConfigPrettier from "eslint-config-prettier/flat";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const configBase = tseslint.config(
   {
@@ -30,11 +34,21 @@ const configBase = tseslint.config(
     },
     settings: {
       'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: [
+            './tsconfig.json',
+            '../../packages/*/tsconfig.json'
+          ]
+        },
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          moduleDirectory: ['node_modules', require('path').resolve(__dirname, '../../node_modules')],
+          moduleDirectory: [
+            'node_modules',
+            path.resolve(__dirname, '../../node_modules')
+          ],
         }
-      },
+      }
     },
     rules: {
       ...js.configs.recommended.rules,

@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitest/config'
-
 const thresholds = process.env.ENABLE_COVERAGE_TRESHOLD === 'true' ? {
   autoUpdate: true,
   statements: 2.66,
