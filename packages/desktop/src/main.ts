@@ -1,24 +1,25 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 import started from 'electron-squirrel-startup'
-import { registerEventHandler, removeEventHandler } from './components/event-handler/event-handler'
+import {
+    registerEventHandler,
+    removeEventHandler,
+} from './components/event-handler/event-handler'
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string
 declare const MAIN_WINDOW_VITE_NAME: string
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 console.log(`The main.ts is running in ${process.env.NODE_ENV} mode.`)
-let preloadScriptPath = path.join(__dirname, 'preload.js');
+const preloadScriptPath = path.join(__dirname, 'preload.js')
 console.log(`The preload.js file is situated on ${preloadScriptPath}`)
 
-const channels = [
-    "sg-event"
-]
+const channels = ['sg-event']
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
-    channels.forEach(channel => {
-        removeEventHandler(channel);
+    channels.forEach((channel) => {
+        removeEventHandler(channel)
     })
     app.quit()
 }
@@ -61,8 +62,8 @@ app.on('ready', createWindow)
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        channels.forEach(channel => {
-            removeEventHandler(channel);
+        channels.forEach((channel) => {
+            removeEventHandler(channel)
         })
         app.quit()
     }
@@ -79,6 +80,6 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-channels.forEach(channel => {
-    registerEventHandler(channel);
+channels.forEach((channel) => {
+    registerEventHandler(channel)
 })
