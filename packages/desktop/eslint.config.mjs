@@ -2,8 +2,9 @@ import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 import importPlugin from 'eslint-plugin-import'
+import eslintConfigPrettier from "eslint-config-prettier/flat";
 
-export default tseslint.config(
+const configBase = tseslint.config(
   {
     ignores: ['dist', 'coverage', 'html', "out", "/.vite", "node_modules"],
   },
@@ -37,3 +38,8 @@ export default tseslint.config(
     },
   }
 )
+
+export default [
+  ...configBase,
+  eslintConfigPrettier
+]

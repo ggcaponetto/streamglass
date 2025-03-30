@@ -1,15 +1,14 @@
 import './App.css'
-import Connector from '../connector/Connector';
-import {version} from "../../../package.json";
+import Connector from '../connector/Connector'
+import { version } from '../../../package.json'
 
 function App() {
-  return (
-    <div>
-      <Connector />
-      <span>version {version}</span>
-    </div>
-  )
+    return (
+        <div>
+            <Connector />
+            <span>version {version}</span>
+        </div>
+    )
 }
 
-export default App;
-
+export default App

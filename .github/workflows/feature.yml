@@ -23,6 +23,7 @@ jobs:
       - run: npm --version
       - run: npm install
       - run: npm run tsc
+      - run: npm run format-check
       - run: npm run lint
       - run: npm run build
       - run: npm run test-coverage-html --workspaces --if-present

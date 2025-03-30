@@ -12,7 +12,8 @@
     "make-badges": "istanbul-badges-readme",
     "tsc": "tsc --noEmit",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint --config eslint.config.mjs",
+    "prettier": "npx prettier src/**/*.{ts,tsx}",
     "preview": "vite preview"
   },
   "dependencies": {

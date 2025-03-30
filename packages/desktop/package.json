@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
-  "type": "module",
   "scripts": {
     "start": "electron-forge start",
     "tsc": "tsc --noEmit",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --config eslint.config.mjs ."
+    "prettier": "npx prettier src/**/*.{ts,tsx}",
+    "lint": "eslint --config eslint.config.mjs"
   },
   "keywords": [],
   "author": {

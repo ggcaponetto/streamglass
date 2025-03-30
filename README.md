@@ -15,16 +15,12 @@ The streamglass project is organized in a monorepo structure.
 
 ## Getting Started
 
-Install the Vercel CLI
-
 ```bash
-npm i -g vercel
-```
-
-Install all dependencies
-
-```bash
-npm install --workspaces
+npm i
+# start the desktp app in development mode
+npm run start-desktop
+# start the backend and web controls in dev mode
+npm run start
 ```
 
 ### Frontend
@@ -55,7 +51,7 @@ This is the main web-application.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-2.53%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-0%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-0%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-2.53%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-2.35%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-0%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-0%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-2.35%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/server/README.md -->

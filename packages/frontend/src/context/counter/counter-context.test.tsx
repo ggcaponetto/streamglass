@@ -4,13 +4,13 @@ import { useContext } from 'react'
 import { render } from '@testing-library/react'
 
 function TestComponent() {
-  const context = useContext(CounterContext)
-  return <div>{context === null ? 'No context' : 'Has context'}</div>
+    const context = useContext(CounterContext)
+    return <div>{context === null ? 'No context' : 'Has context'}</div>
 }
 
 describe('CounterContext', () => {
-  it('should default to null', () => {
-    const { getByText } = render(<TestComponent />)
-    expect(getByText('No context')).toBeTruthy()
-  })
+    it('should default to null', () => {
+        const { getByText } = render(<TestComponent />)
+        expect(getByText('No context')).toBeTruthy()
+    })
 })

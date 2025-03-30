@@ -13,16 +13,12 @@ The streamglass project is organized in a monorepo structure.
 
 ## Getting Started
 
-Install the Vercel CLI
-
 ```bash
-npm i -g vercel
-```
-
-Install all dependencies
-
-```bash
-npm install --workspaces
+npm i
+# start the desktp app in development mode
+npm run start-desktop
+# start the backend and web controls in dev mode
+npm run start
 ```
 
 ### Frontend
