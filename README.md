@@ -48,7 +48,6 @@ npm run test --workspaces
 
 This is the main web-application.
 
-
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://img.shields.io/badge/statements-2.35%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-0%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-0%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-2.35%25-red.svg?style=flat) |
@@ -62,7 +61,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-86.56%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-87.5%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-86.56%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-83.09%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-87.5%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-83.09%25-yellow.svg?style=flat) |
 
 
 <!-- Source: ./packages/sg-utilities/README.md -->
@@ -71,7 +70,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-97.29%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.29%25-brightgreen.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-97.5%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.5%25-brightgreen.svg?style=flat) |
 
 Utility to concatenate mardown files.
 
@@ -98,6 +97,10 @@ tsx packages/sg-utilities/src/markdown-util.ts --input ./README_MONOREPO_ROOT.md
 ## StreamGlass: Desktop
 
 This is the desktop application that controls your computer.
+
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-50%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-50%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
 
 ### Developing with WSL
 
