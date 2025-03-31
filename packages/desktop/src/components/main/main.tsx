@@ -3,6 +3,7 @@ import './main.css'
 import { version } from './../../../package.json'
 import '@radix-ui/themes/styles.css'
 import { Flex, Text, Button, Theme } from '@radix-ui/themes'
+import Connector from '../ws-connector/ws-connector'
 
 const { ipcRenderer } = window.electron
 
@@ -11,11 +12,9 @@ root.render(
     <Theme appearance="dark">
         <Flex direction="column" gap="2">
             <Text style={{ textAlign: 'center' }} size={'5'}>
-                Welcome to StreamGlass
+                Welcome to StreamGlass {version}
             </Text>
-            <Text weight="light" size={'2'}>
-                {version}
-            </Text>
+            <Connector></Connector>
             <Button
                 onClick={async () => {
                     const result = await ipcRenderer.invoke?.('sg-event', {
