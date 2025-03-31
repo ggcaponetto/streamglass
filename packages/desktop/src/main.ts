@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, nativeTheme } from 'electron'
 import path from 'node:path'
 import started from 'electron-squirrel-startup'
 import {
@@ -50,6 +50,8 @@ const createWindow = () => {
     if (isDevelopment) {
         mainWindow.webContents.openDevTools()
     }
+
+    nativeTheme.themeSource = 'dark'
 }
 
 // This method will be called when Electron has finished
