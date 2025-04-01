@@ -1,8 +1,8 @@
-import { Flex, Spinner, Switch } from '@radix-ui/themes'
+import { Box, Flex, Spinner, Switch } from '@radix-ui/themes'
 import { useEffect, useRef, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { DotFilledIcon } from '@radix-ui/react-icons'
-import { green } from '@radix-ui/colors'
+import { green, red } from '@radix-ui/colors'
 
 const URL = 'ws://localhost:3001'
 export default function Connector() {
@@ -50,14 +50,16 @@ export default function Connector() {
         }
     }, [])
     return (
-        <Flex gap="4">
+        <Flex gap="4" align={'center'} justify={'center'}>
             <Spinner loading={isLoading}>
-                Connection:{' '}
-                <DotFilledIcon
-                    color={green.green10}
-                    width={'30'}
-                    height={'30'}
-                ></DotFilledIcon>
+                <Flex align={'center'} justify={'center'}>
+                    Connection:{' '}
+                    <DotFilledIcon
+                        color={isConnected ? green.green10 : red.red10}
+                        width={'30'}
+                        height={'30'}
+                    ></DotFilledIcon>
+                </Flex>
             </Spinner>
         </Flex>
     )
