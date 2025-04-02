@@ -10,6 +10,7 @@ export default function Connector() {
     const [isLoading, setIsLoading] = useState(false);
     const socketRef = useRef<null | Socket>(null);
     const [isConnected, setIsConnected] = useState(false); // Track connection status
+    const [error, setError] = useState(null);
     useEffect(() => {
         console.log(`Connecting to ${URL}`);
         setIsLoading(true);
@@ -18,6 +19,7 @@ export default function Connector() {
             console.log('connect');
             setIsConnected(true); // Update state
             setIsLoading(false);
+            setError(null);
         });
         socketInstance.on('disconnect', (reason: any, details: any) => {
             console.log(
@@ -29,10 +31,26 @@ export default function Connector() {
             );
             setIsConnected(false); // Update state
             setIsLoading(false);
+            setError(null);
         });
         socketInstance.on('data', (data) => {
             console.log('data', data);
         });
+
+        socketInstance.on('connect_error', (error) => {
+            console.error('Connection Error:', error);
+            setIsConnected(false);
+            setIsLoading(false);
+            setError(error);
+        });
+
+        socketInstance.on('connect_timeout', (timeout) => {
+            console.error('Connection Timeout:', timeout);
+            setIsConnected(false);
+            setIsLoading(false);
+            setError(timeout);
+        });
+
         const handle = setInterval(() => {
             if (socketInstance) {
                 socketInstance.emit('data', new Date());
@@ -53,15 +71,35 @@ export default function Connector() {
     return (
         <Flex gap="4" align={'center'} justify={'center'}>
             <Spinner loading={isLoading}>
-                <Flex align={'center'} justify={'center'}>
-                    <Text align={'center'} size={'2'}>
-                        Connection:
-                    </Text>
-                    <DotFilledIcon
-                        color={isConnected ? green.green10 : red.red10}
-                        width={'30'}
-                        height={'30'}
-                    ></DotFilledIcon>
+                <Flex align={'center'} justify={'center'} direction={'column'}>
+                    <Flex align={'center'} justify={'center'} direction={'row'}>
+                        <Text align={'center'} size={'2'}>
+                            Connection:
+                        </Text>
+                        <DotFilledIcon
+                            color={isConnected ? green.green10 : red.red10}
+                            width={'30'}
+                            height={'30'}
+                        ></DotFilledIcon>
+                        {error && !isLoading && !isConnected && (
+                            <Text
+                                align={'center'}
+                                size={'1'}
+                                style={{ color: red.red5 }}
+                            >
+                                {error.toString()}
+                            </Text>
+                        )}
+                        {!error && !isLoading && isConnected && (
+                            <Text
+                                align={'center'}
+                                size={'1'}
+                                style={{ color: green.green5 }}
+                            >
+                                OK
+                            </Text>
+                        )}
+                    </Flex>
                 </Flex>
             </Spinner>
         </Flex>
