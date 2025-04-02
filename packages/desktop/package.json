@@ -5,7 +5,7 @@
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js start",
     "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",
     "make-badges": "istanbul-badges-readme",

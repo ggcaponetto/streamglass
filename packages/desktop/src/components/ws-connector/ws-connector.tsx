@@ -4,7 +4,8 @@ import { io, Socket } from 'socket.io-client'
 import { DotFilledIcon } from '@radix-ui/react-icons'
 import { green, red } from '@radix-ui/colors'
 
-const URL = 'ws://localhost:3001'
+const URL = import.meta.env.VITE_SERVER_URL
+
 export default function Connector() {
     const [isLoading, setIsLoading] = useState(false)
     const socketRef = useRef<null | Socket>(null)
