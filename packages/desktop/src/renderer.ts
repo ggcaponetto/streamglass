@@ -26,12 +26,12 @@
  * ```
  */
 
-import './index.css'
-import './vite-env.d.ts'
+import './index.css';
+import './vite-env.d.ts';
 
 console.log(
     '👋 This message is being logged by "renderer.ts", included via Vite'
-)
+);
 
 // Add this to the end of the existing file
-import './components/main/main.tsx'
+import './components/main/main.tsx';

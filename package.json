@@ -11,6 +11,7 @@
     "format": "npm run prettier --workspaces --if-present -- --write",
     "format-check": "npm run prettier --workspaces --if-present -- --check",
     "lint": "npx eslint --config eslint.config.mjs . && npm run lint --workspaces --if-present",
+    "lint-fix": "npx eslint --config eslint.config.mjs . --fix && npm run lint --workspaces --if-present -- --fix",
     "tsc": "npm run tsc --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",

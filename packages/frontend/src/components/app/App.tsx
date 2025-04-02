@@ -1,6 +1,6 @@
-import './App.css'
-import Connector from '../connector/Connector'
-import { version } from '../../../package.json'
+import './App.css';
+import Connector from '../connector/Connector';
+import { version } from '../../../package.json';
 
 function App() {
     return (
@@ -8,7 +8,7 @@ function App() {
             <Connector />
             <span>version {version}</span>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;

@@ -2,16 +2,16 @@
  * @module connectionState
  */
 
-import { v7 as uuidv7, validate as uuidValidate } from 'uuid'
+import { v7 as uuidv7, validate as uuidValidate } from 'uuid';
 
-export type ClientId = string
-export type ConnectionId = string
+export type ClientId = string;
+export type ConnectionId = string;
 
 /**
  * The structure of the state mapping connection UUIDs to sets of client IDs.
  */
 export interface ConnectionState {
-    [connectionId: string]: Set<ClientId>
+    [connectionId: string]: Set<ClientId>;
 }
 
 /**
@@ -19,7 +19,7 @@ export interface ConnectionState {
  * @returns {ConnectionState}
  */
 export function createState(): ConnectionState {
-    return {}
+    return {};
 }
 
 /**
@@ -32,11 +32,11 @@ export function createConnection(
     state: ConnectionState,
     connectionId: ConnectionId
 ): ConnectionState {
-    if (state[connectionId]) return state // Avoid overwrite
+    if (state[connectionId]) return state; // Avoid overwrite
     return {
         ...state,
         [connectionId]: new Set(),
-    }
+    };
 }
 
 /**
@@ -53,15 +53,15 @@ export function addClient(
     clientId: ClientId
 ): ConnectionState {
     if (!uuidValidate(clientId)) {
-        throw new Error(`Invalid clientId: ${clientId}`)
+        throw new Error(`Invalid clientId: ${clientId}`);
     }
-    if (!state[connectionId]) return state
-    const newClients = new Set(state[connectionId])
-    newClients.add(clientId)
+    if (!state[connectionId]) return state;
+    const newClients = new Set(state[connectionId]);
+    newClients.add(clientId);
     return {
         ...state,
         [connectionId]: newClients,
-    }
+    };
 }
 
 /**
@@ -76,13 +76,13 @@ export function removeClient(
     connectionId: ConnectionId,
     clientId: ClientId
 ): ConnectionState {
-    if (!state[connectionId]) return state
-    const newClients = new Set(state[connectionId])
-    newClients.delete(clientId)
+    if (!state[connectionId]) return state;
+    const newClients = new Set(state[connectionId]);
+    newClients.delete(clientId);
     return {
         ...state,
         [connectionId]: newClients,
-    }
+    };
 }
 
 /**
@@ -95,8 +95,9 @@ export function closeConnection(
     state: ConnectionState,
     connectionId: ConnectionId
 ): ConnectionState {
-    const { [connectionId]: _, ...rest } = state
-    return rest
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [connectionId]: _, ...rest } = state;
+    return rest;
 }
 
 /**
@@ -105,11 +106,11 @@ export function closeConnection(
  * @returns {object} - Serialized version of the state.
  */
 export function serializeState(state: ConnectionState): object {
-    const serialized: Record<string, string[]> = {}
+    const serialized: Record<string, string[]> = {};
     for (const [connId, clients] of Object.entries(state)) {
-        serialized[connId] = Array.from(clients)
+        serialized[connId] = Array.from(clients);
     }
-    return serialized
+    return serialized;
 }
 
 /**
@@ -120,11 +121,11 @@ export function serializeState(state: ConnectionState): object {
 export function deserializeState(
     data: Record<string, string[]>
 ): ConnectionState {
-    const state = {} as ConnectionState
+    const state = {} as ConnectionState;
     for (const [connId, clients] of Object.entries(data)) {
-        state[connId] = new Set(clients)
+        state[connId] = new Set(clients);
     }
-    return state
+    return state;
 }
 
 /**
@@ -132,5 +133,5 @@ export function deserializeState(
  * @returns {ClientId} - A new UUID string.
  */
 export function generateClientId(): ClientId {
-    return uuidv7()
+    return uuidv7();
 }

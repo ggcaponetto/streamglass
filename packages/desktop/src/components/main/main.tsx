@@ -1,16 +1,16 @@
-import { createRoot } from 'react-dom/client'
-import './main.css'
-import { version } from './../../../package.json'
-import '@radix-ui/themes/styles.css'
-import { Flex, Text, Button, Theme, Box, Container } from '@radix-ui/themes'
-import Connector from '../ws-connector/ws-connector'
-import '../../i18n'
-import { useTranslation } from 'react-i18next'
+import { createRoot } from 'react-dom/client';
+import './main.css';
+import { version } from './../../../package.json';
+import '@radix-ui/themes/styles.css';
+import { Flex, Text, Button, Theme, Container } from '@radix-ui/themes';
+import Connector from '../ws-connector/ws-connector';
+import '../../i18n';
+import { useTranslation } from 'react-i18next';
 
-const { ipcRenderer } = window.electron
+const { ipcRenderer } = window.electron;
 
 function Main() {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation();
     return (
         <Theme style={{ height: '100%' }} appearance="dark" accentColor="plum">
             <Container
@@ -40,11 +40,11 @@ function Main() {
                                     message:
                                         'This is a message from the renderer',
                                 }
-                            )
+                            );
                             console.log(
                                 'Reveived a response from the event-handler: ',
                                 result
-                            )
+                            );
                         }}
                     >
                         {t('invoke-command')}
@@ -52,8 +52,8 @@ function Main() {
                 </Flex>
             </Container>
         </Theme>
-    )
+    );
 }
 
-const root = createRoot(document.getElementById('root'))
-root.render(<Main />)
+const root = createRoot(document.getElementById('root'));
+root.render(<Main />);

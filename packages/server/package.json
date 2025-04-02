@@ -5,7 +5,7 @@
   "main": "./dist/index.mjs",
   "exports": "./dist/index.mjs",
   "scripts": {
-    "start:socket-io": "tsx --env-file-if-exists=./../../.env src/components/socket-io/index.js",
+    "start:socket-io": "tsx --env-file-if-exists=./../../.env src/components/socket-io/index.ts",
     "start:ollama": "tsx --env-file-if-exists=.env src/index.ts",
     "tsc": "tsc --noEmit",
     "lint": "eslint --config eslint.config.mjs",

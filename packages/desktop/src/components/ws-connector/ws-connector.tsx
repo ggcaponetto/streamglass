@@ -1,24 +1,24 @@
-import { Box, Flex, Spinner, Switch, Text } from '@radix-ui/themes'
-import { useEffect, useRef, useState } from 'react'
-import { io, Socket } from 'socket.io-client'
-import { DotFilledIcon } from '@radix-ui/react-icons'
-import { green, red } from '@radix-ui/colors'
+import { Flex, Spinner, Text } from '@radix-ui/themes';
+import { useEffect, useRef, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
+import { DotFilledIcon } from '@radix-ui/react-icons';
+import { green, red } from '@radix-ui/colors';
 
-const URL = import.meta.env.VITE_SERVER_URL
+const URL = import.meta.env.VITE_SERVER_URL;
 
 export default function Connector() {
-    const [isLoading, setIsLoading] = useState(false)
-    const socketRef = useRef<null | Socket>(null)
-    const [isConnected, setIsConnected] = useState(false) // Track connection status
+    const [isLoading, setIsLoading] = useState(false);
+    const socketRef = useRef<null | Socket>(null);
+    const [isConnected, setIsConnected] = useState(false); // Track connection status
     useEffect(() => {
-        console.log(`Connecting to ${URL}`)
-        setIsLoading(true)
-        const socketInstance = io(URL)
+        console.log(`Connecting to ${URL}`);
+        setIsLoading(true);
+        const socketInstance = io(URL);
         socketInstance.on('connect', () => {
-            console.log('connect')
-            setIsConnected(true) // Update state
-            setIsLoading(false)
-        })
+            console.log('connect');
+            setIsConnected(true); // Update state
+            setIsLoading(false);
+        });
         socketInstance.on('disconnect', (reason: any, details: any) => {
             console.log(
                 'disconnect',
@@ -26,30 +26,30 @@ export default function Connector() {
                     reason,
                     details,
                 })
-            )
-            setIsConnected(false) // Update state
-            setIsLoading(false)
-        })
+            );
+            setIsConnected(false); // Update state
+            setIsLoading(false);
+        });
         socketInstance.on('data', (data) => {
-            console.log('data', data)
-        })
+            console.log('data', data);
+        });
         const handle = setInterval(() => {
             if (socketInstance) {
-                socketInstance.emit('data', new Date())
+                socketInstance.emit('data', new Date());
             }
-        }, 1000)
-        socketRef.current = socketInstance
+        }, 1000);
+        socketRef.current = socketInstance;
         return () => {
             if (handle) {
-                clearInterval(handle)
+                clearInterval(handle);
             }
             if (socketInstance) {
-                console.log('Cleaning up socket connection', socketInstance)
-                socketInstance.disconnect() // 💡 Properly disconnect the socket here
+                console.log('Cleaning up socket connection', socketInstance);
+                socketInstance.disconnect(); // 💡 Properly disconnect the socket here
             }
-            setIsLoading(false)
-        }
-    }, [])
+            setIsLoading(false);
+        };
+    }, []);
     return (
         <Flex gap="4" align={'center'} justify={'center'}>
             <Spinner loading={isLoading}>
@@ -65,5 +65,5 @@ export default function Connector() {
                 </Flex>
             </Spinner>
         </Flex>
-    )
+    );
 }
