@@ -40,7 +40,9 @@ export function createHttpServer(): HTTPServer {
 export function createSocketServer(httpServer: HTTPServer): Server {
     const io = new Server(httpServer, {
         cors: {
-            origin: process.env.SERVER_CLIENT_ORIGIN,
+            origin: process.env.SERVER_CLIENT_ORIGIN?.split(',').map((origin) =>
+                origin.trim()
+            ),
         },
     })
 

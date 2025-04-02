@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Switch } from '@radix-ui/themes'
+import { Box, Flex, Spinner, Switch, Text } from '@radix-ui/themes'
 import { useEffect, useRef, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { DotFilledIcon } from '@radix-ui/react-icons'
@@ -53,7 +53,9 @@ export default function Connector() {
         <Flex gap="4" align={'center'} justify={'center'}>
             <Spinner loading={isLoading}>
                 <Flex align={'center'} justify={'center'}>
-                    Connection:{' '}
+                    <Text align={'center'} size={'2'}>
+                        Connection:
+                    </Text>
                     <DotFilledIcon
                         color={isConnected ? green.green10 : red.red10}
                         width={'30'}
