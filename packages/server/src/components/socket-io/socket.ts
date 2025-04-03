@@ -2,7 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
 import { handleMessage } from '../message-handler/message-handler.js';
-import { createState } from '../socket-state/socket-state.js';
+import { State } from '../socket-state/socket-state.js';
 
 /**
  * Validates required environment variables for the Socket.IO server.
@@ -39,7 +39,10 @@ export function createHttpServer(): HTTPServer {
  * @param httpServer - The HTTP server to bind the Socket.IO server to.
  * @returns The configured Socket.IO server.
  */
-export function createSocketServer(httpServer: HTTPServer): Server {
+export function createSocketServer(
+    httpServer: HTTPServer,
+    state: State
+): Server {
     const io = new Server(httpServer, {
         cors: {
             origin: process.env.SERVER_CLIENT_ORIGIN?.split(',').map((origin) =>
@@ -48,7 +51,16 @@ export function createSocketServer(httpServer: HTTPServer): Server {
         },
     });
 
-    io.on('connection', handleConnection);
+    io.on('connection', (socket) => {
+        state[socket.id] = true;
+        console.log(
+            chalk.green(
+                `Connection established with socket ${socket.id}`,
+                JSON.stringify(state, null, 2)
+            )
+        );
+        handleConnection(socket, state);
+    });
 
     return io;
 }
@@ -57,14 +69,13 @@ export function createSocketServer(httpServer: HTTPServer): Server {
  * Handles a new client connection to the Socket.IO server.
  * @param socket - The connected socket.
  */
-export function handleConnection(socket: Socket): void {
-    console.log(chalk.green('Connection established', socket.id));
-
+export function handleConnection(socket: Socket, state: State): void {
     socket.on('disconnect', (reason) => {
+        delete state[socket.id];
         console.log(
             chalk.yellow(
-                `Disconnected from ${socket.id}`,
-                JSON.stringify({ reason })
+                `Disconnected from ${socket.id} with reason: ${reason}`,
+                JSON.stringify(state, null, 2)
             )
         );
     });
@@ -89,9 +100,16 @@ export function handleConnection(socket: Socket): void {
  * @param io - The Socket.IO server instance.
  * @param port - The port number to listen on.
  */
-export function startServer(io: Server, port: number): void {
-    io.listen(port);
-    console.log(chalk.blue(`Socket.IO server listening on port ${port}`));
-    const state = createState();
+export function startServer(): void {
+    const state = new State();
     console.log(chalk.white('Created state', JSON.stringify(state, null, 2)));
+
+    // Entry point logic
+    validateEnv();
+    const port = getPort();
+    const httpServer = createHttpServer();
+    const io = createSocketServer(httpServer, state);
+    io.listen(port);
+
+    console.log(chalk.blue(`Socket.IO server listening on port ${port}`));
 }

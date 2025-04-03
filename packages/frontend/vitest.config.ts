@@ -23,6 +23,7 @@ export default defineConfig({
       include: [
         "src/**/*.{ts,tsx}"
       ],
+      exclude: ['coverage', 'html', 'dist'],
       thresholds:thresholds
     },
   },

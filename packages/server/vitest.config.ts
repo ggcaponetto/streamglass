@@ -19,6 +19,7 @@ export default defineConfig({
       include: [
         "src/**/*"
       ],
+      exclude: ['coverage', 'html'],
       thresholds: thresholds
     },
   },

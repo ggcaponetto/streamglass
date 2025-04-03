@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\"",
+    "start": "concurrently \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\"",
+    "start-frontend": "npm run start:socket-io --workspace=frontend",
     "start-backend": "npm run start:socket-io --workspace=server",
     "start-desktop": "npm run start --workspace=desktop",
     "format": "npm run prettier --workspaces --if-present -- --write",
@@ -19,7 +20,7 @@
     "make-badges": "npm run make-badges --workspaces --if-present",
     "concat-md-docs": "npm run concat-md --workspace=sg-utilities -- --input ./README_MONOREPO_ROOT.md ./packages/frontend/README.md ./packages/server/README.md ./packages/sg-utilities/README.md ./packages/desktop/README.md --output ./README.md",
     "generate-docs": "npm run test-coverage-html && npm run make-badges && npm run concat-md-docs",
-    "pre-commit": "npm run tsc && npm run format && npm run format-check && npm run lint && npm run build && npm run generate-docs"
+    "pre-commit": "npm run tsc && npm run format && npm run format-check && npm run lint-fix && npm run lint && npm run build && npm run generate-docs"
   },
   "author": "Giuseppe Giulio Caponetto",
   "license": "MIT",

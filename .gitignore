@@ -2,7 +2,18 @@ node_modules
 .vscode
 .env
 coverage
-.vercel
 
 # Vite HTML reports
 packages/**/html/
+packages/**/coverage/
+
+packages/frontend/.vercel/
+packages/frontend/coverage/
+packages/frontend/dist/
+packages/frontend/html/
+packages/frontend/playwright-report/
+
+packages/desktop/.vercel/
+packages/desktop/coverage/
+packages/desktop/out/
+packages/desktop/html/

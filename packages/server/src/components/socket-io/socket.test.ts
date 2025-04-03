@@ -9,12 +9,12 @@ import {
     createHttpServer,
     createSocketServer,
     handleConnection,
-    startServer,
 } from './socket.js';
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Server } from 'socket.io';
 import { Socket } from 'socket.io';
+import { State } from '../socket-state/socket-state.js';
 
 describe('socketServer', () => {
     const OLD_ENV = process.env;
@@ -60,7 +60,8 @@ describe('socketServer', () => {
     describe('createSocketServer', () => {
         it('creates a Socket.IO server and attaches handlers', () => {
             const httpServer = createHttpServer();
-            const io = createSocketServer(httpServer);
+            const state = new State();
+            const io = createSocketServer(httpServer, state);
             expect(io).toBeInstanceOf(Server);
         });
     });
@@ -73,7 +74,9 @@ describe('socketServer', () => {
                 emit: vi.fn(),
             } as unknown as Socket;
 
-            handleConnection(socket);
+            const state = new State();
+
+            handleConnection(socket, state);
 
             expect(socket.on).toHaveBeenCalledWith(
                 'disconnect',
@@ -83,17 +86,6 @@ describe('socketServer', () => {
                 'data',
                 expect.any(Function)
             );
-        });
-    });
-
-    describe('startServer', () => {
-        it('starts listening on the provided port', () => {
-            const io = {
-                listen: vi.fn(),
-            } as unknown as Server;
-
-            startServer(io, 5000);
-            expect(io.listen).toHaveBeenCalledWith(5000);
         });
     });
 });
