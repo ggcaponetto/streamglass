@@ -12,7 +12,7 @@ export async function handleMessage(
     done: () => unknown
 ) {
     console.log(
-        chalk.white(`Got data from ${socket.id}`, JSON.stringify(data))
+        chalk.white(`Got data from ${socket.id}: `, JSON.stringify(data))
     );
     // do some async stuff
     await new Promise((res, rej) => {

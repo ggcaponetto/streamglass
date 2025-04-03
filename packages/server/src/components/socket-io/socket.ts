@@ -2,7 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
 import { handleMessage } from '../message-handler/message-handler.js';
-import { State } from '../socket-state/socket-state.js';
+import { generateClientId, State } from '../socket-state/socket-state.js';
 
 /**
  * Validates required environment variables for the Socket.IO server.
@@ -52,7 +52,11 @@ export function createSocketServer(
     });
 
     io.on('connection', (socket) => {
-        state[socket.id] = true;
+        state[socket.id] = {
+            pairingCode: generateClientId(),
+            clients: [],
+        };
+        socket.emit('pairing-data', state[socket.id]);
         console.log(
             chalk.green(
                 `Connection established with socket ${socket.id}`,
@@ -63,6 +67,28 @@ export function createSocketServer(
     });
 
     return io;
+}
+
+function addClientViapairingCode(
+    state: State,
+    pairingCode: string,
+    clientId: string
+): boolean {
+    for (const key in state) {
+        const entry = state[key];
+        if (
+            typeof entry === 'object' &&
+            entry !== null &&
+            'pairingCode' in entry &&
+            'clients' in entry &&
+            Array.isArray(entry.clients) &&
+            entry.pairingCode === pairingCode
+        ) {
+            entry.clients.push(clientId);
+            return true;
+        }
+    }
+    return false;
 }
 
 /**
@@ -78,6 +104,17 @@ export function handleConnection(socket: Socket, state: State): void {
                 JSON.stringify(state, null, 2)
             )
         );
+    });
+
+    socket.on('pairing-data', (data) => {
+        console.log(
+            chalk.white(
+                `Received pairing-data from ${socket.id}:`,
+                JSON.stringify(data, null, 2)
+            )
+        );
+        const { pairingCode, clientId } = data;
+        addClientViapairingCode(state, pairingCode, clientId);
     });
 
     socket.on('data', async (data) => {

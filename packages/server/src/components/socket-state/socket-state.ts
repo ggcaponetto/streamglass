@@ -7,8 +7,13 @@ import { v7 as uuidv7 } from 'uuid';
 export type ClientId = string;
 export type ConnectionId = string;
 
+export type ClientEntry = {
+    pairingCode: string;
+    clients: string[];
+} | object;
+
 // Whatever shape your state has
-export type State = { [key: string]: unknown };
+export type State = { [key: string]: ClientEntry};
 
 // Constructor signature
 export interface StateConstructor {
