@@ -1,7 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
-import { handleMessage } from './message-handler/message-handler.js';
+import { handleMessage } from '../message-handler/message-handler.js';
+import { createState } from '../socket-state/socket-state.js';
 
 /**
  * Validates required environment variables for the Socket.IO server.
@@ -91,4 +92,6 @@ export function handleConnection(socket: Socket): void {
 export function startServer(io: Server, port: number): void {
     io.listen(port);
     console.log(chalk.blue(`Socket.IO server listening on port ${port}`));
+    const state = createState();
+    console.log(chalk.white('Created state', JSON.stringify(state, null, 2)));
 }
