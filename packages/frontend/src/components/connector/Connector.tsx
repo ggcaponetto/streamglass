@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 const URL = import.meta.env.VITE_SERVER_URL;
+// const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+// const VITE_DESKTOP_ORIGIN = import.meta.env.VITE_DESKTOP_ORIGIN;
+
 export default function Connector() {
     const socketRef = useRef<null | Socket>(null);
     const [isConnected, setIsConnected] = useState(false); // Track connection status

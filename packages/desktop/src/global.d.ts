@@ -1,5 +1,3 @@
-export {};
-
 declare global {
     interface Window {
         electron: {
@@ -11,3 +9,5 @@ declare global {
         };
     }
 }
+
+export {};

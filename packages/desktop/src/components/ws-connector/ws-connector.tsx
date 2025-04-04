@@ -1,10 +1,13 @@
-import { Box, Flex, Spinner, Text } from '@radix-ui/themes';
+import { Box, Flex, Link, Spinner, Text } from '@radix-ui/themes';
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { DotFilledIcon } from '@radix-ui/react-icons';
-import { cyan, green, red } from '@radix-ui/colors';
+import { green, red } from '@radix-ui/colors';
 
-const URL = import.meta.env.VITE_SERVER_URL;
+const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const VITE_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
+
+const ipcRenderer = window.electron.ipcRenderer;
 
 export default function Connector() {
     const [isLoading, setIsLoading] = useState(false);
@@ -20,9 +23,9 @@ export default function Connector() {
     }, [isConnected]);
 
     useEffect(() => {
-        console.log(`Connecting to ${URL}`);
+        console.log(`Connecting to ${VITE_SERVER_URL}`);
         setIsLoading(true);
-        const socketInstance = io(URL);
+        const socketInstance = io(VITE_SERVER_URL);
         socketInstance.on('connect', () => {
             console.log('connect');
             setIsConnected(true); // Update state
@@ -41,8 +44,12 @@ export default function Connector() {
             setIsLoading(false);
             setError(null);
         });
-        socketInstance.on('data', (data) => {
-            console.log('data', data);
+        socketInstance.on('data', async (data) => {
+            console.log(
+                `Got data from socket-io server: ${JSON.stringify(data)}`
+            );
+            const result = await ipcRenderer.invoke?.('sg-event', data);
+            console.log('Reveived a response from the event-handler: ', result);
         });
         socketInstance.on('pairing-data', (data) => {
             console.log('Received pairing-data', JSON.stringify(data, null, 2));
@@ -106,13 +113,9 @@ export default function Connector() {
                     </Flex>
                     <Box>
                         {paringData && (
-                            <Text
-                                align={'center'}
-                                size={'1'}
-                                style={{ color: cyan.cyan8 }}
-                            >
-                                {paringData.pairingCode}
-                            </Text>
+                            <Link href={`${paringData.pairingCode}`}>
+                                {`${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData.pairingCode}`}
+                            </Link>
                         )}
                     </Box>
                 </Flex>

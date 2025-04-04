@@ -7,35 +7,24 @@ import { v7 as uuidv7 } from 'uuid';
 export type ClientId = string;
 export type ConnectionId = string;
 
-export type ClientEntry =
-    | {
-          pairingCode: string;
-          clients: string[];
-      }
-    | object;
+export type ClientEntry = {
+    pairingCode: string;
+    clients: string[];
+};
 
 // Whatever shape your state has
 export type State = { [key: string]: ClientEntry };
 
-// Constructor signature
-export interface StateConstructor {
-    new (): State;
+export function State() {
+    return {} as State;
 }
-
-// Function with 'this' type
-export function StateImpl(this: State) {
-    this.state = createState();
-    return this.state;
-}
-
-// Tell TypeScript that `StateImpl` can be called with `new`
-export const State: StateConstructor = StateImpl as unknown as StateConstructor;
 
 /**
  * Creates a new empty connection state.
  */
 export function createState(): State {
-    return {};
+    const emptyState: State = {}; // totally fine
+    return emptyState;
 }
 
 /**

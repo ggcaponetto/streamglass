@@ -12,8 +12,11 @@ export function validateEnv(): void {
     if (!process.env.SERVER_SOCKET_IO_PORT) {
         throw new Error('Please specify a SERVER_SOCKET_IO_PORT env variable.');
     }
-    if (!process.env.SERVER_CLIENT_ORIGIN) {
-        throw new Error('Please specify a SERVER_CLIENT_ORIGIN env variable.');
+    if (!process.env.VITE_DESKTOP_ORIGIN) {
+        throw new Error('Please specify a VITE_DESKTOP_ORIGIN env variable.');
+    }
+    if (!process.env.VITE_FRONTEND_ORIGIN) {
+        throw new Error('Please specify a VITE_FRONTEND_ORIGIN env variable.');
     }
 }
 
@@ -45,9 +48,10 @@ export function createSocketServer(
 ): Server {
     const io = new Server(httpServer, {
         cors: {
-            origin: process.env.SERVER_CLIENT_ORIGIN?.split(',').map((origin) =>
-                origin.trim()
-            ),
+            origin: [
+                process.env.VITE_FRONTEND_ORIGIN?.toString() || null,
+                process.env.VITE_DESKTOP_ORIGIN?.toString() || null,
+            ].filter((origin) => origin !== null),
         },
     });
 
@@ -154,7 +158,7 @@ export function handleConnection(socket: Socket, state: State): void {
  * @param port - The port number to listen on.
  */
 export function startServer(): void {
-    const state = new State();
+    const state = State();
     console.log(chalk.white('Created state', JSON.stringify(state, null, 2)));
 
     // Entry point logic

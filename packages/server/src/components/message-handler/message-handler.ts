@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { Socket, DefaultEventsMap } from 'socket.io';
+import { Socket, DefaultEventsMap, Server } from 'socket.io';
 import { State } from '../socket-state/socket-state.js';
 
 export async function handleMessage(
@@ -24,8 +24,15 @@ export async function handleMessage(
     );
     // traverse all the state and emit messages to the paired socket
     for (const socketId in state) {
-        if (socket.id === socketId) {
-            // TODO
+        if (state[socketId].clients.includes(socket.id)) {
+            console.log(
+                chalk.blue(`Sending message to paired client ${socketId}`, data)
+            );
+            const io = socket.nsp.server as Server;
+            const pairedSocket = io.sockets.sockets.get(socketId);
+            if (pairedSocket) {
+                pairedSocket.emit('data', data);
+            }
         }
     }
 

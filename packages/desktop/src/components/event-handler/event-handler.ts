@@ -5,17 +5,20 @@ export function registerEventHandler(channel: string) {
     const handle = ipcMain.handle('sg-event', async (event, ...args) => {
         console.log(
             `Got event on channel "${channel}": `,
-            JSON.stringify({ event, args })
+            JSON.stringify({ args })
         );
         return await new Promise((res, rej) => {
             try {
                 setTimeout(() => {
-                    res({ message: `Event "${channel}" handled by OS.` });
+                    res({
+                        message: `Event "${channel}" handled by OS with a 2s delay.`,
+                        args,
+                    });
                 }, 2000);
             } catch (e) {
                 rej(
                     new Error(
-                        `Something wrong happened while handling an "${channel}" event: ${JSON.stringify(event, e)}`
+                        `Something wrong happened while handling an "${channel}" event: ${e.message}`
                     )
                 );
             }

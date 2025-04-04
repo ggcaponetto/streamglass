@@ -32,8 +32,13 @@ describe('socketServer', () => {
             expect(() => validateEnv()).toThrow();
         });
 
-        it('throws if SERVER_CLIENT_ORIGIN is missing', () => {
-            delete process.env.SERVER_CLIENT_ORIGIN;
+        it('throws if VITE_FRONTEND_ORIGIN is missing', () => {
+            delete process.env.VITE_FRONTEND_ORIGIN;
+            expect(() => validateEnv()).toThrow();
+        });
+
+        it('throws if VITE_DESKTOP_ORIGIN is missing', () => {
+            delete process.env.VITE_DESKTOP_ORIGIN;
             expect(() => validateEnv()).toThrow();
         });
 
@@ -60,7 +65,7 @@ describe('socketServer', () => {
     describe('createSocketServer', () => {
         it('creates a Socket.IO server and attaches handlers', () => {
             const httpServer = createHttpServer();
-            const state = new State();
+            const state = State();
             const io = createSocketServer(httpServer, state);
             expect(io).toBeInstanceOf(Server);
         });
@@ -74,7 +79,7 @@ describe('socketServer', () => {
                 emit: vi.fn(),
             } as unknown as Socket;
 
-            const state = new State();
+            const state = State();
 
             handleConnection(socket, state);
 
