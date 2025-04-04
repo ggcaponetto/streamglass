@@ -69,22 +69,26 @@ export function createSocketServer(
     return io;
 }
 
-function addClientViapairingCode(
+function addClientViaPairingCode(
     state: State,
     pairingCode: string,
     clientId: string
 ): boolean {
-    for (const key in state) {
-        const entry = state[key];
+    // The pairing is initialized by an arbitrary client.
+    // Each client received a pairing id that can be used to
+    // establish a bi-directional communication between clients
+    // proxied by the server.
+    for (const socketId in state) {
+        const stateEntry = state[socketId];
         if (
-            typeof entry === 'object' &&
-            entry !== null &&
-            'pairingCode' in entry &&
-            'clients' in entry &&
-            Array.isArray(entry.clients) &&
-            entry.pairingCode === pairingCode
+            typeof stateEntry === 'object' &&
+            stateEntry !== null &&
+            'pairingCode' in stateEntry &&
+            'clients' in stateEntry &&
+            Array.isArray(stateEntry.clients) &&
+            stateEntry.pairingCode === pairingCode
         ) {
-            entry.clients.push(clientId);
+            stateEntry.clients.push(clientId);
             return true;
         }
     }
@@ -114,7 +118,7 @@ export function handleConnection(socket: Socket, state: State): void {
             )
         );
         const { pairingCode, socketId: clientId } = data;
-        const isSuccess = addClientViapairingCode(state, pairingCode, clientId);
+        const isSuccess = addClientViaPairingCode(state, pairingCode, clientId);
         if (!isSuccess) {
             chalk.yellow(
                 console.warn(`Could not pair ${clientId} via ${pairingCode}`)
@@ -131,7 +135,7 @@ export function handleConnection(socket: Socket, state: State): void {
 
     socket.on('data', async (data) => {
         const start = Date.now();
-        const res = await handleMessage(data, socket, () => {
+        const res = await handleMessage(data, socket, state, () => {
             console.log(chalk.white(`Message sent by ${socket.id} handled.`));
         });
         const duration = Date.now() - start;

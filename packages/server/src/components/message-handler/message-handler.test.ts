@@ -27,8 +27,13 @@ describe('handleMessage', () => {
 
     it('should log data, emit echoed data, and call done()', async () => {
         const data = { foo: 'bar' };
-
-        const promise = handleMessage(data, mockSocket as Socket, mockDone);
+        const mockState = {};
+        const promise = handleMessage(
+            data,
+            mockSocket as Socket,
+            mockState,
+            mockDone
+        );
 
         // Simulate timeout delay
         vi.advanceTimersByTime(200);
