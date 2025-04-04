@@ -113,8 +113,20 @@ export function handleConnection(socket: Socket, state: State): void {
                 JSON.stringify(data, null, 2)
             )
         );
-        const { pairingCode, clientId } = data;
-        addClientViapairingCode(state, pairingCode, clientId);
+        const { pairingCode, socketId: clientId } = data;
+        const isSuccess = addClientViapairingCode(state, pairingCode, clientId);
+        if (!isSuccess) {
+            chalk.yellow(
+                console.warn(`Could not pair ${clientId} via ${pairingCode}`)
+            );
+        } else {
+            chalk.green(
+                console.warn(
+                    `Paired ${clientId} via ${pairingCode}`,
+                    JSON.stringify(state, null, 2)
+                )
+            );
+        }
     });
 
     socket.on('data', async (data) => {

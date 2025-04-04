@@ -50,7 +50,7 @@ This is the main web-application.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-2.35%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-0%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-0%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-2.35%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-1.94%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.94%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/server/README.md -->
@@ -61,7 +61,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-85.71%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-83.33%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-94.11%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-85.71%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-52.54%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80.95%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-76.92%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-52.54%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/sg-utilities/README.md -->
@@ -100,7 +100,7 @@ This is the desktop application that controls your computer.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-28.57%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-28.57%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-44.44%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-44.44%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
 
 ### Developing with WSL
 

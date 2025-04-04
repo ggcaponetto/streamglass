@@ -35,7 +35,7 @@ describe('handleMessage', () => {
         await promise;
 
         expect(console.log).toHaveBeenCalledWith(
-            expect.stringContaining('Got data from abc123 {"foo":"bar"}')
+            expect.stringContaining('Got data from abc123:  {"foo":"bar"}')
         );
 
         expect(mockEmit).toHaveBeenCalledWith(

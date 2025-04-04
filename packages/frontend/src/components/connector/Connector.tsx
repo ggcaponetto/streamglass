@@ -21,16 +21,15 @@ export default function Connector() {
     }, []);
 
     useEffect(() => {
-        // TODO fix this use effect
-        if (pairingCode && socketRef.current) {
-            const data = {
-                pairingCode: 1333,
-                socketId: socketRef.current.id,
+        if (pairingCode && isConnected) {
+            const paringData = {
+                pairingCode,
+                socketId: socketRef.current?.id,
             };
-            console.log('Emitting pairing code:', pairingCode);
-            socketRef.current?.emit('pairing-data', data);
+            console.log('Emitting pairing code:', paringData);
+            socketRef.current?.emit('pairing-data', paringData);
         }
-    }, [pairingCode]);
+    }, [pairingCode, isConnected]);
 
     useEffect(() => {
         console.log(`Connecting to ${URL}`);

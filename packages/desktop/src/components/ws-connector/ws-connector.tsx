@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner, Text } from '@radix-ui/themes';
-import { use, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { DotFilledIcon } from '@radix-ui/react-icons';
 import { cyan, green, red } from '@radix-ui/colors';
