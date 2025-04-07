@@ -23,7 +23,10 @@ describe('socketServer', () => {
         vi.restoreAllMocks();
         process.env = { ...OLD_ENV }; // Clone before each
         process.env.SERVER_SOCKET_IO_PORT = '4000';
-        process.env.SERVER_CLIENT_ORIGIN = 'http://localhost:3000';
+        process.env.VITE_FRONTEND_ORIGIN = 'http://localhost:5173';
+        process.env.VITE_DESKTOP_ORIGIN = 'http://localhost:5174';
+        process.env.VITE_SERVER_URL = 'ws://localhost:3001';
+        process.env.ENABLE_COVERAGE_TRESHOLD = 'false';
     });
 
     describe('validateEnv', () => {
