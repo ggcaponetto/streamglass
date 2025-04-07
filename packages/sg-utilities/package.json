@@ -1,20 +1,20 @@
 {
-  "name": "sg-utilities",
-  "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "concat-md": "tsx src/markdown-util.ts",
-    "tsc": "tsc --noEmit",
-    "test": "vitest --config vitest.config.ts run",
-    "test-coverage-html": "vitest run --coverage --reporter=html",
-    "prettier": "npx prettier src/**/*.{ts,tsx}",
-    "lint": "eslint --config eslint.config.mjs",
-    "make-badges": "istanbul-badges-readme"
-  },
-  "author": "Giuseppe Giulio Caponetto",
-  "license": "MIT",
-  "description": "",
-  "dependencies": {
-  }
+    "name": "sg-utilities",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./types/types.d.ts",
+    "scripts": {
+        "concat-md": "tsx src/markdown-util.ts",
+        "tsc": "tsc --noEmit",
+        "test": "vitest --config vitest.config.ts run",
+        "test-coverage-html": "vitest run --coverage --reporter=html",
+        "prettier": "npx prettier src/**/*.{ts,tsx}",
+        "lint": "eslint --config eslint.config.mjs",
+        "make-badges": "istanbul-badges-readme"
+    },
+    "author": "Giuseppe Giulio Caponetto",
+    "license": "MIT",
+    "description": "",
+    "dependencies": {}
 }

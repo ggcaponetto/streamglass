@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { Socket, DefaultEventsMap, Server } from 'socket.io';
-import { State } from '../socket-state/socket-state.js';
+import type { State as StateType } from 'sg-utilities';
 
 export async function handleMessage(
     data: unknown,
@@ -10,7 +10,7 @@ export async function handleMessage(
         DefaultEventsMap,
         unknown
     >,
-    state: State,
+    state: StateType,
     done: () => unknown
 ) {
     console.log(

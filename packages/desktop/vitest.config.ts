@@ -13,25 +13,14 @@ const thresholds =
 export default defineConfig({
     test: {
         environment: 'jsdom',
-        exclude: [
-            './.vite/**',
-            './coverage/**',
-            './html/**',
-            './out/**',
-        ],
         coverage: {
             enabled: false,
             reportsDirectory: './coverage',
             reportOnFailure: true,
             provider: 'v8',
             reporter: ['json-summary', 'html', 'text'],
-            include: ['./src/**'],
-            exclude: [
-                './.vite/**',
-                './coverage/**',
-                './html/**',
-                './out/**',
-            ],
+            include: ['src/**/*'],
+            exclude: ['.vite', 'coverage', 'html', 'out'],
             thresholds: thresholds,
         },
     },

@@ -3,6 +3,13 @@ import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
 import { handleMessage } from '../message-handler/message-handler.js';
 import { generateClientId, State } from '../socket-state/socket-state.js';
+import type {
+    PairingOffer,
+    PairingRequest,
+    State as StateType,
+    ClientId,
+} from 'sg-utilities';
+import { EventTypes } from 'sg-utilities/src/constants/event-types.js';
 
 /**
  * Validates required environment variables for the Socket.IO server.
@@ -37,6 +44,34 @@ export function createHttpServer(): HTTPServer {
     return createServer();
 }
 
+export function sendPairingOffer(
+    pairingId: string,
+    socket: Socket,
+    state: StateType
+): void {
+    const pairingOffer: PairingOffer = {
+        pairingCode: pairingId,
+        pairingData: state[pairingId],
+    };
+    socket.emit(EventTypes.PairingOffer, pairingOffer);
+}
+
+export function openPairingChannel(state: StateType, socket: Socket): string {
+    const pairingId = generateClientId();
+    state[pairingId] = {
+        clients: [socket.id],
+    };
+    return pairingId;
+}
+
+export function closePairingChannel(
+    state: StateType,
+    pairingId: string
+): string {
+    delete state[pairingId];
+    return pairingId;
+}
+
 /**
  * Creates and configures a new Socket.IO server using the provided HTTP server.
  * @param httpServer - The HTTP server to bind the Socket.IO server to.
@@ -44,7 +79,7 @@ export function createHttpServer(): HTTPServer {
  */
 export function createSocketServer(
     httpServer: HTTPServer,
-    state: State
+    state: StateType
 ): Server {
     const io = new Server(httpServer, {
         cors: {
@@ -56,56 +91,52 @@ export function createSocketServer(
     });
 
     io.on('connection', (socket) => {
-        const pairingId = generateClientId();
-        state[pairingId] = {
-            clients: [socket.id],
-        };
-        socket.emit('pairing-data', state[socket.id]);
+        const pairingId = openPairingChannel(state, socket);
         console.log(
             chalk.green(
                 `Connection established with socket ${socket.id}`,
                 JSON.stringify(state, null, 2)
             )
         );
-        handleConnection(socket, state);
+        sendPairingOffer(pairingId, socket, state);
+        handleConnection(socket, state, pairingId);
     });
 
     return io;
 }
 
-function addClientViaPairingCode(
-    state: State,
+function pair(
+    state: StateType,
     pairingCode: string,
-    clientId: string
-): boolean {
-    // The pairing is initialized by an arbitrary client.
-    // Each client received a pairing id that can be used to
-    // establish a bi-directional communication between clients
-    // proxied by the server.
-    for (const socketId in state) {
-        const stateEntry = state[socketId];
-        if (
-            typeof stateEntry === 'object' &&
-            stateEntry !== null &&
-            'pairingCode' in stateEntry &&
-            'clients' in stateEntry &&
-            Array.isArray(stateEntry.clients) &&
-            stateEntry.pairingCode === pairingCode
-        ) {
-            stateEntry.clients.push(clientId);
-            return true;
-        }
-    }
-    return false;
+    socket: Socket
+): StateType['pairingCode'] {
+    state[pairingCode].clients.push(socket.id as ClientId);
+    return state[pairingCode];
+}
+
+function unpair(
+    state: StateType,
+    pairingCode: string,
+    socket: Socket
+): StateType['pairingCode'] {
+    state[pairingCode].clients = state[pairingCode].clients.filter(
+        (clientId: string) => clientId !== socket.id
+    );
+    return state[pairingCode];
 }
 
 /**
  * Handles a new client connection to the Socket.IO server.
  * @param socket - The connected socket.
  */
-export function handleConnection(socket: Socket, state: State): void {
+export function handleConnection(
+    socket: Socket,
+    state: StateType,
+    pairingCode: string
+): void {
     socket.on('disconnect', (reason) => {
-        delete state[socket.id];
+        unpair(state, pairingCode, socket);
+        closePairingChannel(state, pairingCode);
         console.log(
             chalk.yellow(
                 `Disconnected from ${socket.id} with reason: ${reason}`,
@@ -114,23 +145,24 @@ export function handleConnection(socket: Socket, state: State): void {
         );
     });
 
-    socket.on('pairing-data', (data) => {
+    socket.on(EventTypes.PairingRequest, (data: PairingRequest) => {
         console.log(
             chalk.white(
-                `Received pairing-data from ${socket.id}:`,
+                `Received pairing request from ${socket.id} for channel "${data.pairingCode}"`,
                 JSON.stringify(data, null, 2)
             )
         );
-        const { pairingCode, socketId: clientId } = data;
-        const isSuccess = addClientViaPairingCode(state, pairingCode, clientId);
+        const isSuccess = pair(state, data.pairingCode, socket);
         if (!isSuccess) {
             chalk.yellow(
-                console.warn(`Could not pair ${clientId} via ${pairingCode}`)
+                console.warn(
+                    `Could not pair ${socket.id} over ${data.pairingCode} channel`
+                )
             );
         } else {
             chalk.green(
                 console.warn(
-                    `Paired ${clientId} via ${pairingCode}`,
+                    `Paired ${socket.id} over ${data.pairingCode} channel`,
                     JSON.stringify(state, null, 2)
                 )
             );

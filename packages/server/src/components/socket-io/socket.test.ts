@@ -83,8 +83,9 @@ describe('socketServer', () => {
             } as unknown as Socket;
 
             const state = State();
+            const mockPairingCode = 'pairingCode123';
 
-            handleConnection(socket, state);
+            handleConnection(socket, state, mockPairingCode);
 
             expect(socket.on).toHaveBeenCalledWith(
                 'disconnect',

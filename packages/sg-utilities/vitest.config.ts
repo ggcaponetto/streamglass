@@ -13,16 +13,14 @@ const thresholds =
 
 export default defineConfig({
     test: {
-        include: ['./src/**'],
-        exclude: ['./coverage/**', './html/**'],
         coverage: {
             enabled: true,
             reportsDirectory: './coverage',
             reportOnFailure: true,
             provider: 'v8',
             reporter: ['json-summary', 'html', 'text'],
-            include: ['./src/**'],
-            exclude: ['./coverage/**', './html/**'],
+            include: ['src/**'],
+            exclude: ['coverage/**', 'html/**'],
             thresholds: thresholds,
         },
     },

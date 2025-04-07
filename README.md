@@ -50,7 +50,7 @@ This is the main web-application.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-1.94%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.94%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-1.68%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.68%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/server/README.md -->
@@ -61,7 +61,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-52.54%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80.95%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-76.92%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-52.54%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-48.44%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-72%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-52.94%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-48.44%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/sg-utilities/README.md -->
@@ -70,7 +70,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-97.56%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-80%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.56%25-brightgreen.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-91.95%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-75%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-80%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-91.95%25-brightgreen.svg?style=flat) |
 
 Utility to concatenate mardown files.
 

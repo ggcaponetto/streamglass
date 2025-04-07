@@ -1,18 +1,5 @@
-/**
- * @module connectionState
- */
-
 import { v7 as uuidv7 } from 'uuid';
-
-export type ClientId = string;
-export type ConnectionId = string;
-
-export type Pairing = {
-    clients: string[];
-};
-
-// Whatever shape your state has
-export type State = { [pairingCode: string]: Pairing };
+import type { State, ClientId } from 'sg-utilities';
 
 export function State() {
     return {} as State;
