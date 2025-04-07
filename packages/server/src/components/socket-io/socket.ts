@@ -56,9 +56,9 @@ export function createSocketServer(
     });
 
     io.on('connection', (socket) => {
-        state[socket.id] = {
-            pairingCode: generateClientId(),
-            clients: [],
+        const pairingId = generateClientId();
+        state[pairingId] = {
+            clients: [socket.id],
         };
         socket.emit('pairing-data', state[socket.id]);
         console.log(
