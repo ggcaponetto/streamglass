@@ -18,6 +18,10 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "baseUrl": ["./"],                                 /* Base URL to resolve non-relative module names. */
+      "sg-utilities": ["./packages/sg-utilities/src"]
+    },      
   }
 }

@@ -30,7 +30,7 @@ export default function Connector() {
                 socketId: socketRef.current?.id,
             };
             console.log('Emitting pairing code:', paringData);
-            socketRef.current?.emit('pairing-data', paringData);
+            socketRef.current?.emit('pairing-request', paringData);
         }
     }, [pairingCode, isConnected]);
 

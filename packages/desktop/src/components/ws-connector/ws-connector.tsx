@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { DotFilledIcon } from '@radix-ui/react-icons';
 import { green, red } from '@radix-ui/colors';
+import { EventTypes } from 'sg-utilities/src/constants/event-types';
 
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const VITE_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
@@ -51,8 +52,11 @@ export default function Connector() {
             const result = await ipcRenderer.invoke?.('sg-event', data);
             console.log('Reveived a response from the event-handler: ', result);
         });
-        socketInstance.on('pairing-data', (data) => {
-            console.log('Received pairing-data', JSON.stringify(data, null, 2));
+        socketInstance.on(EventTypes.PairingRequest, (data) => {
+            console.log(
+                'Received pairing offer',
+                JSON.stringify(data, null, 2)
+            );
             setParingData(data);
         });
 

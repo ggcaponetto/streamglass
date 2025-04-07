@@ -119,8 +119,20 @@ function unpair(
     pairingCode: string,
     socket: Socket
 ): StateType['pairingCode'] {
+    console.log(
+        chalk.yellow(
+            `Unpairing ${socket.id} from ${pairingCode} channel`,
+            JSON.stringify(state, null, 2)
+        )
+    );
     state[pairingCode].clients = state[pairingCode].clients.filter(
-        (clientId: string) => clientId !== socket.id
+        (socketId: string) => socketId !== socket.id
+    );
+    console.log(
+        chalk.yellow(
+            `Unpaired ${socket.id} from ${pairingCode} channel`,
+            JSON.stringify(state, null, 2)
+        )
     );
     return state[pairingCode];
 }
@@ -145,6 +157,7 @@ export function handleConnection(
         );
     });
 
+    // the server receives a pairing request from the client
     socket.on(EventTypes.PairingRequest, (data: PairingRequest) => {
         console.log(
             chalk.white(
