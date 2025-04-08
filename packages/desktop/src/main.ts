@@ -4,7 +4,7 @@ import started from 'electron-squirrel-startup';
 import {
     registerEventHandler,
     removeEventHandler,
-} from './components/event-handler/event-handler';
+} from './components/event-handler/event-handler.js';
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;

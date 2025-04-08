@@ -3,10 +3,21 @@
     "version": "1.0.0",
     "type": "module",
     "main": "./dist/index.js",
-    "types": "./types/types.d.ts",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./constants/event-types": {
+            "import": "./dist/constants/event-types.js",
+            "types": "./dist/constants/event-types.d.ts"
+        }
+    },
     "scripts": {
         "concat-md": "tsx src/markdown-util.ts",
         "tsc": "tsc --noEmit",
+        "tsc:build": "tsc --project tsconfig.build.json",
         "test": "vitest --config vitest.config.ts run",
         "test-coverage-html": "vitest run --coverage --reporter=html",
         "prettier": "npx prettier src/**/*.{ts,tsx}",

@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import './main.css';
-import { version } from './../../../package.json';
+import packageJson from './../../../package.json' with { type: 'json' };
 import '@radix-ui/themes/styles.css';
 import { Flex, Text, Button, Theme, Container } from '@radix-ui/themes';
-import Connector from '../ws-connector/ws-connector';
+import Connector from '../ws-connector/ws-connector.js';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
 
@@ -28,7 +28,7 @@ function Main() {
                     direction={'column'}
                 >
                     <Text align={'center'} size={'5'}>
-                        {t('StreamGlass')} <Text size={'1'}>v{version}</Text>
+                        {t('StreamGlass')} <Text size={'1'}>v{packageJson.version}</Text>
                     </Text>
                     <Connector />
                     <Button

@@ -17,3 +17,6 @@ packages/desktop/.vercel/
 packages/desktop/coverage/
 packages/desktop/out/
 packages/desktop/html/
+
+packages/sg-utilities/dist/
+
