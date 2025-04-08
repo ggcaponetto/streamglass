@@ -4,10 +4,10 @@ export function registerEventHandler(channel: string) {
     console.log(`Registering event handler on channel "${channel}".`);
     const handle = ipcMain.handle('sg-event', async (event, ...args) => {
         console.log(
-            `Got event on channel "${channel}": `,
+            `Got event on channel "${channel}" (registerEventHandler): `,
             JSON.stringify({ args })
         );
-        return await new Promise((res, rej) => {
+        return new Promise((res, rej) => {
             try {
                 setTimeout(() => {
                     res({

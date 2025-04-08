@@ -12,7 +12,16 @@ export default function Connector() {
 
     const sendCommand = () => {
         if (socketRef.current) {
-            socketRef.current.emit('data', new Date());
+            socketRef.current.emit(
+                'data',
+                new Date(),
+                (err: unknown, data: unknown) => {
+                    console.log('Command execution acknowledged', {
+                        err,
+                        data,
+                    });
+                }
+            );
         }
     };
 

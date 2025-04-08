@@ -10,7 +10,7 @@ export type State = { [pairingCode: string]: Pairing };
 
 export type PairingOffer = {
     pairingCode: string;
-    pairingData: {
+    state: {
         clients: string[];
     };
 };

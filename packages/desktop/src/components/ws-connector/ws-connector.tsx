@@ -45,14 +45,23 @@ export default function Connector() {
             setIsLoading(false);
             setError(null);
         });
-        socketInstance.on('data', async (data) => {
+        socketInstance.on('data', async (data, callback) => {
             console.log(
                 `Got data from socket-io server: ${JSON.stringify(data)}`
             );
             const result = await ipcRenderer.invoke?.('sg-event', data);
-            console.log('Reveived a response from the event-handler: ', result);
+            console.log(
+                'Received a response from the event-handler (socket): ',
+                {
+                    result,
+                    callback,
+                }
+            );
+            if (callback) {
+                callback(null, result);
+            }
         });
-        socketInstance.on(EventTypes.PairingRequest, (data) => {
+        socketInstance.on(EventTypes.PairingOffer, (data) => {
             console.log(
                 'Received pairing offer',
                 JSON.stringify(data, null, 2)

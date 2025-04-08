@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { Socket, DefaultEventsMap, Server } from 'socket.io';
 import type { State as StateType } from 'sg-utilities';
 
-export async function handleMessage(
+export function handleMessage(
     data: unknown,
     socket: Socket<
         DefaultEventsMap,
@@ -10,8 +10,7 @@ export async function handleMessage(
         DefaultEventsMap,
         unknown
     >,
-    state: StateType,
-    done: () => unknown
+    state: StateType
 ) {
     console.log(
         chalk.white(
@@ -22,31 +21,56 @@ export async function handleMessage(
             })
         )
     );
-    // traverse all the state and emit messages to the paired socket
-    for (const socketId in state) {
-        if (state[socketId].clients.includes(socket.id)) {
+    const promises: Promise<unknown>[] = [];
+    // traverse all pairin channels and emit a message to all clients
+    for (const pairingCode in state) {
+        state[pairingCode].clients.forEach((clientId) => {
+            // don't send the messages to unpaired clients
+            if (state[pairingCode].clients.length <= 1) {
+                return;
+            }
+            // don't send the messages to the original sender (himself)
+            if (clientId === socket.id) {
+                return;
+            }
             console.log(
-                chalk.blue(`Sending message to paired client ${socketId}`, data)
+                chalk.blue(
+                    `Sending message to paired client ${clientId} via ${pairingCode} channel`,
+                    data
+                )
             );
             const io = socket.nsp.server as Server;
-            const pairedSocket = io.sockets.sockets.get(socketId);
+            const pairedSocket = io.sockets.sockets.get(clientId);
             if (pairedSocket) {
-                pairedSocket.emit('data', data);
+                promises.push(
+                    new Promise((res, rej) => {
+                        pairedSocket.emit(
+                            'data',
+                            data,
+                            (err: Error | null, result: unknown) => {
+                                console.log(
+                                    chalk.green(
+                                        `Received message aknowledgment from paired client ${clientId} via ${pairingCode} channel: \n ${JSON.stringify(
+                                            {
+                                                err,
+                                                result,
+                                            },
+                                            null,
+                                            2
+                                        )}`
+                                    )
+                                );
+                                if (err) {
+                                    rej(err);
+                                } else {
+                                    res(result);
+                                }
+                            }
+                        );
+                    })
+                );
             }
-        }
+        });
     }
-
-    // do some async stuff
-    await new Promise((res, rej) => {
-        try {
-            setTimeout(() => {
-                const echoMessage = `Echo back: ${JSON.stringify(data)}`;
-                socket.emit('data', echoMessage);
-                done();
-                res(echoMessage);
-            }, 200);
-        } catch (e) {
-            rej(new Error(`Error handling data from ${socket.id}: ${e}`));
-        }
-    });
+    return promises;
 }

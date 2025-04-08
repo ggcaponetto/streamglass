@@ -42,7 +42,7 @@ function Main() {
                                 }
                             );
                             console.log(
-                                'Reveived a response from the event-handler: ',
+                                'Reveived a response from the event-handler (onClick): ',
                                 result
                             );
                         }}

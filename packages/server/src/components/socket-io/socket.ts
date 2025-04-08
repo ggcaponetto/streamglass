@@ -51,7 +51,7 @@ export function sendPairingOffer(
 ): void {
     const pairingOffer: PairingOffer = {
         pairingCode: pairingId,
-        pairingData: state[pairingId],
+        state: state[pairingId],
     };
     socket.emit(EventTypes.PairingOffer, pairingOffer);
 }
@@ -69,6 +69,12 @@ export function closePairingChannel(
     pairingId: string
 ): string {
     delete state[pairingId];
+    console.log(
+        chalk.yellow(
+            `Closed pairing channel ${pairingId}`,
+            JSON.stringify(state, null, 2)
+        )
+    );
     return pairingId;
 }
 
@@ -105,13 +111,20 @@ export function createSocketServer(
     return io;
 }
 
-function pair(
-    state: StateType,
-    pairingCode: string,
-    socket: Socket
-): StateType['pairingCode'] {
-    state[pairingCode].clients.push(socket.id as ClientId);
-    return state[pairingCode];
+function pair(state: StateType, pairingCode: string, socket: Socket): boolean {
+    let isSuccess = false;
+    try {
+        state[pairingCode].clients.push(socket.id as ClientId);
+        isSuccess = true;
+    } catch (error) {
+        console.error(
+            chalk.red(
+                `Error pairing ${socket.id} with ${pairingCode} channel:`,
+                error
+            )
+        );
+    }
+    return isSuccess;
 }
 
 function unpair(
@@ -125,15 +138,17 @@ function unpair(
             JSON.stringify(state, null, 2)
         )
     );
-    state[pairingCode].clients = state[pairingCode].clients.filter(
-        (socketId: string) => socketId !== socket.id
-    );
-    console.log(
-        chalk.yellow(
-            `Unpaired ${socket.id} from ${pairingCode} channel`,
-            JSON.stringify(state, null, 2)
-        )
-    );
+    for (const pairingCode in state) {
+        state[pairingCode].clients = state[pairingCode].clients.filter(
+            (socketId: string) => socketId !== socket.id
+        );
+        console.log(
+            chalk.yellow(
+                `Unpaired ${socket.id} from ${pairingCode} channel`,
+                JSON.stringify(state, null, 2)
+            )
+        );
+    }
     return state[pairingCode];
 }
 
@@ -182,18 +197,24 @@ export function handleConnection(
         }
     });
 
-    socket.on('data', async (data) => {
+    socket.on('data', async (data, callback) => {
         const start = Date.now();
-        const res = await handleMessage(data, socket, state, () => {
-            console.log(chalk.white(`Message sent by ${socket.id} handled.`));
-        });
+        const promises = handleMessage(data, socket, state);
+        const responses = await Promise.all(promises);
         const duration = Date.now() - start;
         console.log(
             chalk.white(
-                `Handled data sent by ${socket.id} in ${duration}ms`,
-                res
-            )
+                `Message sent by ${socket.id} handled in ${duration}ms and got responses: ${JSON.stringify(responses)}`
+            ),
+            {
+                data,
+                responses,
+                callback,
+            }
         );
+        if (callback) {
+            callback(null, responses);
+        }
     });
 }
 
