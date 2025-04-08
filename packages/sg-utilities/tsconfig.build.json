@@ -2,7 +2,7 @@
     // "extends": "./tsconfig.json",
     "compilerOptions": {
         "declaration": true,
-        "emitDeclarationOnly": true,
+        "emitDeclarationOnly": false,
         "declarationMap": true,
         "outDir": "./dist",
         "module": "ESNext",

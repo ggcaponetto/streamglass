@@ -3,12 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { DotFilledIcon } from '@radix-ui/react-icons';
 import { green, red } from '@radix-ui/colors';
-import type {
-    PairingOffer,
-    PairingRequest,
-    State as StateType,
-    ClientId
-} from 'sg-utilities';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;

@@ -3,12 +3,12 @@
     // these options are overrides used only by ts-node
     // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
     "compilerOptions": {
-      "module": "nodenext"
+      "module": "commonjs"
     }
   },
   "compilerOptions": {
     "target": "esnext",
-    "module": "nodenext",
+    "module": "esnext",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,12 +16,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "outDir": "dist",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "baseUrl": ["./"],                                 /* Base URL to resolve non-relative module names. */
-      "sg-utilities": ["./packages/sg-utilities/src"]
-    },      
+    "jsx": "react-jsx"    
   }
 }

@@ -10,9 +10,9 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
     resolve: {
         alias: {
-            'sg-utilities': path.resolve(
+            'sg-utilities/constants/event-types': path.resolve(
                 __dirname,
-                'packages/sg-utilities'
+                '../../packages/sg-utilities/src/constants/event-types.ts'
             ),
         },
     },

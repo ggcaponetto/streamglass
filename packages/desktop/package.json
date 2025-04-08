@@ -4,9 +4,8 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
-  "type": "module",
   "scripts": {
-    "start": "node --env-file-if-exists=../../.env --loader ts-node/esm ../../node_modules/@electron-forge/cli/dist/electron-forge.js start",
+    "start": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js start",
     "test": "vitest --config vitest.config.ts run",
     "test-coverage-html": "vitest run --coverage --reporter=html",
     "make-badges": "istanbul-badges-readme",

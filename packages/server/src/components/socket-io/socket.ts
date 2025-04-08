@@ -7,7 +7,7 @@ import type {
     PairingOffer,
     PairingRequest,
     State as StateType,
-    ClientId
+    ClientId,
 } from 'sg-utilities';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 

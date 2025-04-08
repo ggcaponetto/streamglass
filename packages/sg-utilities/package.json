@@ -14,8 +14,15 @@
             "types": "./dist/constants/event-types.d.ts"
         }
     },
+    "typesVersions": {
+        "*": {
+            "constants/event-types": [
+                "dist/constants/event-types.d.ts"
+            ]
+        }
+    },
     "scripts": {
-        "concat-md": "tsx src/markdown-util.ts",
+        "concat-md": "tsx src/markdown-util/markdown-util.ts",
         "tsc": "tsc --noEmit",
         "tsc:build": "tsc --project tsconfig.build.json",
         "test": "vitest --config vitest.config.ts run",

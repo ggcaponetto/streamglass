@@ -1,4 +1,3 @@
-
 export type ClientId = string;
 export type ConnectionId = string;
 
