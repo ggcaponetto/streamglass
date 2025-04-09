@@ -51,7 +51,9 @@ export function sendPairingOffer(
 ): void {
     const pairingOffer: PairingOffer = {
         pairingCode: pairingId,
-        state: state[pairingId],
+        state: {
+            [pairingId]: state[pairingId]
+        },
     };
     socket.emit(EventTypes.PairingOffer, pairingOffer);
 }
@@ -59,7 +61,10 @@ export function sendPairingOffer(
 export function openPairingChannel(state: StateType, socket: Socket): string {
     const pairingId = generateClientId();
     state[pairingId] = {
-        clients: [socket.id],
+        clients: [{
+            clientId: socket.id,
+            type: "server"
+        }],
     };
     return pairingId;
 }
@@ -114,7 +119,11 @@ export function createSocketServer(
 function pair(state: StateType, pairingCode: string, socket: Socket): boolean {
     let isSuccess = false;
     try {
-        state[pairingCode].clients.push(socket.id as ClientId);
+        state[pairingCode].clients.push({
+            clientId: socket.id as ClientId,
+            // TODO
+            type: "todo"
+        });
         isSuccess = true;
     } catch (error) {
         console.error(
