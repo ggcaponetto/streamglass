@@ -14,6 +14,7 @@
         "lint": "npx eslint --config eslint.config.mjs . && npm run lint --workspaces --if-present",
         "lint-fix": "npx eslint --config eslint.config.mjs . --fix && npm run lint --workspaces --if-present -- --fix",
         "tsc": "npm run tsc --workspaces --if-present",
+        "tsc:build": "npm run tsc:build --workspaces --if-present",
         "test": "npm run test --workspaces --if-present",
         "build": "npm run build --workspaces --if-present",
         "test-coverage-html": "npm run test-coverage-html --workspaces --if-present",
