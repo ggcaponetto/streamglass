@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "start": "concurrently --names \"frontend,server,desktop,tsc-watcher\" --prefix-colors \"cyan,magenta,green,blue\" \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\" \"npm run tsc:build:watch\"",
-        "start-frontend": "npm run dev --workspace=frontend",
+        "start-frontend-dev": "npm run dev --workspace=frontend",
+        "start-frontend-prod": "npm run serve --workspace=frontend",
         "start-backend": "npm run start:socket-io --workspace=server",
         "start-desktop": "npm run start --workspace=desktop",
         "format": "npm run prettier --workspaces --if-present -- --write",

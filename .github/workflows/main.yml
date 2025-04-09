@@ -34,26 +34,9 @@ jobs:
             - run: npm run test-coverage-html --workspaces --if-present
             - run: npm run install-playwright-ci --workspace=frontend
             - run: npm run test-playwright --workspace=frontend
-
-    Deploy-Frontend-Production:
+    Deploy-Backend-And-Frontend-Production:
         needs: Source
-        name: 'Deploy frontend to production (Vercel)'
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 'latest'
-            - name: Deploy to Vercel
-              run: |
-                  ls -lah
-                  npm i -g vercel
-                  vercel link --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
-                  vercel deploy --prod --yes --token=${{secrets.VERCEL_TOKEN}}
-
-    Deploy-Backend-Production:
-        needs: Source
-        name: 'Deploy backend to production (Vultr)'
+        name: 'Deploy backend and frontend to production (Vultr)'
         runs-on: ubuntu-latest
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         # needs: test
@@ -115,11 +98,12 @@ jobs:
             - run: ssh production 'docker network create stremglass_network || true'
             - run: ssh production 'echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login docker.io/ggcaponetto -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin'
             - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
-            - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.streamglass.io ggcaponetto/streamglass:latest'
+            - run: ssh production 'docker run --name streamglass-server --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.streamglass.io ggcaponetto/streamglass:latest npm run start-backend'
+            - run: ssh production 'docker run --name streamglass-frontend --network stremglass_network -d ggcaponetto/streamglass:latest npm run start-frontend-prod'            
             - run: ssh production 'docker pull caddy'
             # Increase buffer size for HTTP/3 (caddy)
             # https://github.com/nextcloud/all-in-one/discussions/1970
             - run: ssh production 'sysctl -w net.core.rmem_max=7500000'
             - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
             # HTTPS
-            - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.streamglass.io --to streamglass:5000'
+            - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.streamglass.io --to streamglass:5000 --from app.streamglass.io --to streamglass:3000'
