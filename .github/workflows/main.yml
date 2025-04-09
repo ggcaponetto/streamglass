@@ -50,6 +50,7 @@ jobs:
           npm i -g vercel
           cd packages/frontend
           ls -lah
+          npm i
           vercel link --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
           vercel deploy --prod --yes --token=${{secrets.VERCEL_TOKEN}}
 
