@@ -106,4 +106,4 @@ jobs:
             - run: ssh production 'sysctl -w net.core.rmem_max=7500000'
             - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
             # HTTPS
-            - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.streamglass.io --to streamglass:5000 --from app.streamglass.io --to streamglass:3000'
+            - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.streamglass.io --to streamglass-server:5000 --from app.streamglass.io --to streamglass-frontend:3000'
