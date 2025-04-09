@@ -22,8 +22,8 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: npm install
+      - run: npm run tsc:build
       - run: npm run tsc
-      - run: npm run tsc:build --workspaces --if-present
       - run: npm run format-check
       - run: npm run lint
       - run: npm run build
