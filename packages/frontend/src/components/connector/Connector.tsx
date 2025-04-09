@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { ClientTypes, PairingRequest } from 'sg-utilities';
 import { io, Socket } from 'socket.io-client';
 
 const URL = import.meta.env.VITE_SERVER_URL;
@@ -34,12 +35,13 @@ export default function Connector() {
 
     useEffect(() => {
         if (pairingCode && isConnected) {
-            const paringData = {
+            const pairingRequest = {
                 pairingCode,
-                socketId: socketRef.current?.id,
-            };
-            console.log('Emitting pairing code:', paringData);
-            socketRef.current?.emit('pairing-request', paringData);
+                type: ClientTypes.Frontend,
+                clientId: socketRef.current?.id,
+            } as PairingRequest;
+            console.log('Emitting pairing request:', pairingRequest);
+            socketRef.current?.emit('pairing-request', pairingRequest);
         }
     }, [pairingCode, isConnected]);
 

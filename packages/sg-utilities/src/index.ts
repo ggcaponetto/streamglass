@@ -1,13 +1,21 @@
 export type ClientId = string;
 export type ConnectionId = string;
-export type AppType = string;
-export type ClientType = {clientId: ClientId, type: ClientType}
+export type ClientType = {clientId: ClientId, type: ClientTypes}
+
+export enum ClientTypes {
+    Desktop = 'Desktop',
+    Frontend = 'Frontend',
+    Server = "Server"
+}
+
+export type Client = {
+    clientId: ClientId, type: ClientTypes
+}
 
 export type Pairing = {
-    clients: {clientId: ClientId, type: AppType}[];
+    clients: Client[];
 };
 
-// Whatever shape your state has
 export type State = { [pairingCode: string]: Pairing };
 
 export type PairingOffer = {
@@ -17,4 +25,6 @@ export type PairingOffer = {
 
 export type PairingRequest = {
     pairingCode: string;
+    type: ClientTypes;
+    clientId: ClientId;
 };

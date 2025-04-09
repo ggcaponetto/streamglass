@@ -3,11 +3,13 @@ import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
 import { handleMessage } from '../message-handler/message-handler.js';
 import { generateClientId, State } from '../socket-state/socket-state.js';
-import type {
-    PairingOffer,
-    PairingRequest,
-    State as StateType,
-    ClientId,
+import {
+    type PairingOffer,
+    type PairingRequest,
+    type State as StateType,
+    type ClientId,
+    ClientTypes,
+    Client,
 } from 'sg-utilities';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 
@@ -63,7 +65,7 @@ export function openPairingChannel(state: StateType, socket: Socket): string {
     state[pairingId] = {
         clients: [{
             clientId: socket.id,
-            type: "server"
+            type: ClientTypes.Server
         }],
     };
     return pairingId;
@@ -116,13 +118,13 @@ export function createSocketServer(
     return io;
 }
 
-function pair(state: StateType, pairingCode: string, socket: Socket): boolean {
+function pair(state: StateType, data: PairingRequest, socket: Socket): boolean {
     let isSuccess = false;
+    const {pairingCode, type} = data;
     try {
         state[pairingCode].clients.push({
             clientId: socket.id as ClientId,
-            // TODO
-            type: "todo"
+            type
         });
         isSuccess = true;
     } catch (error) {
@@ -149,7 +151,7 @@ function unpair(
     );
     for (const pairingCode in state) {
         state[pairingCode].clients = state[pairingCode].clients.filter(
-            (socketId: string) => socketId !== socket.id
+            (client: Client) => client.clientId !== socket.id
         );
         console.log(
             chalk.yellow(
@@ -189,7 +191,7 @@ export function handleConnection(
                 JSON.stringify(data, null, 2)
             )
         );
-        const isSuccess = pair(state, data.pairingCode, socket);
+        const isSuccess = pair(state, data, socket);
         if (!isSuccess) {
             chalk.yellow(
                 console.warn(
