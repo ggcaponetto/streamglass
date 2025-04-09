@@ -1,128 +1,128 @@
 name: CI/CD
 
 on:
-  workflow_call:  # 👈 enables reuse from other workflows
-    inputs:
-      branch:
-        required: true
-        type: string
-  push:
-    branches:
-      - main # We want this to run on pushes to the main branch too
+    workflow_call: # 👈 enables reuse from other workflows
+        inputs:
+            branch:
+                required: true
+                type: string
+    push:
+        branches:
+            - main # We want this to run on pushes to the main branch too
 jobs:
-  Print-Action-Info:
-    if: false # 👈 This will skip the job
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 Triggered by ${{github.event_name}} on branch ${{inputs.branch}}"
+    Print-Action-Info:
+        if: false # 👈 This will skip the job
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "🎉 Triggered by ${{github.event_name}} on branch ${{inputs.branch}}"
 
-  Source:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
-      - run: node --version
-      - run: npm --version
-      - run: npm install
-      - run: npm run tsc:build
-      - run: npm run tsc
-      - run: npm run format-check
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test-coverage-html --workspaces --if-present
-      - run: npm run install-playwright-ci --workspace=frontend
-      - run: npm run test-playwright --workspace=frontend
+    Source:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 'latest'
+            - run: node --version
+            - run: npm --version
+            - run: npm install
+            - run: npm run tsc:build
+            - run: npm run tsc
+            - run: npm run format-check
+            - run: npm run lint
+            - run: npm run build
+            - run: npm run test-coverage-html --workspaces --if-present
+            - run: npm run install-playwright-ci --workspace=frontend
+            - run: npm run test-playwright --workspace=frontend
 
-  Deploy-Frontend-Production:
-    needs: Source
-    name: "Deploy frontend to production (Vercel)"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
-      - name: Deploy to Vercel
-        run: |
-          ls -lah
-          npm i -g vercel
-          cd packages/frontend
-          ls -lah
-          npm i
-          vercel link --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
-          vercel deploy --prod --yes --token=${{secrets.VERCEL_TOKEN}}
+    Deploy-Frontend-Production:
+        needs: Source
+        name: 'Deploy frontend to production (Vercel)'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 'latest'
+            - name: Deploy to Vercel
+              run: |
+                  ls -lah
+                  npm i -g vercel
+                  npm i
+                  cd packages/frontend
+                  ls -lah
+                  vercel link --yes --token=${{secrets.VERCEL_TOKEN}} --project=prj_O7M0R1EUPEt9IHTnNOespBeG8U6a
+                  vercel deploy --prod --yes --token=${{secrets.VERCEL_TOKEN}}
 
-  Deploy-Backend-Production:
-    needs: Source
-    name: "Deploy backend to production (Vultr)"
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # needs: test
-    steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 'latest'
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/production.key
-          chmod 600 ~/.ssh/production.key
-          cat >>~/.ssh/config <<END
-          Host production
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/production.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: ${{secrets.PRODUCTION_SSH_USER}}
-          SSH_KEY: ${{secrets.PRODUCTION_SSH_KEY}}
-          SSH_HOST: ${{secrets.PRODUCTION_SSH_HOST}}
-      - name: Simple Echo
-        run: ssh production 'echo "hello world"'
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{github.repository}} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in current directory
-        run: ls -lah
-      - name: Install Docker if not present
-        run: |
-          ssh production << 'EOF'
-            if ! command -v docker &> /dev/null; then
-              echo "Docker not found. Installing..."
-              curl -fsSL https://get.docker.com -o get-docker.sh
-              sh get-docker.sh
-              sudo usermod -aG docker $USER
-              echo "Docker installed successfully."
-            else
-              echo "Docker is already installed."
-            fi
-          EOF
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{secrets.DOCKERHUB_USERNAME}}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
-      - run: echo "Running $(docker --version)"
-      - run: docker build --progress=plain --no-cache -f Dockerfile -t streamglass .
-      - run: docker image tag streamglass:latest ggcaponetto/streamglass:latest
-      - run: docker image push ggcaponetto/streamglass:latest
-      - run: ssh production 'docker stop $(docker ps -a -q) || true'
-      - run: ssh production 'docker rm $(docker ps -a -q) || true'
-      - run: ssh production 'docker container prune -f'
-      - run: ssh production 'docker ps -a'
-      - run: ssh production 'docker network rm stremglass_network || true'
-      - run: ssh production 'docker network create stremglass_network || true'
-      - run: ssh production 'echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login docker.io/ggcaponetto -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin'
-      - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
-      - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.faifai.ch ggcaponetto/streamglass:latest'
-      - run: ssh production 'docker pull caddy'
-      # Increase buffer size for HTTP/3 (caddy)
-      # https://github.com/nextcloud/all-in-one/discussions/1970
-      - run: ssh production 'sysctl -w net.core.rmem_max=7500000'
-      - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
-      # HTTPS
-      - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.faifai.ch --to streamglass:5000'
+    Deploy-Backend-Production:
+        needs: Source
+        name: 'Deploy backend to production (Vultr)'
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        # needs: test
+        steps:
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 'latest'
+            - name: Configure SSH
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "$SSH_KEY" > ~/.ssh/production.key
+                  chmod 600 ~/.ssh/production.key
+                  cat >>~/.ssh/config <<END
+                  Host production
+                    HostName $SSH_HOST
+                    User $SSH_USER
+                    IdentityFile ~/.ssh/production.key
+                    StrictHostKeyChecking no
+                  END
+              env:
+                  SSH_USER: ${{secrets.PRODUCTION_SSH_USER}}
+                  SSH_KEY: ${{secrets.PRODUCTION_SSH_KEY}}
+                  SSH_HOST: ${{secrets.PRODUCTION_SSH_HOST}}
+            - name: Simple Echo
+              run: ssh production 'echo "hello world"'
+            - name: Check out repository code
+              uses: actions/checkout@v4
+            - run: echo "💡 The ${{github.repository}} repository has been cloned to the runner."
+            - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+            - name: List files in current directory
+              run: ls -lah
+            - name: Install Docker if not present
+              run: |
+                  ssh production << 'EOF'
+                    if ! command -v docker &> /dev/null; then
+                      echo "Docker not found. Installing..."
+                      curl -fsSL https://get.docker.com -o get-docker.sh
+                      sh get-docker.sh
+                      sudo usermod -aG docker $USER
+                      echo "Docker installed successfully."
+                    else
+                      echo "Docker is already installed."
+                    fi
+                  EOF
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                  username: ${{secrets.DOCKERHUB_USERNAME}}
+                  password: ${{secrets.DOCKERHUB_TOKEN}}
+            - run: echo "Running $(docker --version)"
+            - run: docker build --progress=plain --no-cache -f Dockerfile -t streamglass .
+            - run: docker image tag streamglass:latest ggcaponetto/streamglass:latest
+            - run: docker image push ggcaponetto/streamglass:latest
+            - run: ssh production 'docker stop $(docker ps -a -q) || true'
+            - run: ssh production 'docker rm $(docker ps -a -q) || true'
+            - run: ssh production 'docker container prune -f'
+            - run: ssh production 'docker ps -a'
+            - run: ssh production 'docker network rm stremglass_network || true'
+            - run: ssh production 'docker network create stremglass_network || true'
+            - run: ssh production 'echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login docker.io/ggcaponetto -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin'
+            - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
+            - run: ssh production 'docker run --name streamglass --network stremglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.streamglass.io ggcaponetto/streamglass:latest'
+            - run: ssh production 'docker pull caddy'
+            # Increase buffer size for HTTP/3 (caddy)
+            # https://github.com/nextcloud/all-in-one/discussions/1970
+            - run: ssh production 'sysctl -w net.core.rmem_max=7500000'
+            - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
+            # HTTPS
+            - run: ssh production 'docker run --name caddy --network stremglass_network -d --cap-add=NET_ADMIN -p 80:80 -p 443:443 -p 443:443/udp -v caddy_data:/data caddy caddy reverse-proxy --from backend.streamglass.io --to streamglass:5000'
