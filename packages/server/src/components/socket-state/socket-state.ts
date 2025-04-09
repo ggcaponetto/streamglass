@@ -1,5 +1,5 @@
 import { v7 as uuidv7 } from 'uuid';
-import type { State, ClientId } from 'sg-utilities';
+import type { State } from 'sg-utilities';
 
 export function State() {
     return {} as State;
@@ -17,6 +17,6 @@ export function createState(): State {
  * Generates a valid UUID to be used as a client ID.
  * @returns {ClientId} - A new UUID string.
  */
-export function generateClientId(): ClientId {
+export function generatePairingCode(): string {
     return uuidv7();
 }

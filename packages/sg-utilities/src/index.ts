@@ -1,16 +1,17 @@
-export type ClientId = string;
+export type SocketId = string;
 export type ConnectionId = string;
-export type ClientType = {clientId: ClientId, type: ClientTypes}
+export type ClientType = { socketId: SocketId; type: ClientTypes };
 
 export enum ClientTypes {
     Desktop = 'Desktop',
     Frontend = 'Frontend',
-    Server = "Server"
+    Server = 'Server',
 }
 
 export type Client = {
-    clientId: ClientId, type: ClientTypes
-}
+    socketId: SocketId;
+    type: ClientTypes;
+};
 
 export type Pairing = {
     clients: Client[];
@@ -26,5 +27,11 @@ export type PairingOffer = {
 export type PairingRequest = {
     pairingCode: string;
     type: ClientTypes;
-    clientId: ClientId;
+    socketId: SocketId;
+};
+
+export type SocketData = {
+    pairingCode: string;
+    targetClientTypes: ClientTypes[];
+    data: unknown;
 };

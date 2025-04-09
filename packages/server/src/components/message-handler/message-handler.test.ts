@@ -1,16 +1,15 @@
 import { describe, it, vi, expect, beforeEach, afterEach } from 'vitest';
 import { handleMessage } from './message-handler.js';
 import type { Socket } from 'socket.io';
+import { ClientTypes } from 'sg-utilities';
 
 describe('handleMessage', () => {
     let mockEmit: ReturnType<typeof vi.fn>;
-    let mockDone: ReturnType<typeof vi.fn>;
     let mockSocket: Partial<Socket>;
 
     beforeEach(() => {
         vi.useFakeTimers();
         mockEmit = vi.fn();
-        mockDone = vi.fn();
         mockSocket = {
             id: 'abc123',
             emit: mockEmit,
@@ -25,25 +24,23 @@ describe('handleMessage', () => {
         vi.useRealTimers();
     });
 
-    it('should log data, emit echoed data, and call done()', async () => {
-        const data = { foo: 'bar' };
-        const mockState = {};
-        const promise = handleMessage(data, mockSocket as Socket, mockState);
+    it('return empty array if there is no paired client', async () => {
+        const data = {
+            pairingCode: 'testPairingCode',
+            targetClientTypes: [ClientTypes.Desktop],
+            data: { foo: 'bar' },
+        };
+        const mockState = {
+            testPairingCode: {
+                clients: [],
+            },
+        };
+        const promises = handleMessage(data, mockSocket as Socket, mockState);
 
         // Simulate timeout delay
         vi.advanceTimersByTime(200);
-        await promise;
+        const res = await Promise.all(promises);
 
-        expect(console.log).toHaveBeenCalledWith(
-            expect.stringContaining(
-                'Got data from abc123:  {"data":{"foo":"bar"},"state":{}}'
-            )
-        );
-
-        expect(mockEmit).toHaveBeenCalledWith(
-            'data',
-            'Echo back: {"foo":"bar"}'
-        );
-        expect(mockDone).toHaveBeenCalled();
+        expect(res).toEqual([]);
     });
 });

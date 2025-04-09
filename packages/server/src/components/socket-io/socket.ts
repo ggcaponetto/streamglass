@@ -2,16 +2,20 @@ import { Server, Socket } from 'socket.io';
 import { createServer, Server as HTTPServer } from 'http';
 import chalk from 'chalk';
 import { handleMessage } from '../message-handler/message-handler.js';
-import { generateClientId, State } from '../socket-state/socket-state.js';
+import { generatePairingCode, State } from '../socket-state/socket-state.js';
 import {
     type PairingOffer,
     type PairingRequest,
     type State as StateType,
-    type ClientId,
+    type SocketId,
     ClientTypes,
     Client,
 } from 'sg-utilities';
 import { EventTypes } from 'sg-utilities/constants/event-types';
+
+export function printState(state: StateType): void {
+    console.log('State: \n', JSON.stringify(state, null, 2));
+}
 
 /**
  * Validates required environment variables for the Socket.IO server.
@@ -54,19 +58,21 @@ export function sendPairingOffer(
     const pairingOffer: PairingOffer = {
         pairingCode: pairingId,
         state: {
-            [pairingId]: state[pairingId]
+            [pairingId]: state[pairingId],
         },
     };
     socket.emit(EventTypes.PairingOffer, pairingOffer);
 }
 
 export function openPairingChannel(state: StateType, socket: Socket): string {
-    const pairingId = generateClientId();
+    const pairingId = generatePairingCode();
     state[pairingId] = {
-        clients: [{
-            clientId: socket.id,
-            type: ClientTypes.Server
-        }],
+        clients: [
+            {
+                socketId: socket.id,
+                type: ClientTypes.Server,
+            },
+        ],
     };
     return pairingId;
 }
@@ -76,12 +82,7 @@ export function closePairingChannel(
     pairingId: string
 ): string {
     delete state[pairingId];
-    console.log(
-        chalk.yellow(
-            `Closed pairing channel ${pairingId}`,
-            JSON.stringify(state, null, 2)
-        )
-    );
+    console.log(chalk.yellow(`Closed pairing channel ${pairingId}`));
     return pairingId;
 }
 
@@ -106,34 +107,34 @@ export function createSocketServer(
     io.on('connection', (socket) => {
         const pairingId = openPairingChannel(state, socket);
         console.log(
-            chalk.green(
-                `Connection established with socket ${socket.id}`,
-                JSON.stringify(state, null, 2)
-            )
+            chalk.green(`Connection established with socket ${socket.id}`)
         );
+        printState(state);
         sendPairingOffer(pairingId, socket, state);
-        handleConnection(socket, state, pairingId);
+        handleConnection(socket, state, pairingId, () => {
+            printState(state);
+        });
     });
 
     return io;
 }
 
 function pair(state: StateType, data: PairingRequest, socket: Socket): boolean {
-    let isSuccess = false;
-    const {pairingCode, type} = data;
-    try {
-        state[pairingCode].clients.push({
-            clientId: socket.id as ClientId,
-            type
-        });
-        isSuccess = true;
-    } catch (error) {
+    let isSuccess;
+    const { pairingCode, type } = data;
+    if (!state[pairingCode]) {
         console.error(
             chalk.red(
-                `Error pairing ${socket.id} with ${pairingCode} channel:`,
-                error
+                `Error pairing ${socket.id} with ${pairingCode} channel. The channel does not exist.`
             )
         );
+        isSuccess = false;
+    } else {
+        state[pairingCode].clients.push({
+            socketId: socket.id as SocketId,
+            type,
+        });
+        isSuccess = true;
     }
     return isSuccess;
 }
@@ -143,21 +144,12 @@ function unpair(
     pairingCode: string,
     socket: Socket
 ): StateType['pairingCode'] {
-    console.log(
-        chalk.yellow(
-            `Unpairing ${socket.id} from ${pairingCode} channel`,
-            JSON.stringify(state, null, 2)
-        )
-    );
     for (const pairingCode in state) {
         state[pairingCode].clients = state[pairingCode].clients.filter(
-            (client: Client) => client.clientId !== socket.id
+            (client: Client) => client.socketId !== socket.id
         );
         console.log(
-            chalk.yellow(
-                `Unpaired ${socket.id} from ${pairingCode} channel`,
-                JSON.stringify(state, null, 2)
-            )
+            chalk.yellow(`Unpaired ${socket.id} from ${pairingCode} channel`)
         );
     }
     return state[pairingCode];
@@ -170,25 +162,25 @@ function unpair(
 export function handleConnection(
     socket: Socket,
     state: StateType,
-    pairingCode: string
+    pairingCode: string,
+    onSocketEvent?: (...args: unknown[]) => unknown // Optional callback for additional socket events
 ): void {
     socket.on('disconnect', (reason) => {
         unpair(state, pairingCode, socket);
         closePairingChannel(state, pairingCode);
         console.log(
             chalk.yellow(
-                `Disconnected from ${socket.id} with reason: ${reason}`,
-                JSON.stringify(state, null, 2)
+                `Disconnected from ${socket.id} with reason: ${reason}`
             )
         );
+        onSocketEvent?.();
     });
 
     // the server receives a pairing request from the client
     socket.on(EventTypes.PairingRequest, (data: PairingRequest) => {
         console.log(
             chalk.white(
-                `Received pairing request from ${socket.id} for channel "${data.pairingCode}"`,
-                JSON.stringify(data, null, 2)
+                `Received pairing request from ${socket.id} for channel "${data.pairingCode}"`
             )
         );
         const isSuccess = pair(state, data, socket);
@@ -201,11 +193,11 @@ export function handleConnection(
         } else {
             chalk.green(
                 console.warn(
-                    `Paired ${socket.id} over ${data.pairingCode} channel`,
-                    JSON.stringify(state, null, 2)
+                    `Paired ${socket.id} over ${data.pairingCode} channel`
                 )
             );
         }
+        onSocketEvent?.();
     });
 
     socket.on('data', async (data, callback) => {
@@ -226,6 +218,7 @@ export function handleConnection(
         if (callback) {
             callback(null, responses);
         }
+        onSocketEvent?.();
     });
 }
 
@@ -236,7 +229,8 @@ export function handleConnection(
  */
 export function startServer(): void {
     const state = State();
-    console.log(chalk.white('Created state', JSON.stringify(state, null, 2)));
+    console.log(chalk.white('Created empty state.'));
+    printState(state);
 
     // Entry point logic
     validateEnv();

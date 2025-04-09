@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as uuid from 'uuid';
 
-import { generateClientId } from './socket-state.js';
+import { generatePairingCode } from './socket-state.js';
 
 vi.mock('uuid', () => ({
     v7: vi.fn(),
@@ -12,7 +12,7 @@ describe('generateClientId', () => {
         const mockUuid = '123e4567-e89b-12d3-a456-426614174000';
         (uuid.v7 as ReturnType<typeof vi.fn>).mockReturnValue(mockUuid);
 
-        const clientId = generateClientId();
+        const clientId = generatePairingCode();
 
         expect(uuid.v7).toHaveBeenCalled();
         expect(clientId).toBe(mockUuid);

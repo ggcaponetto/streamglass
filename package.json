@@ -5,7 +5,7 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "concurrently --names \"frontend,server,desktop\" --prefix-colors \"cyan,magenta,green\" \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\"",
+        "start": "concurrently --names \"frontend,server,desktop,tsc-watcher\" --prefix-colors \"cyan,magenta,green,blue\" \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\" \"npm run tsc:build:watch\"",
         "start-frontend": "npm run dev --workspace=frontend",
         "start-backend": "npm run start:socket-io --workspace=server",
         "start-desktop": "npm run start --workspace=desktop",
@@ -15,6 +15,7 @@
         "lint-fix": "npx eslint --config eslint.config.mjs . --fix && npm run lint --workspaces --if-present -- --fix",
         "tsc": "npm run tsc --workspaces --if-present",
         "tsc:build": "npm run tsc:build --workspaces --if-present",
+        "tsc:build:watch": "npm run tsc:build:watch --workspaces --if-present",
         "test": "npm run test --workspaces --if-present",
         "build": "npm run build --workspaces --if-present",
         "test-coverage-html": "npm run test-coverage-html --workspaces --if-present",
