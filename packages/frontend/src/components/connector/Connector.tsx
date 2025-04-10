@@ -80,7 +80,7 @@ export default function Connector() {
     }, []);
     return (
         <div>
-            <div>Is connected: {isConnected ? 'yes' : 'no'}</div>
+            <div>Is connected to {import.meta.env.VITE_SERVER_URL}: {isConnected ? 'yes' : 'no'}</div>
             <div>Pairing code: {pairingCode}</div>
             <button onClick={sendCommand}>send command</button>
         </div>
