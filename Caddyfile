@@ -1,0 +1,7 @@
+app.streamglass.io {
+  reverse_proxy streamglass-frontend:3000
+}
+
+backend.streamglass.io {
+  reverse_proxy streamglass-server:5000
+}
