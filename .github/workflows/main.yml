@@ -98,8 +98,8 @@ jobs:
             - run: ssh production 'docker network create streamglass_network || true'
             - run: ssh production 'echo "${{secrets.DOCKERHUB_TOKEN}}" | docker login docker.io/ggcaponetto -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin'
             - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
-            - run: ssh production 'docker run --name streamglass-server --network streamglass_network -d --env SERVER_SOCKET_IO_PORT=5000 --env SERVER_CLIENT_ORIGIN=https://app.streamglass.io ggcaponetto/streamglass:latest npm run start-backend'
-            - run: ssh production 'docker run --name streamglass-frontend --network streamglass_network -d ggcaponetto/streamglass:latest npm run start-frontend-prod'            
+            - run: ssh production 'docker run --name streamglass-server --network streamglass_network -d --env SERVER_SOCKET_IO_PORT=443 --env VITE_FRONTEND_ORIGIN=https://app.streamglass.io --env VITE_DESKTOP_ORIGIN=http://localhost:5174 --env VITE_SERVER_URL=wss://backend.streamglass.io --env=ENABLE_COVERAGE_TRESHOLD=false ggcaponetto/streamglass:latest npm run start-backend'
+            - run: ssh production 'docker run --name streamglass-frontend --network streamglass_network -d --env SERVER_SOCKET_IO_PORT=443 --env VITE_FRONTEND_ORIGIN=https://app.streamglass.io --env VITE_DESKTOP_ORIGIN=http://localhost:5174 --env VITE_SERVER_URL=wss://backend.streamglass.io --env=ENABLE_COVERAGE_TRESHOLD=false ggcaponetto/streamglass:latest npm run start-frontend-prod'            
             - run: ssh production 'docker pull caddy'
             # Increase buffer size for HTTP/3 (caddy)
             # https://github.com/nextcloud/all-in-one/discussions/1970
