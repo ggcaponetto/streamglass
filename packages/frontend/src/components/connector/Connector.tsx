@@ -3,9 +3,6 @@ import { ClientTypes, SocketData, PairingRequest } from 'sg-utilities';
 import { io, Socket } from 'socket.io-client';
 
 const URL = import.meta.env.VITE_SERVER_URL;
-// const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
-// const VITE_DESKTOP_ORIGIN = import.meta.env.VITE_DESKTOP_ORIGIN;
-
 export default function Connector() {
     const socketRef = useRef<null | Socket>(null);
     const [isConnected, setIsConnected] = useState(false); // Track connection status
@@ -80,7 +77,9 @@ export default function Connector() {
     }, []);
     return (
         <div>
-            <div>Is connected to {import.meta.env.VITE_SERVER_URL}: {isConnected ? 'yes' : 'no'}</div>
+            <div>
+                Is connected to {URL}: {isConnected ? 'yes' : 'no'}
+            </div>
             <div>Pairing code: {pairingCode}</div>
             <button onClick={sendCommand}>send command</button>
         </div>
