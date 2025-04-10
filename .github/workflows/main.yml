@@ -107,7 +107,7 @@ jobs:
             - run: ssh production 'sysctl -w net.core.wmem_max=7500000'
             # HTTPS
             - run: ls -lah
-            - run: scp -i ~/.ssh/production.key -o StrictHostKeyChecking=no Caddyfile ${{secrets.PRODUCTION_SSH_USER}}@${{secrets.PRODUCTION_SSH_HOST}}:/home/${{secrets.PRODUCTION_SSH_USER}}/Caddyfile
+            - run: scp -i ~/.ssh/production.key -o StrictHostKeyChecking=no Caddyfile root@${{secrets.PRODUCTION_SSH_HOST}}:/root/Caddyfile
             - run: |
                   ssh production '
                   docker run --name caddy \
@@ -118,7 +118,7 @@ jobs:
                     -p 443:443 \
                     -p 443:443/udp \
                     -v caddy_data:/data \
-                    -v /home/youruser/Caddyfile:/etc/caddy/Caddyfile \
+                    -v /root/Caddyfile:/etc/caddy/Caddyfile \
                     caddy
                   '
 
