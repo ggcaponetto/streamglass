@@ -6,10 +6,11 @@
     "type": "module",
     "scripts": {
         "start": "concurrently --names \"frontend,server,desktop,tsc-watcher\" --prefix-colors \"cyan,magenta,green,blue\" \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\" \"npm run tsc:build:watch\"",
-        "start-frontend-dev": "npm run dev --workspace=frontend",
-        "start-frontend-prod": "npm run serve --workspace=frontend",
+        "start-frontend-development": "npm run dev --workspace=frontend",
+        "start-frontend-production": "npm run serve --workspace=frontend",
         "start-backend": "npm run start:socket-io --workspace=server",
         "start-desktop": "npm run start --workspace=desktop",
+        "start-desktop-production": "npm run start-production --workspace=desktop",
         "format": "npm run prettier --workspaces --if-present -- --write",
         "format-check": "npm run prettier --workspaces --if-present -- --check",
         "lint": "npx eslint --config eslint.config.mjs . && npm run lint --workspaces --if-present",

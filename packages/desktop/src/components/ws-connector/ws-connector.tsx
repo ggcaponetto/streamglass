@@ -98,7 +98,7 @@ export default function Connector() {
                 <Flex align={'center'} justify={'center'} direction={'column'}>
                     <Flex align={'center'} justify={'center'} direction={'row'}>
                         <Text align={'center'} size={'2'}>
-                            Connection:
+                            Connection to {VITE_SERVER_URL}:
                         </Text>
                         <DotFilledIcon
                             color={isConnected ? green.green10 : red.red10}
