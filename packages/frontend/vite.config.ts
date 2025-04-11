@@ -3,14 +3,6 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { checkRequiredEnvVars } from 'sg-utilities/check-envs';
-
-checkRequiredEnvVars([
-    'VITE_FRONTEND_ORIGIN',
-    'VITE_DESKTOP_ORIGIN',
-    'VITE_SERVER_URL',
-]);
-
 // ESM alternative to __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
