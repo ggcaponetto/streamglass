@@ -1,7 +1,7 @@
 # StreamGlass
 
 ![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
-![status: pre-alpha](https://img.shields.io/badge/pre--alpha-active_development-green?style=flat-square)
+![status: pre-alpha](https://img.shields.io/badge/pre--alpha-active_development-green)
 
 > 🚧 **Development Notice**: This repository is in an **early development phase** (pre-alpha). Expect frequent and potentially breaking changes. Not ready for production or general use but your feedback is more than welcome.
 
