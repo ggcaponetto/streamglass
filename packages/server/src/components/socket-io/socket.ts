@@ -95,13 +95,19 @@ export function createSocketServer(
     httpServer: HTTPServer,
     state: StateType
 ): Server {
+    const corsOptions = {
+        origin: [
+            process.env.VITE_FRONTEND_ORIGIN?.toString() || null,
+            process.env.VITE_DESKTOP_ORIGIN?.toString() || null,
+        ].filter((origin) => origin !== null),
+    };
+    console.log(
+        chalk.blue(
+            `Starting socket server with cors options:\n ${JSON.stringify(corsOptions)}`
+        )
+    );
     const io = new Server(httpServer, {
-        cors: {
-            origin: [
-                process.env.VITE_FRONTEND_ORIGIN?.toString() || null,
-                process.env.VITE_DESKTOP_ORIGIN?.toString() || null,
-            ].filter((origin) => origin !== null),
-        },
+        cors: corsOptions,
     });
 
     io.on('connection', (socket) => {

@@ -8,7 +8,7 @@
         "start": "concurrently --names \"frontend,server,desktop,tsc-watcher\" --prefix-colors \"cyan,magenta,green,blue\" \"npm run dev --workspace=frontend\" \"npm run start:socket-io --workspace=server\" \"npm run start --workspace=desktop\" \"npm run tsc:build:watch\"",
         "start-frontend-development": "npm run dev --workspace=frontend",
         "start-frontend-production": "npm run serve --workspace=frontend",
-        "start-backend": "npm run start:socket-io --workspace=server",
+        "start-backend-production": "npm run start:socket-io --workspace=server",
         "start-desktop": "npm run start --workspace=desktop",
         "start-desktop-production": "npm run start-production --workspace=desktop",
         "format": "npm run prettier --workspaces --if-present -- --write",
