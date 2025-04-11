@@ -87,7 +87,7 @@ jobs:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_TOKEN}}
             - run: echo "Running $(docker --version)"
-            - run: docker build --progress=plain --no-cache -f Dockerfile -t streamglass .
+            - run: docker build --progress=plain --no-cache -f Dockerfile.proudction -t streamglass .
             - run: docker image tag streamglass:latest ggcaponetto/streamglass:latest
             - run: docker image push ggcaponetto/streamglass:latest
             - run: ssh production 'docker stop $(docker ps -a -q) || true'

@@ -2,6 +2,7 @@ FROM node:23-alpine
 WORKDIR /app
 COPY package*.json ./
 COPY . .
+RUN cp .env-production .env
 RUN npm install
 RUN npm run tsc:build
 RUN npm run build
