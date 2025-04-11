@@ -4,41 +4,23 @@
 
 ![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
 
-Streaming layers and utilities for Twitch/OBS
+Streamer utilities for Twitch/OBS and any other software. Control your workstation with any device, from anywhere.
+You can read more on the user documentation hosted on [https://docs.streamglass.io](https://docs.streamglass.io).
 
-The streamglass project is organized in a monorepo structure.
+The streamglass project is organized as a monorepo.
 
-- [StreamGlass: Frontend](./packages/frontend/README.md)
-- [StreamGlass: Server](./packages/server/README.md)
+- [StreamGlass: Frontend](./packages/frontend/README.md) - Available on [https://app.streamglass.io](https://app.streamglass.io)
+- [StreamGlass: Server](./packages/server/README.md) - Available on [https://backend.streamglass.io](https://backend.streamglass.io)
 - [StreamGlass: Utilities](./packages/sg-utilities/README.md)
 - [StreamGlass: Desktop](./packages/desktop/README.md)
 
 ## Getting Started
 
 ```bash
+# Install all dependencies
 npm i
-# start the desktp app in development mode
-npm run start-desktop
-# start the backend and web controls in dev mode
+# Start the server, desktop and frontend app in development mode.
 npm run start
-```
-
-### Frontend
-
-```bash
- npm run dev --workspace=frontend
-```
-
-### Server
-
-```bash
- npm run start --workspace=server
-```
-
-## Testing
-
-```bash
-npm run test --workspaces
 ```
 
 
@@ -50,7 +32,7 @@ This is the main web-application.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-1.45%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.45%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-1.37%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.37%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/server/README.md -->
@@ -61,7 +43,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-37.19%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-72.72%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-50%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-37.19%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-33.57%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-62.5%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-47.05%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-33.57%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/sg-utilities/README.md -->
@@ -70,7 +52,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-89.88%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-75%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-80%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-89.88%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-90.62%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-82.35%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-90.62%25-brightgreen.svg?style=flat) |
 
 Utility to concatenate mardown files.
 

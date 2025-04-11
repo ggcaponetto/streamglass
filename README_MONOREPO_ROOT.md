@@ -2,39 +2,21 @@
 
 ![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
 
-Streaming layers and utilities for Twitch/OBS
+Streamer utilities for Twitch/OBS and any other software. Control your workstation with any device, from anywhere.
+You can read more on the user documentation hosted on [https://docs.streamglass.io](https://docs.streamglass.io).
 
-The streamglass project is organized in a monorepo structure.
+The streamglass project is organized as a monorepo.
 
-- [StreamGlass: Frontend](./packages/frontend/README.md)
-- [StreamGlass: Server](./packages/server/README.md)
+- [StreamGlass: Frontend](./packages/frontend/README.md) - Available on [https://app.streamglass.io](https://app.streamglass.io)
+- [StreamGlass: Server](./packages/server/README.md) - Available on [https://backend.streamglass.io](https://backend.streamglass.io)
 - [StreamGlass: Utilities](./packages/sg-utilities/README.md)
 - [StreamGlass: Desktop](./packages/desktop/README.md)
 
 ## Getting Started
 
 ```bash
+# Install all dependencies
 npm i
-# start the desktp app in development mode
-npm run start-desktop
-# start the backend and web controls in dev mode
+# Start the server, desktop and frontend app in development mode.
 npm run start
-```
-
-### Frontend
-
-```bash
- npm run dev --workspace=frontend
-```
-
-### Server
-
-```bash
- npm run start --workspace=server
-```
-
-## Testing
-
-```bash
-npm run test --workspaces
 ```

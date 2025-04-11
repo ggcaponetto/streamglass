@@ -5,6 +5,15 @@ import {
     registerEventHandler,
     removeEventHandler,
 } from './components/event-handler/event-handler';
+import { checkRequiredEnvVars } from '../../sg-utilities/dist/check-envs/check-envs';
+
+checkRequiredEnvVars([
+    'SERVER_SOCKET_IO_PORT',
+    'VITE_FRONTEND_ORIGIN',
+    'VITE_DESKTOP_ORIGIN',
+    'VITE_SERVER_URL',
+    'ENABLE_COVERAGE_TRESHOLD',
+]);
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;

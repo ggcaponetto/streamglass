@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const port = process.env.VITE_DESKTOP_ORIGIN !== undefined ?
+     parseInt(process.env.VITE_DESKTOP_ORIGIN.split(':')[2], 10) : 5174;
+
 // https://vitejs.dev/config
 export default defineConfig({
     resolve: {
@@ -27,4 +30,7 @@ export default defineConfig({
             process.env.VITE_FRONTEND_ORIGIN
         ),
     },
+    server: {
+        port,
+    }
 });

@@ -18,27 +18,10 @@ export function printState(state: StateType): void {
 }
 
 /**
- * Validates required environment variables for the Socket.IO server.
- * Throws an error if any are missing.
- */
-export function validateEnv(): void {
-    if (!process.env.SERVER_SOCKET_IO_PORT) {
-        throw new Error('Please specify a SERVER_SOCKET_IO_PORT env variable.');
-    }
-    if (!process.env.VITE_DESKTOP_ORIGIN) {
-        throw new Error('Please specify a VITE_DESKTOP_ORIGIN env variable.');
-    }
-    if (!process.env.VITE_FRONTEND_ORIGIN) {
-        throw new Error('Please specify a VITE_FRONTEND_ORIGIN env variable.');
-    }
-}
-
-/**
  * Parses and returns the port number from environment variables.
  * @returns The port number to start the server on.
  */
 export function getPort(): number {
-    validateEnv();
     return parseInt(process.env.SERVER_SOCKET_IO_PORT || '', 10);
 }
 
@@ -239,7 +222,6 @@ export function startServer(): void {
     printState(state);
 
     // Entry point logic
-    validateEnv();
     const port = getPort();
     const httpServer = createHttpServer();
     const io = createSocketServer(httpServer, state);

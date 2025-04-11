@@ -4,7 +4,6 @@ vi.mock('./message-handler/message-handler.js', () => ({
 }));
 
 import {
-    validateEnv,
     getPort,
     createHttpServer,
     createSocketServer,
@@ -27,27 +26,6 @@ describe('socketServer', () => {
         process.env.VITE_DESKTOP_ORIGIN = 'http://localhost:5174';
         process.env.VITE_SERVER_URL = 'ws://localhost:3001';
         process.env.ENABLE_COVERAGE_TRESHOLD = 'false';
-    });
-
-    describe('validateEnv', () => {
-        it('throws if SERVER_SOCKET_IO_PORT is missing', () => {
-            delete process.env.SERVER_SOCKET_IO_PORT;
-            expect(() => validateEnv()).toThrow();
-        });
-
-        it('throws if VITE_FRONTEND_ORIGIN is missing', () => {
-            delete process.env.VITE_FRONTEND_ORIGIN;
-            expect(() => validateEnv()).toThrow();
-        });
-
-        it('throws if VITE_DESKTOP_ORIGIN is missing', () => {
-            delete process.env.VITE_DESKTOP_ORIGIN;
-            expect(() => validateEnv()).toThrow();
-        });
-
-        it('does not throw if all env vars are present', () => {
-            expect(() => validateEnv()).not.toThrow();
-        });
     });
 
     describe('getPort', () => {

@@ -17,7 +17,7 @@ jobs:
             - run: echo "🎉 Triggered by ${{github.event_name}} on branch ${{inputs.branch}}"
 
     Source:
-        if: true # 👈 This will skip the job
+        if: false # 👈 This will skip the job
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4

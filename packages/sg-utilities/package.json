@@ -12,6 +12,10 @@
         "./constants/event-types": {
             "import": "./dist/constants/event-types.js",
             "types": "./dist/constants/event-types.d.ts"
+        },
+        "./check-envs": {
+            "import": "./dist/check-envs/check-envs.js",
+            "types": "./dist/check-envs/check-envs.d.ts"
         }
     },
     "typesVersions": {
