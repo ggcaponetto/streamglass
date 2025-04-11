@@ -3,6 +3,9 @@
 # StreamGlass
 
 ![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
+![status: pre-alpha](https://img.shields.io/badge/pre--alpha-active_development-green?style=flat-square)
+
+> 🚧 **Development Notice**: This repository is in an **early development phase** (pre-alpha). Expect frequent and potentially breaking changes. Not ready for production or general use but your feedback is more than welcome.
 
 Streamer utilities for Twitch/OBS and any other software. Control your workstation with any device, from anywhere.
 You can read more on the user documentation hosted on [https://docs.streamglass.io](https://docs.streamglass.io).
@@ -32,7 +35,7 @@ This is the main web-application.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-1.37%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.37%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-1.45%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-20%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-20%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-1.45%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/server/README.md -->
