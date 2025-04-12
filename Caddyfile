@@ -5,3 +5,7 @@ app.streamglass.io {
 backend.streamglass.io {
   reverse_proxy streamglass-server:5000
 }
+
+docs.streamglass.io {
+  reverse_proxy streamglass-docs:4000
+}

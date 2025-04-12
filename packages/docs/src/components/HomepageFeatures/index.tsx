@@ -3,8 +3,8 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
-import SvgMountain from '@site/static/img/undraw_docusaurus_mountain.svg';
-import SvgTree from '@site/static/img/undraw_docusaurus_tree.svg';
+import SvgEasy from '@site/static/img/easy.svg';
+import SvgFocus from '@site/static/img/focus.svg';
 
 interface FeatureItem {
     title: string;
@@ -15,7 +15,7 @@ interface FeatureItem {
 const FeatureList: FeatureItem[] = [
     {
         title: 'Easy to Use',
-        Svg: SvgMountain,
+        Svg: SvgEasy,
         description: (
             <>
                 StreamGlass was designed from the ground up to be easily
@@ -25,7 +25,7 @@ const FeatureList: FeatureItem[] = [
     },
     {
         title: 'Focus on What Matters',
-        Svg: SvgTree,
+        Svg: SvgFocus,
         description: (
             <>
                 StreamGlass lets you focus on your workflow, and we&apos;ll do

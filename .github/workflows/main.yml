@@ -102,6 +102,7 @@ jobs:
             - run: ssh production 'docker pull ggcaponetto/streamglass:latest'
             - run: ssh production 'docker run --name streamglass-server --network streamglass_network -d ggcaponetto/streamglass:latest npm run start-backend-production'
             - run: ssh production 'docker run --name streamglass-frontend --network streamglass_network -d ggcaponetto/streamglass:latest npm run start-frontend-production'
+            - run: ssh production 'docker run --name streamglass-docs --network streamglass_network -d ggcaponetto/streamglass:latest npm run start-docs-production'
             - run: ssh production 'docker pull caddy'
             # Increase buffer size for HTTP/3 (caddy)
             # https://github.com/nextcloud/all-in-one/discussions/1970

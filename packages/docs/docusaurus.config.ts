@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
     title: 'StreamGlass',
-    tagline: 'Stream what you want',
+    tagline: 'Stream how you want',
     favicon: 'img/favicon.ico',
 
     // Set the production url of your site here

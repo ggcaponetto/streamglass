@@ -11,6 +11,7 @@
         "start-backend-production": "npm run start:socket-io --workspace=server",
         "start-desktop-development": "npm run start --workspace=desktop",
         "start-desktop-production": "npm run start-production --workspace=desktop",
+        "start-docs-production": "npm run serve --workspace=docs",
         "format": "npm run prettier --workspaces --if-present -- --write",
         "format-check": "npm run prettier --workspaces --if-present -- --check",
         "lint": "npx eslint --config eslint.config.mjs . && npm run lint --workspaces --if-present",
@@ -29,10 +30,7 @@
     "author": "Giuseppe Giulio Caponetto",
     "license": "MIT",
     "workspaces": [
-        "packages/frontend",
-        "packages/server",
-        "packages/sg-utilities",
-        "packages/desktop"
+        "packages/*"
     ],
     "devDependencies": {
         "@eslint/js": "^9.24.0",
