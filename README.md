@@ -61,7 +61,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-33.57%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-62.5%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-47.05%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-33.57%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-69.64%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-72.41%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-88.23%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-69.64%25-red.svg?style=flat) |
 
 
 <!-- Source: ./packages/sg-utilities/README.md -->
@@ -70,7 +70,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-81.25%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-76.47%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-81.25%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-98.21%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-88.88%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-98.21%25-brightgreen.svg?style=flat) |
 
 Utility to concatenate mardown files.
 
@@ -128,4 +128,10 @@ npm install --platform=win32
 ## or:
 
 npm_config_platform=win32 npm install
+```
+
+Also make sure to have installed these dependencies:
+
+```bash
+sudo apt install dpkg fakeroot rpm
 ```
