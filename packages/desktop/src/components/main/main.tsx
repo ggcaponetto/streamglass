@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import './main.css';
 import { version } from './../../../package.json';
 import '@radix-ui/themes/styles.css';
-import { Flex, Text, Button, Theme, Container, Box } from '@radix-ui/themes';
+import { Flex, Text, Theme, Container, Box } from '@radix-ui/themes';
 import Connector from '../ws-connector/ws-connector';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
