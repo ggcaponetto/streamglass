@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ClientTypes } from './index.ts';
+import { ClientTypes } from './index.js';
 
 describe('ClientTypes enum', () => {
     it('should match expected values', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { EventTypes } from './event-types.ts';
+import { EventTypes } from './event-types.js';
 
 describe('EventTypes enum', () => {
     it('should have correct values', () => {
