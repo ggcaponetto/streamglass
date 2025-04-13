@@ -2,8 +2,13 @@
 
 # StreamGlass
 
+
 ![example branch parameter](https://github.com/ggcaponetto/streamglass/actions/workflows/main.yml/badge.svg?branch=main)
 ![status: pre-alpha](https://img.shields.io/badge/pre--alpha-active_development-green)
+
+<p align="center">
+  <img src="./packages/frontend/public/assets/logo/icon.png" width="150" alt="Logo">
+</p>
 
 > 🚧 **Development Notice**: This repository is in an **early development phase** (pre-alpha). Expect frequent and potentially breaking changes. Not ready for production or general use but your feedback is more than welcome.
 
@@ -65,7 +70,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-81.25%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-77.77%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-81.25%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-81.25%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-76.47%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-81.25%25-yellow.svg?style=flat) |
 
 Utility to concatenate mardown files.
 

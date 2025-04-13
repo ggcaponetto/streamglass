@@ -9,7 +9,7 @@ import {
 } from '@radix-ui/themes';
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { DotFilledIcon , CheckCircledIcon } from '@radix-ui/react-icons';
+import { DotFilledIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import { green, red } from '@radix-ui/colors';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 import { Toast } from 'radix-ui';
