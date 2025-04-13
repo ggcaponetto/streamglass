@@ -14,6 +14,7 @@ import { green, red } from '@radix-ui/colors';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 import { Toast } from 'radix-ui';
 import { CheckCircledIcon } from '@radix-ui/react-icons';
+import { QRCodeSVG } from 'qrcode.react';
 
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const VITE_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
@@ -191,6 +192,25 @@ export default function Connector() {
                                             </div>
                                         </Toast.Description>
                                     </Toast.Root>
+                                </Box>
+                                <Box p="2">
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <QRCodeSVG
+                                            title="StreamGlass Pairing QR Code"
+                                            value={url}
+                                            size={256}
+                                            marginSize={4}
+                                            level="H"
+                                            bgColor="white"
+                                            fgColor="black"
+                                        ></QRCodeSVG>
+                                    </div>
                                 </Box>
                             </Container>
                         )}

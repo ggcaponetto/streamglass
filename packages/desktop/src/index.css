@@ -1,11 +1,16 @@
-html, body, #root{
+html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: 100dvh;
+  overflow: auto;
   position: relative; /* optional, but useful for layout control */
 }
+
+#root{
+  overflow: auto;
+}
+
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,

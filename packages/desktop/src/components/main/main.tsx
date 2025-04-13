@@ -7,9 +7,7 @@ import Connector from '../ws-connector/ws-connector';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
 import { Toast } from 'radix-ui';
-import './toast.css';
-
-const { ipcRenderer } = window.electron;
+import './global-toast.css';
 
 function Main() {
     const { t } = useTranslation();
@@ -24,33 +22,15 @@ function Main() {
                     }}
                     size="1"
                 >
-                    <Flex flexGrow={'1'} direction={'column'}>
-                        <Text align={'center'} size={'5'}>
-                            {t('StreamGlass')}{' '}
-                            <Text size={'1'}>v{version}</Text>
-                        </Text>
-                        <Connector />
-                        <Box p="2">
-                            <Button
-                                style={{ width: '100%' }}
-                                onClick={async () => {
-                                    const result = await ipcRenderer.invoke?.(
-                                        'sg-event',
-                                        {
-                                            message:
-                                                'This is a message from the renderer',
-                                        }
-                                    );
-                                    console.log(
-                                        'Reveived a response from the event-handler (onClick): ',
-                                        result
-                                    );
-                                }}
-                            >
-                                {t('invoke-command')}
-                            </Button>
-                        </Box>
-                    </Flex>
+                    <Box p="2">
+                        <Flex flexGrow={'1'} direction={'column'}>
+                            <Text align={'center'} size={'5'}>
+                                {t('StreamGlass')}{' '}
+                                <Text size={'1'}>v{version}</Text>
+                            </Text>
+                            <Connector />
+                        </Flex>
+                    </Box>
                 </Container>
                 <div style={{ position: 'fixed', bottom: '0', right: '0' }}>
                     <Box p="2">
