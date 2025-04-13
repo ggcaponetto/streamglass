@@ -1,8 +1,8 @@
 {
-    "name": "desktop",
-    "productName": "desktop",
+    "name": "streamglass-desktop",
+    "productName": "streamglass-desktop",
     "version": "1.0.0",
-    "description": "My Electron application description",
+    "description": "StreamGlass Desktop App is an application to fully customize your streaming workflow enabling remote desktop controlling.",
     "main": ".vite/build/main.js",
     "scripts": {
         "start": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js start",

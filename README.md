@@ -65,7 +65,7 @@ This is an optional server component that provides additional functionalities.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-81.25%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-76.47%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-81.25%25-yellow.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-81.25%25-yellow.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-77.77%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-83.33%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-81.25%25-yellow.svg?style=flat) |
 
 Utility to concatenate mardown files.
 
@@ -95,7 +95,7 @@ This is the desktop application that controls your computer.
 
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-44.44%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-44.44%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-0%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-40%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-40%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-0%25-red.svg?style=flat) |
 
 ### Developing with WSL
 

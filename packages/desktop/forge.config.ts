@@ -9,10 +9,19 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 const config: ForgeConfig = {
     packagerConfig: {
-        asar: true
+        asar: true,
+        icon: '/src/assets/logo', // no file extension required
     },
     rebuildConfig: {},
     makers: [
+        {
+            name: '@electron-forge/maker-deb',
+            config: {
+                options: {
+                    icon: '/path/to/icon.png',
+                },
+            },
+        },
         new MakerSquirrel({}),
         new MakerZIP({}, ['darwin']),
         new MakerRpm({}),
