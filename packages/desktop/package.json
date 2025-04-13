@@ -1,6 +1,6 @@
 {
-    "name": "streamglass-desktop",
-    "productName": "streamglass-desktop",
+    "name": "desktop",
+    "productName": "desktop",
     "version": "1.0.0",
     "description": "StreamGlass Desktop App is an application to fully customize your streaming workflow enabling remote desktop controlling.",
     "main": ".vite/build/main.js",
