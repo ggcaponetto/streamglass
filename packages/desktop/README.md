@@ -33,3 +33,9 @@ npm install --platform=win32
 
 npm_config_platform=win32 npm install
 ```
+
+Also make sure to have installed these dependencies:
+
+```bash
+sudo apt install dpkg fakeroot rpm
+```
