@@ -114,3 +114,5 @@ npm install --platform=win32
 
 npm_config_platform=win32 npm install
 ```
+
+Make sure you have mono and wine installed too.

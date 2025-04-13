@@ -20,6 +20,9 @@ export default defineConfig({
         },
     },
     define: {
+        'import.meta.env.SERVER_SOCKET_IO_PORT': JSON.stringify(
+            process.env.SERVER_SOCKET_IO_PORT
+        ),
         'import.meta.env.VITE_SERVER_URL': JSON.stringify(
             process.env.VITE_SERVER_URL
         ),
@@ -28,6 +31,9 @@ export default defineConfig({
         ),
         'import.meta.env.VITE_FRONTEND_ORIGIN': JSON.stringify(
             process.env.VITE_FRONTEND_ORIGIN
+        ),
+        'import.meta.env.ENABLE_COVERAGE_TRESHOLD': JSON.stringify(
+            process.env.ENABLE_COVERAGE_TRESHOLD
         ),
     },
     server: {
