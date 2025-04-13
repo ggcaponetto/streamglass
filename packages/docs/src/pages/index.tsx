@@ -34,8 +34,8 @@ export default function Home(): ReactNode {
     const { siteConfig } = useDocusaurusContext();
     return (
         <Layout
-            title={`Hello from ${siteConfig.title}`}
-            description="Description will go into a meta tag in <head />"
+            title={`${siteConfig.title}`}
+            description="StreamGlass Documentation. StreamGlass is an application to fully customize your streaming workflow enabling remote desktop controlling."
         >
             <HomepageHeader />
             <main>

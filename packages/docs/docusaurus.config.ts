@@ -5,9 +5,9 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-    title: 'StreamGlass',
+    title: 'StreamGlass Documentation',
     tagline: 'Stream how you want',
-    favicon: 'img/favicon.ico',
+    favicon: 'assets/logo/icon.ico',
 
     // Set the production url of your site here
     url: 'https://docs.streamglass.io',

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="black"/>
+  <defs>
+    <!-- Plum gradient for rectangles -->
+    <linearGradient id="grad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DDA0DD"/>
+      <stop offset="100%" stop-color="#8E4585"/>
+    </linearGradient>
+
+    <!-- Cyan gradient for circle and arcs -->
+    <linearGradient id="cyanGrad" x1="45" y1="320" x2="115" y2="320" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00FFFF"/>
+      <stop offset="100%" stop-color="#00AFFF"/>
+    </linearGradient>
+  </defs>
+  <g transform="scale(1.5) translate(-20, -30)">
+    <rect x="120" y="80" width="200" height="200" rx="20" stroke="url(#grad)" stroke-width="16" fill="none"/>
+    <rect x="80" y="120" width="200" height="200" rx="20" stroke="url(#grad)" stroke-width="16" fill="none"/>
+
+    <!-- Group with cyan circle and arcs -->
+    <g transform="translate(140, -50)">
+      <circle cx="80" cy="320" r="10" fill="url(#cyanGrad)"/>
+      <path d="M 60,320 A 20,20 0 0,1 100,320" stroke="url(#cyanGrad)" stroke-width="8" fill="none"/>
+      <path d="M 45,320 A 35,35 0 0,1 115,320" stroke="url(#cyanGrad)" stroke-width="8" fill="none"/>
+    </g>
+  </g>
+</svg>
