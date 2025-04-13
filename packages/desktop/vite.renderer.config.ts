@@ -20,6 +20,9 @@ export default defineConfig({
         },
     },
     define: {
+        'import.meta.env.NODE_ENV': JSON.stringify(
+            process.env.NODE_ENV
+        ),
         'import.meta.env.VITE_SERVER_URL': JSON.stringify(
             process.env.VITE_SERVER_URL
         ),
@@ -28,7 +31,7 @@ export default defineConfig({
         ),
         'import.meta.env.VITE_FRONTEND_ORIGIN': JSON.stringify(
             process.env.VITE_FRONTEND_ORIGIN
-        ),
+        )
     },
     server: {
         port,

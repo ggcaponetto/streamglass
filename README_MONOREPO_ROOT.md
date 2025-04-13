@@ -20,6 +20,16 @@ The streamglass project is organized as a monorepo.
 ```bash
 # Install all dependencies
 npm i
+# Transpile the sg-uitlities library
+npm tsc:build
 # Start the server, desktop and frontend app in development mode.
 npm run start
 ```
+
+To build the electron deskop app, run:
+
+```bash
+npm run make
+```
+
+The binary can be found in `packages/desktop/out`.
