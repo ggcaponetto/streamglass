@@ -13,9 +13,10 @@
         "tsc": "tsc --noEmit",
         "package": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js package",
         "make": "npm run make-windows",
+        "print-env": "node --env-file-if-exists=../../.env-production -e \"console.log(process.env)\"",
         "make-default": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js make",
-        "make-windows": "rimraf node_modules && npm install --platform=win32 && NODE_ENV=production SERVER_SOCKET_IO_PORT=5000 VITE_FRONTEND_ORIGIN=https://app.streamglass.io VITE_DESKTOP_ORIGIN=http://localhost:5174 VITE_SERVER_URL=wss://backend.streamglass.io ENABLE_COVERAGE_TRESHOLD=false node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js make --platform=win32",
-        "make-linux": "rimraf node_modules && npm install --platform=linux && NODE_ENV=production SERVER_SOCKET_IO_PORT=5000 VITE_FRONTEND_ORIGIN=https://app.streamglass.io VITE_DESKTOP_ORIGIN=http://localhost:5174 VITE_SERVER_URL=wss://backend.streamglass.io ENABLE_COVERAGE_TRESHOLD=false node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js make --platform=linux",
+        "make-windows": "node --env-file-if-exists=../../.env-production ../../node_modules/@electron-forge/cli/dist/electron-forge.js make",
+        "make-linux": "rimraf node_modules && npm install --platform=linux && node --env-file-if-exists=../../.env-production ../../node_modules/@electron-forge/cli/dist/electron-forge.js make --platform=linux",
         "publish": "node --env-file-if-exists=../../.env ../../node_modules/@electron-forge/cli/dist/electron-forge.js publish",
         "prettier": "npx prettier src/**/*.{ts,tsx}",
         "lint": "eslint --config eslint.config.mjs"
