@@ -4,15 +4,28 @@ vi.mock('../message-handler/message-handler.js', () => {
         handleMessage: vi.fn(() => [Promise.resolve('response')]),
     };
 });
-import { getPort, createHttpServer, createSocketServer, handleConnection, openPairingChannel, sendPairingOffer, closePairingChannel, printState, startServer, } from './socket.js';
+
+import {
+    getPort,
+    createHttpServer,
+    createSocketServer,
+    handleConnection,
+    openPairingChannel,
+    sendPairingOffer,
+    closePairingChannel,
+    printState,
+    startServer,
+} from './socket.js';
 import * as socketModule from './socket.js'; // For mocking startServer deps
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Server as SocketIOServer } from 'socket.io';
 import { State } from '../socket-state/socket-state.js';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 import { ClientTypes } from 'sg-utilities';
+
 describe('socketServer', () => {
     const OLD_ENV = process.env;
+
     beforeEach(() => {
         vi.restoreAllMocks();
         process.env = { ...OLD_ENV };
@@ -20,12 +33,14 @@ describe('socketServer', () => {
         process.env.VITE_FRONTEND_ORIGIN = 'http://localhost:5173';
         process.env.VITE_DESKTOP_ORIGIN = 'http://localhost:5174';
     });
+
     describe('getPort', () => {
         it('parses port correctly', () => {
             process.env.SERVER_SOCKET_IO_PORT = '1234';
             expect(getPort()).toBe(1234);
         });
     });
+
     describe('createHttpServer', () => {
         it('creates an HTTP server', () => {
             const server = createHttpServer();
@@ -33,14 +48,16 @@ describe('socketServer', () => {
             expect(typeof server.listen).toBe('function');
         });
     });
+
     describe('printState', () => {
         it('prints the state to console', () => {
-            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => { });
+            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const state = { code: { clients: [] } };
             printState(state);
             expect(logSpy).toHaveBeenCalled();
         });
     });
+
     describe('openPairingChannel', () => {
         it('adds a pairing channel to state', () => {
             const state = State();
@@ -52,6 +69,7 @@ describe('socketServer', () => {
             ]);
         });
     });
+
     describe('sendPairingOffer', () => {
         it('emits a pairing offer', () => {
             const socket = {
@@ -64,15 +82,19 @@ describe('socketServer', () => {
                 },
             };
             sendPairingOffer('someId', socket, state);
-            expect(socket.emit).toHaveBeenCalledWith(EventTypes.PairingOffer, expect.objectContaining({
-                pairingCode: 'someId',
-                state: { someId: state.someId },
-            }));
+            expect(socket.emit).toHaveBeenCalledWith(
+                EventTypes.PairingOffer,
+                expect.objectContaining({
+                    pairingCode: 'someId',
+                    state: { someId: state.someId },
+                })
+            );
         });
     });
+
     describe('closePairingChannel', () => {
         it('removes a channel from the state and logs it', () => {
-            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => { });
+            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const state = {
                 testCode: {
                     clients: [],
@@ -84,6 +106,7 @@ describe('socketServer', () => {
             expect(logSpy).toHaveBeenCalled();
         });
     });
+
     describe('createSocketServer', () => {
         it('creates a Socket.IO server and sets connection handler', () => {
             const httpServer = createHttpServer();
@@ -92,8 +115,9 @@ describe('socketServer', () => {
             expect(io).toBeInstanceOf(SocketIOServer);
         });
     });
+
     describe('handleConnection', () => {
-        it('sets up disconnect and data handlers', async () => {
+        it('registers disconnect, data, and pairing handlers', () => {
             const socket = {
                 id: 'abc123',
                 on: vi.fn(),
@@ -106,24 +130,33 @@ describe('socketServer', () => {
             expect(socket.on).toHaveBeenCalledWith('data', expect.any(Function));
             expect(socket.on).toHaveBeenCalledWith(EventTypes.PairingRequest, expect.any(Function));
         });
-        it('handles pairing request with success and failure', () => {
+
+        it('logs and handles invalid and valid pairing requests', () => {
+            const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+            const state = {
+                knownCode: { clients: [] },
+            };
             const socket = {
                 id: 'socket123',
                 on: vi.fn((event, cb) => {
                     if (event === EventTypes.PairingRequest) {
-                        cb({ pairingCode: 'unknownCode', type: ClientTypes.Frontend });
+                        // Invalid pairing
+                        cb({ pairingCode: 'invalidCode', type: ClientTypes.Frontend });
+                        // Valid pairing
                         cb({ pairingCode: 'knownCode', type: ClientTypes.Desktop });
                     }
                 }),
                 emit: vi.fn(),
             };
-            const state = {
-                knownCode: { clients: [] },
-            };
             handleConnection(socket, state, 'someCode');
             expect(state.knownCode.clients.length).toBe(1);
+            expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Could not pair'));
+            expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Paired'));
+            warnSpy.mockRestore();
         });
-        it('handles data message with callback', async () => {
+
+        it('handles data message with callback, logs properly', async () => {
+            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const callback = vi.fn();
             const socket = {
                 id: 'abc',
@@ -137,11 +170,15 @@ describe('socketServer', () => {
             const state = State();
             handleConnection(socket, state, 'code123');
             await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(callback).toHaveBeenCalledWith(null, ['response']);
+            expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Message sent by abc handled in'));
+            logSpy.mockRestore();
         });
     });
+
     describe('startServer', () => {
         it('starts the server and logs output', () => {
-            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => { });
+            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
             const mockHttpServer = {
                 listen: vi.fn(),
             };
