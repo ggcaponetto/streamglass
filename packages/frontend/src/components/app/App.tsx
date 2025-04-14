@@ -2,6 +2,7 @@ import './App.css';
 import Connector from '../connector/Connector';
 import { version } from '../../../package.json';
 import { Text, Box, Container, Flex } from '@radix-ui/themes';
+import { SGGrid } from '../grid/Grid';
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     </Text>
                 </Box>
             </Flex>
+            <SGGrid />
         </Container>
     );
 }
