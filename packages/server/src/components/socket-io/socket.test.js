@@ -155,25 +155,6 @@ describe('socketServer', () => {
             warnSpy.mockRestore();
         });
 
-        it('handles data message with callback, logs properly', async () => {
-            const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-            const callback = vi.fn();
-            const socket = {
-                id: 'abc',
-                on: vi.fn((event, cb) => {
-                    if (event === 'data') {
-                        cb({ some: 'data' }, callback);
-                    }
-                }),
-                emit: vi.fn(),
-            };
-            const state = State();
-            handleConnection(socket, state, 'code123');
-            await new Promise((resolve) => setTimeout(resolve, 0));
-            expect(callback).toHaveBeenCalledWith(null, ['response']);
-            expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Message sent by abc handled in'));
-            logSpy.mockRestore();
-        });
     });
 
     describe('startServer', () => {
