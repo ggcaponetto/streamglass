@@ -1,15 +1,35 @@
 import { createRoot } from 'react-dom/client';
 import './main.css';
 import { version } from './../../../package.json';
-import '@radix-ui/themes/styles.css';
-import { Flex, Text, Theme, Container, Box } from '@radix-ui/themes';
 import Connector from '../ws-connector/ws-connector';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
-import { Toast } from 'radix-ui';
-import './global-toast.css';
+// core styles are required for all packages
+import '@mantine/core/styles.css';
 
-function Main() {
+// other css files are required only if
+// you are using components from the corresponding package
+// import '@mantine/dates/styles.css';
+// import '@mantine/dropzone/styles.css';
+// import '@mantine/code-highlight/styles.css';
+// ...
+import { Button, createTheme, MantineProvider } from '@mantine/core';
+const theme = createTheme({
+
+});
+
+function Main(){
+    return (
+        <MantineProvider theme={theme}>
+            <Button>
+                hello mantine
+            </Button>
+        </MantineProvider>
+    )
+}
+
+// TODO rm readix deps
+/* function _Main() {
     const { t } = useTranslation();
     return (
         <Theme style={{ height: '100%' }} appearance="dark" accentColor="plum">
@@ -40,7 +60,7 @@ function Main() {
             </Toast.Provider>
         </Theme>
     );
-}
+} */
 
 const root = createRoot(document.getElementById('root'));
 root.render(<Main />);
