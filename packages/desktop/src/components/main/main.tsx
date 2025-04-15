@@ -4,9 +4,7 @@ import { version } from './../../../package.json';
 import Connector from '../ws-connector/ws-connector';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
-// core styles are required for all packages
 import '@mantine/core/styles.css';
-
 // other css files are required only if
 // you are using components from the corresponding package
 // import '@mantine/dates/styles.css';
@@ -15,72 +13,112 @@ import '@mantine/core/styles.css';
 // ...
 import {
     Text,
-    Button,
-    colorsTuple,
     createTheme,
     Group,
     MantineProvider,
     virtualColor,
+    AppShell,
+    Box,
+    Burger,
+    Title,
+    Menu,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Flex } from '@radix-ui/themes';
+import SGIcon from '../../../src/assets/logo/logo-transparent.svg';
 
 const theme = createTheme({
     colors: {
         primary: virtualColor({
             name: 'primary',
-            dark: 'grape',
-            light: 'grape',
+            dark: 'pink',
+            light: 'pink',
         }),
         secondary: virtualColor({
             name: 'secondary',
-            dark: 'cyan',
-            light: 'cyan',
+            dark: 'blue',
+            light: 'blue',
         }),
     },
 });
 
 function Main() {
+    const [opened, { toggle }] = useDisclosure();
     const { t } = useTranslation();
     return (
         <MantineProvider theme={theme} defaultColorScheme="dark">
-            <Text>
-                {t('StreamGlass')} <span>v{version}</span>
-            </Text>
-            <Connector />
-        </MantineProvider>
-    );
-}
-
-// TODO rm readix deps
-function _Main() {
-    const { t } = useTranslation();
-    return (
-        <Theme style={{ height: '100%' }} appearance="dark" accentColor="plum">
-            <Toast.Provider duration={5000}>
-                <Container
-                    style={{
-                        height: '100%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                    size="1"
-                >
-                    <Box p="2">
-                        <Flex flexGrow={'1'} direction={'column'}>
-                            <Text align={'center'} size={'5'}>
-                                {t('StreamGlass')}{' '}
-                                <Text size={'1'}>v{version}</Text>
-                            </Text>
-                            <Connector />
+            <AppShell
+                padding="md"
+                header={{ height: 40 }}
+                navbar={{
+                    width: 200,
+                    breakpoint: 'sm',
+                    collapsed: {
+                        desktop: !opened,
+                    },
+                }}
+            >
+                <AppShell.Header>
+                    <Group>
+                        <Flex direction={'column'} align={'center'}>
+                            <Box m={2}>
+                                <Burger
+                                    opened={opened}
+                                    onClick={toggle}
+                                    aria-label="Toggle navigation"
+                                />
+                            </Box>
                         </Flex>
+                        <Box>
+                            <Group>
+                                <Title order={1} size={'h5'}>
+                                    {t('StreamGlass')}
+                                </Title>
+                                <Flex
+                                    direction={'column'}
+                                    align={'center'}
+                                    justify={'center'}
+                                >
+                                    <img
+                                        style={{ display: 'flex' }}
+                                        src={SGIcon}
+                                        alt="StreamGlass icon"
+                                        width={25}
+                                        height={25}
+                                    />
+                                </Flex>
+                                <Text size="sm">v{version}</Text>
+                            </Group>
+                        </Box>
+                    </Group>
+                </AppShell.Header>
+                <AppShell.Navbar>
+                    <Box m={8}>
+                        <Menu>
+                            <Menu.Item
+                                onClick={async () => {
+                                    try {
+                                        await window.electron.openExternal(
+                                            'https://doc.streamglass.io'
+                                        );
+                                    } catch (e) {
+                                        console.error(
+                                            'Could not open external URL.',
+                                            e
+                                        );
+                                    }
+                                }}
+                            >
+                                Help
+                            </Menu.Item>
+                        </Menu>
                     </Box>
-                </Container>
-                <div style={{ position: 'fixed', bottom: '0', right: '0' }}>
-                    <Box p="2">
-                        <Toast.Viewport />
-                    </Box>
-                </div>
-            </Toast.Provider>
-        </Theme>
+                </AppShell.Navbar>
+                <AppShell.Main>
+                    <Connector />
+                </AppShell.Main>
+            </AppShell>
+        </MantineProvider>
     );
 }
 

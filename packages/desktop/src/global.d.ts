@@ -1,6 +1,7 @@
 declare global {
     interface Window {
         electron: {
+            openExternal(arg0: string): unknown;
             ipcRenderer: {
                 send(channel: string, data?: any): void;
                 invoke?(channel: string, data?: any): Promise<any>;
