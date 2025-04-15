@@ -13,23 +13,45 @@ import '@mantine/core/styles.css';
 // import '@mantine/dropzone/styles.css';
 // import '@mantine/code-highlight/styles.css';
 // ...
-import { Button, createTheme, MantineProvider } from '@mantine/core';
-const theme = createTheme({
+import {
+    Text,
+    Button,
+    colorsTuple,
+    createTheme,
+    Group,
+    MantineProvider,
+    virtualColor,
+} from '@mantine/core';
 
+const theme = createTheme({
+    colors: {
+        primary: virtualColor({
+            name: 'primary',
+            dark: 'grape',
+            light: 'grape',
+        }),
+        secondary: virtualColor({
+            name: 'secondary',
+            dark: 'cyan',
+            light: 'cyan',
+        }),
+    },
 });
 
-function Main(){
+function Main() {
+    const { t } = useTranslation();
     return (
-        <MantineProvider theme={theme}>
-            <Button>
-                hello mantine
-            </Button>
+        <MantineProvider theme={theme} defaultColorScheme="dark">
+            <Text>
+                {t('StreamGlass')} <span>v{version}</span>
+            </Text>
+            <Connector />
         </MantineProvider>
-    )
+    );
 }
 
 // TODO rm readix deps
-/* function _Main() {
+function _Main() {
     const { t } = useTranslation();
     return (
         <Theme style={{ height: '100%' }} appearance="dark" accentColor="plum">
@@ -60,7 +82,7 @@ function Main(){
             </Toast.Provider>
         </Theme>
     );
-} */
+}
 
 const root = createRoot(document.getElementById('root'));
 root.render(<Main />);
