@@ -107,8 +107,8 @@ export default function Connector() {
         try {
             await navigator.clipboard.writeText(text);
             notifications.show({
-                title: 'Default notification',
-                message: 'Do not forget to star Mantine on GitHub! 🌟',
+                title: 'Pairing Link',
+                message: 'Copied URL to Clipboard',
             });
         } catch (e) {
             console.error('Failed to copy:', e);
