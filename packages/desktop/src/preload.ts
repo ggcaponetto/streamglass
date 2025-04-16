@@ -25,7 +25,9 @@ contextBridge.exposeInMainWorld('electron', {
         },
     },
     openExternal: async (url: string) => {
-        console.log('Opening external URL: ' + url);
-        return await shell.openExternal(url);
+        console.log('[preload] opening external URL:', url);
+        return shell.openExternal(url).catch((err) => {
+            console.error('[preload] failed to open URL:', err);
+        });
     },
 });

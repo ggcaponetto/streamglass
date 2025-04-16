@@ -10,4 +10,13 @@ async function invokeCommand() {
     );
 }
 
+async function openExternalUrl(url: string) {
+    openExternal: (url: string) => {
+        console.log('[preload] opening external URL:', url);
+        shell.openExternal(url).catch((err) => {
+            console.error('[preload] failed to open URL:', err);
+        });
+    },
+}
+
 export { invokeCommand };

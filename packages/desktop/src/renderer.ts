@@ -29,6 +29,7 @@
 import './index.css';
 import './vite-env.d.ts';
 import './global.d.ts';
+import './custom.d.ts';
 
 console.log(
     '👋 This message is being logged by "renderer.ts", included via Vite'

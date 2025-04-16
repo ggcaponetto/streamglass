@@ -6,7 +6,7 @@ declare global {
                 invoke?(channel: string, data?: any): Promise<any>;
                 on?(channel: string, func: (...args: any[]) => void): void;
             };
-            openExternal(arg0: string): unknown;
+            openExternal: (...args: any[]) => any;
         };
     }
 }
