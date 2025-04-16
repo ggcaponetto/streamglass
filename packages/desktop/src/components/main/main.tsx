@@ -1,10 +1,12 @@
 import { createRoot } from 'react-dom/client';
-import './main.css';
 import { version } from './../../../package.json';
 import Connector from '../ws-connector/ws-connector';
-import '../../i18n';
 import { useTranslation } from 'react-i18next';
+import { Notifications } from '@mantine/notifications';
+import '../../i18n';
+import './main.css';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 // other css files are required only if
 // you are using components from the corresponding package
 // import '@mantine/dates/styles.css';
@@ -23,9 +25,9 @@ import {
     Title,
     Menu,
     Center,
+    Flex,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Flex } from '@radix-ui/themes';
 import SGIcon from '../../../src/assets/logo/logo-transparent.svg';
 
 const theme = createTheme({
@@ -48,6 +50,7 @@ function Main() {
     const { t } = useTranslation();
     return (
         <MantineProvider theme={theme} defaultColorScheme="dark">
+            <Notifications />
             <AppShell
                 padding="md"
                 header={{ height: 40 }}
@@ -100,12 +103,17 @@ function Main() {
                                 onClick={() => {
                                     try {
                                         try {
-                                            window.electron.openExternal('https://docs.streamglass.io');
+                                            window.electron.openExternal(
+                                                'https://docs.streamglass.io'
+                                            );
                                         } catch (e) {
-                                            console.error('Could not open external URL.', {
-                                                window,
-                                                e,
-                                            });
+                                            console.error(
+                                                'Could not open external URL.',
+                                                {
+                                                    window,
+                                                    e,
+                                                }
+                                            );
                                         }
                                     } catch (e) {
                                         console.error(
@@ -118,9 +126,7 @@ function Main() {
                                     }
                                 }}
                             >
-                                <Center>
-                                    Help
-                                </Center>
+                                <Center>Help</Center>
                             </Menu.Item>
                         </Menu>
                     </Box>

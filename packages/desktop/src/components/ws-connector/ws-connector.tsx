@@ -1,21 +1,19 @@
-import {
-    Box,
-    Button,
-    Container,
-    Flex,
-    Link,
-    Spinner,
-    Text,
-} from '@radix-ui/themes';
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { DotFilledIcon, CheckCircledIcon } from '@radix-ui/react-icons';
-import { green, red } from '@radix-ui/colors';
 import { EventTypes } from 'sg-utilities/constants/event-types';
-import { Toast } from 'radix-ui';
 import { QRCodeSVG } from 'qrcode.react';
-import { Center, Group, Stack } from '@mantine/core';
-import { IconCircle } from '@tabler/icons-react';
+import { IconCircleFilled } from '@tabler/icons-react';
+import {
+    Text,
+    Group,
+    Box,
+    Center,
+    Flex,
+    Stack,
+    Anchor,
+    Button,
+} from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const VITE_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
@@ -28,7 +26,6 @@ export default function Connector() {
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState(null);
     const [paringData, setParingData] = useState(null);
-    const [isToastOpen, setIsToastOpen] = useState(null);
     const url = `${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData?.pairingCode}`;
 
     useEffect(() => {
@@ -109,88 +106,82 @@ export default function Connector() {
     const onCopyToClipboard = async (text: string) => {
         try {
             await navigator.clipboard.writeText(text);
-            setIsToastOpen(true);
-            setTimeout(() => {
-                setIsToastOpen(false);
-            }, 2000);
+            notifications.show({
+                title: 'Default notification',
+                message: 'Do not forget to star Mantine on GitHub! 🌟',
+            });
         } catch (e) {
             console.error('Failed to copy:', e);
         }
     };
     return (
         <Center>
-            <Group>
-                <Text>Connection to {VITE_SERVER_URL}:</Text>
+            <Flex direction={'column'}>
                 <Center>
-                    <IconCircle
-                        color={isConnected ? 'green' : 'red'}
-                    />
+                    <Text>
+                        Connection to {VITE_SERVER_URL}:{'\u00A0'}
+                    </Text>
+                    <Center>
+                        <IconCircleFilled
+                            size={15}
+                            color={isConnected ? 'green' : 'red'}
+                        />
+                    </Center>
                     {error && !isLoading && !isConnected && (
-                        <Text
-                            align={'center'}
-                            size={'1'}
-                            style={{ color: "red" }}
-                        >
-                            {error.toString()}
-                        </Text>
+                        <Text style={{ color: 'red' }}>{error.toString()}</Text>
                     )}
                     {!error && !isLoading && isConnected && (
-                        <Text
-                            align={'center'}
-                            size={'1'}
-                            style={{ color: "green" }}
-                        >
-                            OK
-                        </Text>
+                        <Text style={{ color: 'green' }}>OK</Text>
                     )}
-                    <Stack>
-                        {paringData && (
-                            <Stack>
-                                <Group m="2">
-                                    <span>
-                                        <span>Open </span>
-                                        <Link
-                                            href={`${paringData.pairingCode}`}
-                                        >
-                                            {`${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData?.pairingCode}`}
-                                        </Link>
-                                        <span> to pair.</span>
-                                    </span>
-                                </Group>
-                                <Box p="2">
-                                    <Button
-                                        style={{ width: '100%' }}
-                                        onClick={async () => {
-                                            await onCopyToClipboard(url);
-                                        }}
-                                    >
-                                        Copy URL to Clipboard
-                                    </Button>
-                                </Box>
-                                <Box p="2">
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <QRCodeSVG
-                                            title="StreamGlass Pairing QR Code"
-                                            value={url}
-                                            size={256}
-                                            marginSize={4}
-                                            level="H"
-                                            bgColor="white"
-                                            fgColor="black"
-                                        ></QRCodeSVG>
-                                    </div>
-                                </Box>
-                            </Stack>
-                        )}
-                    </Stack>
                 </Center>
-            </Group>
+                <Stack>
+                    {paringData && (
+                        <Stack>
+                            <Group m="2">
+                                <Text>
+                                    <span>Open </span>
+                                    <Anchor
+                                        href={`${paringData.pairingCode}`}
+                                        target="_blank"
+                                    >
+                                        {`${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData?.pairingCode}`}
+                                    </Anchor>
+                                    <span> to pair.</span>
+                                </Text>
+                            </Group>
+                            <Box p="2">
+                                <Button
+                                    style={{ width: '100%' }}
+                                    onClick={async () => {
+                                        await onCopyToClipboard(url);
+                                    }}
+                                >
+                                    Copy URL to Clipboard
+                                </Button>
+                            </Box>
+                            <Box p="2">
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <QRCodeSVG
+                                        title="StreamGlass Pairing QR Code"
+                                        value={url}
+                                        size={256}
+                                        marginSize={4}
+                                        level="H"
+                                        bgColor="white"
+                                        fgColor="black"
+                                    ></QRCodeSVG>
+                                </div>
+                            </Box>
+                        </Stack>
+                    )}
+                </Stack>
+            </Flex>
         </Center>
     );
 }
@@ -211,7 +202,7 @@ export default function Connector() {
                         {error && !isLoading && !isConnected && (
                             <Text
                                 align={'center'}
-                                size={'1'}
+                            
                                 style={{ color: red.red5 }}
                             >
                                 {error.toString()}
@@ -220,7 +211,7 @@ export default function Connector() {
                         {!error && !isLoading && isConnected && (
                             <Text
                                 align={'center'}
-                                size={'1'}
+                            
                                 style={{ color: green.green5 }}
                             >
                                 OK
@@ -233,11 +224,11 @@ export default function Connector() {
                                 <Box p="2">
                                     <span>
                                         <span>Open </span>
-                                        <Link
+                                        <Anchor  
                                             href={`${paringData.pairingCode}`}
                                         >
                                             {`${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData?.pairingCode}`}
-                                        </Link>
+                                        </Anchor  >
                                         <span> to pair.</span>
                                     </span>
                                 </Box>
