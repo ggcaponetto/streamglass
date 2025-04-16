@@ -131,13 +131,23 @@ function App() {
                             >
                                 <Center>Help</Center>
                             </Menu.Item>
+                            <Menu.Item>
+                                <Connector />
+                            </Menu.Item>
                         </Menu>
                     </Box>
                 </AppShell.Navbar>
-                <AppShell.Main>
-                    v{version}
-                    <Connector></Connector>
-                    <SGGrid />
+                <AppShell.Main display={'flex'}>
+                    <Flex direction="column" flex={1}>
+                        {/* Bottom section: takes remaining space */}
+                        <Flex
+                            direction="column"
+                            flex={1}
+                            style={{ overflow: 'auto' }}
+                        >
+                            <SGGrid />
+                        </Flex>
+                    </Flex>
                 </AppShell.Main>
             </AppShell>
         </MantineProvider>

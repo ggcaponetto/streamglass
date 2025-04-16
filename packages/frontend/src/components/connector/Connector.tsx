@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ClientTypes, SocketData, PairingRequest } from 'sg-utilities';
 import { io, Socket } from 'socket.io-client';
+import { IconCircleFilled } from '@tabler/icons-react';
+import { Button, Center } from '@mantine/core';
 
 const URL = import.meta.env.VITE_SERVER_URL;
 export default function Connector() {
@@ -76,12 +78,9 @@ export default function Connector() {
         };
     }, []);
     return (
-        <div>
-            <div>
-                Is connected to {URL}: {isConnected ? 'yes' : 'no'}
-            </div>
-            <div>Pairing code: {pairingCode}</div>
-            <button onClick={sendCommand}>send command</button>
-        </div>
+        <Center>
+            <IconCircleFilled size={15} color={isConnected ? 'green' : 'red'} />
+            <Button onClick={sendCommand}>send command</Button>
+        </Center>
     );
 }
