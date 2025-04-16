@@ -1,5 +1,5 @@
 import './App.css';
-import Connector from '../connector/Connector';
+import { useSocketConnector } from '../connector/Connector';
 import { version } from '../../../package.json';
 import { SGGrid } from '../grid/Grid';
 import {
@@ -20,11 +20,13 @@ import { useDisclosure } from '@mantine/hooks';
 import SGIcon from '../../../public/assets/logo/logo-transparent.svg';
 import { Notifications } from '@mantine/notifications';
 import { useTranslation } from 'react-i18next';
+import { IconCircleFilled } from '@tabler/icons-react';
 import '../../i18n';
 import '../../index.css';
 // core styles are required for all packages
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import { useStore } from '../store/store';
 
 // other css files are required only if
 // you are using components from the corresponding package
@@ -51,6 +53,8 @@ const theme = createTheme({
 function App() {
     const [opened, { toggle }] = useDisclosure();
     const { t } = useTranslation();
+    const isConnected = useStore((state) => state.isConnected);
+    useSocketConnector();
     return (
         <MantineProvider theme={theme} defaultColorScheme="dark">
             <Notifications />
@@ -95,6 +99,10 @@ function App() {
                                     />
                                 </Flex>
                                 <Text size="sm">v{version}</Text>
+                                <IconCircleFilled
+                                    size={15}
+                                    color={isConnected ? 'green' : 'red'}
+                                />
                             </Group>
                         </Box>
                     </Group>
@@ -130,9 +138,6 @@ function App() {
                                 }}
                             >
                                 <Center>Help</Center>
-                            </Menu.Item>
-                            <Menu.Item>
-                                <Connector />
                             </Menu.Item>
                         </Menu>
                     </Box>

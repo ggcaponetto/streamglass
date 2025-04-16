@@ -1,22 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ClientTypes, SocketData, PairingRequest } from 'sg-utilities';
 import { io, Socket } from 'socket.io-client';
-import { IconCircleFilled } from '@tabler/icons-react';
-import { Button, Center } from '@mantine/core';
+import { State, useStore } from '../store/store';
 
 const URL = import.meta.env.VITE_SERVER_URL;
-export default function Connector() {
-    const socketRef = useRef<null | Socket>(null);
-    const [isConnected, setIsConnected] = useState(false); // Track connection status
-    const [pairingCode, setPairingCode] = useState<string | null>(null); // Track pairing code
 
-    const sendCommand = () => {
-        if (socketRef.current) {
-            const data = {
+export function useSocketConnector() {
+    const socketRef = useRef<null | Socket>(null);
+    const [isConnected, setIsConnected] = useState(false);
+    const [pairingCode, setPairingCode] = useState<string | null>(null);
+
+    const setIsConnectedStore = useStore(
+        (state: State) => state.setIsConnected
+    );
+    const setSendCommandStore = useStore(
+        (state: State) => state.setSendCommand
+    );
+
+    useEffect(() => {
+        setIsConnectedStore(isConnected);
+    }, [isConnected, setIsConnectedStore]);
+
+    const sendCommand = useCallback(() => {
+        if (socketRef.current && pairingCode !== null) {
+            const data: SocketData = {
                 pairingCode,
                 targetClientTypes: [ClientTypes.Server],
                 data: new Date().toISOString(),
-            } as SocketData;
+            };
             socketRef.current.emit(
                 'data',
                 data,
@@ -28,59 +39,52 @@ export default function Connector() {
                 }
             );
         }
-    };
+    }, [pairingCode]);
 
     useEffect(() => {
-        // 🔍 Extract the "code" query parameter from the URL
+        setSendCommandStore(sendCommand);
+    }, [sendCommand, setSendCommandStore]);
+
+    useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const code = params.get('pairingCode');
         setPairingCode(code);
     }, []);
 
     useEffect(() => {
-        if (pairingCode && isConnected) {
-            const pairingRequest = {
+        if (pairingCode && isConnected && socketRef.current?.id) {
+            const pairingRequest: PairingRequest = {
                 pairingCode,
                 type: ClientTypes.Frontend,
                 socketId: socketRef.current?.id,
-            } as PairingRequest;
+            };
             console.log('Emitting pairing request:', pairingRequest);
             socketRef.current?.emit('pairing-request', pairingRequest);
         }
     }, [pairingCode, isConnected]);
 
     useEffect(() => {
-        console.log(`Connecting to ${URL}`);
         const socketInstance = io(URL);
+
         socketInstance.on('connect', () => {
             console.log('connect');
-            setIsConnected(true); // Update state
+            setIsConnected(true);
         });
         socketInstance.on('disconnect', (reason, details) => {
-            console.log(
-                'disconnect',
-                JSON.stringify({
-                    reason,
-                    details,
-                })
-            );
-            setIsConnected(false); // Update state
+            console.log('disconnect', JSON.stringify({ reason, details }));
+            setIsConnected(false);
         });
         socketInstance.on('data', (data) => {
             console.log('data', data);
         });
+
         socketRef.current = socketInstance;
+
         return () => {
             if (socketInstance) {
                 console.log('Cleaning up socket connection', socketInstance);
-                socketInstance.disconnect(); // 💡 Properly disconnect the socket here
+                socketInstance.disconnect();
             }
         };
     }, []);
-    return (
-        <Center>
-            <IconCircleFilled size={15} color={isConnected ? 'green' : 'red'} />
-            <Button onClick={sendCommand}>send command</Button>
-        </Center>
-    );
 }
