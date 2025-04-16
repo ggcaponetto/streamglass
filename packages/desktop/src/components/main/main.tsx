@@ -26,6 +26,8 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { Flex } from '@radix-ui/themes';
 import SGIcon from '../../../src/assets/logo/logo-transparent.svg';
+const ipcRenderer = window.electron.ipcRenderer;
+const openExternal = window.electron.openExternal;
 
 const theme = createTheme({
     colors: {
@@ -98,8 +100,8 @@ function Main() {
                             <Menu.Item
                                 onClick={async () => {
                                     try {
-                                        await window.electron.openExternal(
-                                            'https://doc.streamglass.io'
+                                        await openExternal(
+                                            'https://docs.streamglass.io'
                                         );
                                     } catch (e) {
                                         console.error(
