@@ -49,24 +49,24 @@ The binary can be found in `packages/desktop/out`.
 ### Architecture and diagrams
 
 ````text
-                              +-----------------------+
-                              |  Web Browser Client   |
-                              |   (Front-end UI)      |
-                              +-----------------------+
-                                        ⇅
-                                    Socket.IO
-                                        ⇅
-                              +-----------------------+
-                              |   Socket.IO Server    |
-                              |   (Central Relay)     |
-                              +-----------------------+
-                                        ⇅
-                                    Socket.IO
-                                        ⇅
-                              +---------------------------+
-                              |   Desktop Electron App    |
-                              | (Local Controller on PC)  |
-                              +---------------------------+
++-----------------------+
+|  Web Browser Client   |
+|   (Front-end UI)      |
++-----------------------+
+          ⇅
+      Socket.IO
+          ⇅
++-----------------------+
+|   Socket.IO Server    |
+|   (Central Relay)     |
++-----------------------+
+          ⇅
+      Socket.IO
+          ⇅
++---------------------------+
+|   Desktop Electron App    |
+| (Local Controller on PC)  |
++---------------------------+
 ````
 
 Diagram: The high-level architecture of StreamGlass. This diagram shows how the web browser clients (running the StreamGlass front-end UI) connect over the internet to a central Socket.IO server, which in turn connects to the Electron-based desktop app running on the streamer’s PC. The Socket.IO server acts as a real-time relay between the browser and desktop, enabling users to control your workstation with any device, from anywhere​.
