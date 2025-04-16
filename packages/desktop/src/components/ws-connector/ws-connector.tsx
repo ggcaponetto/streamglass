@@ -14,6 +14,8 @@ import { green, red } from '@radix-ui/colors';
 import { EventTypes } from 'sg-utilities/constants/event-types';
 import { Toast } from 'radix-ui';
 import { QRCodeSVG } from 'qrcode.react';
+import { Center, Group, Stack } from '@mantine/core';
+import { IconCircle } from '@tabler/icons-react';
 
 const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const VITE_FRONTEND_ORIGIN = import.meta.env.VITE_FRONTEND_ORIGIN;
@@ -116,6 +118,84 @@ export default function Connector() {
         }
     };
     return (
+        <Center>
+            <Group>
+                <Text>Connection to {VITE_SERVER_URL}:</Text>
+                <Center>
+                    <IconCircle
+                        color={isConnected ? 'green' : 'red'}
+                    />
+                    {error && !isLoading && !isConnected && (
+                        <Text
+                            align={'center'}
+                            size={'1'}
+                            style={{ color: "red" }}
+                        >
+                            {error.toString()}
+                        </Text>
+                    )}
+                    {!error && !isLoading && isConnected && (
+                        <Text
+                            align={'center'}
+                            size={'1'}
+                            style={{ color: "green" }}
+                        >
+                            OK
+                        </Text>
+                    )}
+                    <Stack>
+                        {paringData && (
+                            <Stack>
+                                <Group m="2">
+                                    <span>
+                                        <span>Open </span>
+                                        <Link
+                                            href={`${paringData.pairingCode}`}
+                                        >
+                                            {`${VITE_FRONTEND_ORIGIN}/?pairingCode=${paringData?.pairingCode}`}
+                                        </Link>
+                                        <span> to pair.</span>
+                                    </span>
+                                </Group>
+                                <Box p="2">
+                                    <Button
+                                        style={{ width: '100%' }}
+                                        onClick={async () => {
+                                            await onCopyToClipboard(url);
+                                        }}
+                                    >
+                                        Copy URL to Clipboard
+                                    </Button>
+                                </Box>
+                                <Box p="2">
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        <QRCodeSVG
+                                            title="StreamGlass Pairing QR Code"
+                                            value={url}
+                                            size={256}
+                                            marginSize={4}
+                                            level="H"
+                                            bgColor="white"
+                                            fgColor="black"
+                                        ></QRCodeSVG>
+                                    </div>
+                                </Box>
+                            </Stack>
+                        )}
+                    </Stack>
+                </Center>
+            </Group>
+        </Center>
+    );
+}
+
+/* 
         <Flex gap="4" align={'center'} justify={'center'}>
             <Spinner loading={isLoading}>
                 <Flex align={'center'} justify={'center'} direction={'column'}>
@@ -217,5 +297,5 @@ export default function Connector() {
                 </Flex>
             </Spinner>
         </Flex>
-    );
-}
+
+*/

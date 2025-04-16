@@ -22,6 +22,7 @@ import {
     Burger,
     Title,
     Menu,
+    Center,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Flex } from '@radix-ui/themes';
@@ -117,7 +118,9 @@ function Main() {
                                     }
                                 }}
                             >
-                                Help
+                                <Center>
+                                    Help
+                                </Center>
                             </Menu.Item>
                         </Menu>
                     </Box>
