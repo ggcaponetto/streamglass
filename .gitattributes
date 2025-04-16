@@ -1,2 +1,2 @@
 # Ensures LF line endings in the repo, converts to CRLF on checkout (Windows)
-git config --global core.autocrlf true
+core.autocrlf true

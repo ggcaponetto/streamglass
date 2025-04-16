@@ -14,7 +14,8 @@ const config: ForgeConfig = {
         icon: path.resolve(__dirname, 'src/assets/logo/icon'), // no file extension required
     },
     rebuildConfig: {},
-    makers: [
+    makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+    /* makers: [
         {
             name: '@electron-forge/maker-squirrel',
             config: {
@@ -35,7 +36,7 @@ const config: ForgeConfig = {
         new MakerZIP({}, ['darwin']),
         new MakerRpm({}),
         new MakerDeb({}),
-    ],
+    ], */
     plugins: [
         new VitePlugin({
             // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
