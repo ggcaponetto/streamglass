@@ -96,10 +96,10 @@ function Main() {
                     <Box m={8}>
                         <Menu>
                             <Menu.Item
-                                onClick={async () => {
+                                onClick={() => {
                                     try {
                                         try {
-                                            await window.electron.openExternal('https://docs.streamglass.io');
+                                            window.electron.openExternal('https://docs.streamglass.io');
                                         } catch (e) {
                                             console.error('Could not open external URL.', {
                                                 window,

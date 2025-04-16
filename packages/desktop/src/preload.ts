@@ -24,10 +24,8 @@ contextBridge.exposeInMainWorld('electron', {
             return ipcRenderer.invoke(channel, data);
         },
     },
-    openExternal: async (url: string) => {
+    openExternal: (url: string) => {
         console.log('[preload] opening external URL:', url);
-        return shell.openExternal(url).catch((err) => {
-            console.error('[preload] failed to open URL:', err);
-        });
+        shell.openExternal(url);
     },
 });
