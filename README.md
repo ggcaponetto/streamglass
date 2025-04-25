@@ -55,16 +55,16 @@ The binary can be found in `packages/desktop/out`.
 |  Web Browser Client   |
 |   (Front-end UI)      |
 +-----------------------+
-        ⇅
-    Socket.IO
-        ⇅
+          ⇅
+      Socket.IO
+          ⇅
 +-----------------------+
 |   Socket.IO Server    |
 |   (Central Relay)     |
 +-----------------------+
-        ⇅
-    Socket.IO
-        ⇅
+          ⇅
+      Socket.IO
+          ⇅
 +---------------------------+
 |   Desktop Electron App    |
 | (Local Controller on PC)  |
