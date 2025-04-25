@@ -66,6 +66,7 @@ function App() {
                     breakpoint: 'sm',
                     collapsed: {
                         desktop: !opened,
+                        mobile: !opened,
                     },
                 }}
             >
