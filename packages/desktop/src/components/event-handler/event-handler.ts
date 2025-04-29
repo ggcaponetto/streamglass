@@ -1,33 +1,32 @@
 import { ipcMain } from 'electron';
 import { spawn } from 'child_process';
 
-
 function runCommand(commandString: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const child = spawn('node', ['-e', commandString], {
-        stdio: ['ignore', 'pipe', 'pipe']
-      });
-  
-      let stdout = '';
-      let stderr = '';
-  
-      child.stdout.on('data', (data) => {
-        stdout += data.toString();
-      });
-  
-      child.stderr.on('data', (data) => {
-        stderr += data.toString();
-      });
-  
-      child.on('close', (code) => {
-        if (code === 0) {
-          resolve({ stdout, stderr: null, exitCode: code });
-        } else {
-          reject({ stdout, stderr, exitCode: code });
-        }
-      });
+        const child = spawn('node', ['-e', commandString], {
+            stdio: ['ignore', 'pipe', 'pipe'],
+        });
+
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => {
+            stdout += data.toString();
+        });
+
+        child.stderr.on('data', (data) => {
+            stderr += data.toString();
+        });
+
+        child.on('close', (code) => {
+            if (code === 0) {
+                resolve({ stdout, stderr: null, exitCode: code });
+            } else {
+                reject({ stdout, stderr, exitCode: code });
+            }
+        });
     });
-  }
+}
 
 export function registerEventHandler(channel: string) {
     console.log(`Registering event handler on channel "${channel}".`);
@@ -56,7 +55,7 @@ export function registerEventHandler(channel: string) {
                     args,
                     commandString,
                     result,
-                    output
+                    output,
                 });
                 /* runCommand(commandString)
                 .then(({ stdout, stderr, exitCode }) => {

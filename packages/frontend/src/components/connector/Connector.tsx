@@ -21,25 +21,28 @@ export function useSocketConnector() {
         setIsConnectedStore(isConnected);
     }, [isConnected, setIsConnectedStore]);
 
-    const sendCommand = useCallback((...args: unknown[]) => {
-        if (socketRef.current && pairingCode !== null) {
-            const data: SocketData = {
-                pairingCode,
-                targetClientTypes: [ClientTypes.Server],
-                data: args,
-            };
-            socketRef.current.emit(
-                'data',
-                data,
-                (err: unknown, data: unknown) => {
-                    console.log('Command execution acknowledged', {
-                        err,
-                        data,
-                    });
-                }
-            );
-        }
-    }, [pairingCode]);
+    const sendCommand = useCallback(
+        (...args: unknown[]) => {
+            if (socketRef.current && pairingCode !== null) {
+                const data: SocketData = {
+                    pairingCode,
+                    targetClientTypes: [ClientTypes.Server],
+                    data: args,
+                };
+                socketRef.current.emit(
+                    'data',
+                    data,
+                    (err: unknown, data: unknown) => {
+                        console.log('Command execution acknowledged', {
+                            err,
+                            data,
+                        });
+                    }
+                );
+            }
+        },
+        [pairingCode]
+    );
 
     useEffect(() => {
         setSendCommandStore(sendCommand);
