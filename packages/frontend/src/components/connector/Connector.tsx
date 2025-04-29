@@ -21,12 +21,12 @@ export function useSocketConnector() {
         setIsConnectedStore(isConnected);
     }, [isConnected, setIsConnectedStore]);
 
-    const sendCommand = useCallback(() => {
+    const sendCommand = useCallback((...args: unknown[]) => {
         if (socketRef.current && pairingCode !== null) {
             const data: SocketData = {
                 pairingCode,
                 targetClientTypes: [ClientTypes.Server],
-                data: new Date().toISOString(),
+                data: args,
             };
             socketRef.current.emit(
                 'data',

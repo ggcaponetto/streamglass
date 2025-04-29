@@ -22,7 +22,13 @@ export function SGGrid() {
                     <Text>Cell {index + 1}</Text>
                     <Button
                         onClick={() => {
-                            sendCommandStore();
+                            // const commandString = 'console.log(`This is cool`)';
+                            const commandString = `
+                            console.log('\x07');
+                            const a = 2-5;
+                            console.log('a: ' + a);
+                            `;
+                            sendCommandStore(commandString);
                         }}
                     >
                         send command
