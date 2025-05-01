@@ -29,7 +29,7 @@
         "@mantine/notifications": "^7.17.5",
         "@mantine/nprogress": "^7.17.5",
         "@mantine/spotlight": "^7.17.5",
-        "@mantine/tiptap": "^7.17.4",
+        "@mantine/tiptap": "^7.17.5",
         "@tiptap/extension-link": "^2.11.7",
         "@tiptap/pm": "^2.11.7",
         "@tiptap/react": "^2.11.7",
