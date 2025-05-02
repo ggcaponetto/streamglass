@@ -33,7 +33,7 @@
         "@tiptap/extension-link": "^2.11.7",
         "@tiptap/pm": "^2.11.9",
         "@tiptap/react": "^2.11.7",
-        "@tiptap/starter-kit": "^2.11.7",
+        "@tiptap/starter-kit": "^2.11.9",
         "dayjs": "^1.11.13",
         "i18next": "^25.0.2",
         "react": "^19.0.0",
