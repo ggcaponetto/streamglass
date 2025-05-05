@@ -54,7 +54,7 @@
         "vite": "^6.3.4"
     },
     "dependencies": {
-        "@mantine/charts": "^7.17.5",
+        "@mantine/charts": "^7.17.7",
         "@mantine/code-highlight": "^7.17.5",
         "@mantine/core": "^7.17.4",
         "@mantine/dates": "^7.17.6",
