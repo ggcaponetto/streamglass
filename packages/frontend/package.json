@@ -18,7 +18,7 @@
         "preview": "node --env-file-if-exists=./../../.env ../../node_modules/vite/bin/vite.js preview"
     },
     "dependencies": {
-        "@mantine/charts": "^7.17.5",
+        "@mantine/charts": "^8.0.0",
         "@mantine/code-highlight": "^7.17.5",
         "@mantine/core": "^7.17.4",
         "@mantine/dates": "^7.17.6",
