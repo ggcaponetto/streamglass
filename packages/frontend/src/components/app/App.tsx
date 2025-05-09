@@ -30,7 +30,6 @@ import { useStore } from '../store/store';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Mapping } from '../mapping/Mapping';
 import { useNavigate } from 'react-router';
-import { NavLink } from 'react-router';
 
 // other css files are required only if
 // you are using components from the corresponding package
