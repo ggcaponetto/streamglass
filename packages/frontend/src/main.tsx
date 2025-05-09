@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import App from './components/app/App.tsx';
 import './i18n';
 import './index.css';
+import './components/mapping/userWorker.ts';
+
 const container = document.getElementById('root');
 if (container) {
     createRoot(container).render(
