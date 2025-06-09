@@ -19,9 +19,9 @@
     "license": "ISC",
     "description": "",
     "dependencies": {
-        "ollama": "^0.5.15",
+        "ollama": "^0.5.16",
         "socket.io": "^4.8.1",
-        "yargs": "^17.7.2"
+        "yargs": "^18.0.0"
     },
     "optionalDependencies": {
         "bufferutil": "^4.0.9",

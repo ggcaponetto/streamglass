@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
 import { spawn } from 'child_process';
 
+// eslint-disable-next-line no-unused-vars
 function runCommand(commandString: string): Promise<any> {
     return new Promise((resolve, reject) => {
         const child = spawn('node', ['-e', commandString], {
