@@ -30,6 +30,9 @@ import { useStore } from '../store/store';
 import { BrowserRouter, Routes, Route } from 'react-router';
 import { Mapping } from '../mapping/Mapping';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { subscribe } from '../store/store';
+import { sendToServer } from '../api/api';
 
 // other css files are required only if
 // you are using components from the corresponding package
@@ -99,8 +102,23 @@ function SidebarMenu() {
 function App() {
     const [opened, { toggle }] = useDisclosure();
     const { t } = useTranslation();
-    const isConnected = useStore((state) => state.isConnected);
-    useSocketConnector();
+    const store = useStore((state) => state);
+    const { socketRef, pairingCode } = useSocketConnector();
+    useEffect(() => {
+        let unsubscribe: (() => void) | undefined;
+        if (store.isConnected) {
+            unsubscribe = subscribe(
+                'mapping',
+                (mapping: string | undefined) => {
+                    console.log('Mapping updated:', mapping);
+                    sendToServer(socketRef, pairingCode, mapping);
+                }
+            );
+        }
+        return () => {
+            unsubscribe?.();
+        };
+    }, [pairingCode, socketRef, store.isConnected]);
     return (
         <MantineProvider theme={theme} defaultColorScheme="dark">
             <BrowserRouter>
@@ -149,7 +167,9 @@ function App() {
                                     <Text size="sm">v{version}</Text>
                                     <IconCircleFilled
                                         size={15}
-                                        color={isConnected ? 'green' : 'red'}
+                                        color={
+                                            store.isConnected ? 'green' : 'red'
+                                        }
                                     />
                                 </Group>
                             </Box>

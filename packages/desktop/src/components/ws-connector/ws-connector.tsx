@@ -56,9 +56,10 @@ export default function Connector() {
             setError(null);
         });
         socketInstance.on('data', async (data, callback) => {
-            console.log(
-                `Got data from socket-io server: ${JSON.stringify(data)}`
-            );
+            console.log(`Got data from socket-io server:\n\n ${data}`, {
+                data,
+                callback,
+            });
             const result = await ipcRenderer.invoke?.('sg-event', data);
             console.log(
                 'Received a response from the event-handler (socket): ',

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ClientTypes, SocketData, PairingRequest } from 'sg-utilities';
+import { useEffect, useRef, useState } from 'react';
+import { ClientTypes, PairingRequest } from 'sg-utilities';
 import { io, Socket } from 'socket.io-client';
 import { State, useStore } from '../store/store';
 
@@ -13,40 +13,10 @@ export function useSocketConnector() {
     const setIsConnectedStore = useStore(
         (state: State) => state.setIsConnected
     );
-    const setSendCommandStore = useStore(
-        (state: State) => state.setSendCommand
-    );
 
     useEffect(() => {
         setIsConnectedStore(isConnected);
     }, [isConnected, setIsConnectedStore]);
-
-    const sendCommand = useCallback(
-        (...args: unknown[]) => {
-            if (socketRef.current && pairingCode !== null) {
-                const data: SocketData = {
-                    pairingCode,
-                    targetClientTypes: [ClientTypes.Server],
-                    data: args,
-                };
-                socketRef.current.emit(
-                    'data',
-                    data,
-                    (err: unknown, data: unknown) => {
-                        console.log('Command execution acknowledged', {
-                            err,
-                            data,
-                        });
-                    }
-                );
-            }
-        },
-        [pairingCode]
-    );
-
-    useEffect(() => {
-        setSendCommandStore(sendCommand);
-    }, [sendCommand, setSendCommandStore]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -90,4 +60,10 @@ export function useSocketConnector() {
             }
         };
     }, []);
+
+    return {
+        socketRef,
+        isConnected,
+        pairingCode,
+    };
 }

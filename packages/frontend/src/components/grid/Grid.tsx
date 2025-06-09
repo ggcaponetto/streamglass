@@ -1,11 +1,8 @@
 import { Button, SimpleGrid, Stack, Text } from '@mantine/core';
 import { useState } from 'react';
-import { State, useStore } from '../store/store';
 
 export function SGGrid() {
     const [grid] = useState({ columns: 5, rows: 3 });
-    const sendCommandStore = useStore((state: State) => state.sendCommand);
-
     const getCells = () => {
         const totalCells = grid.columns * grid.rows;
         return Array.from({ length: totalCells }, (_, index) => (
@@ -22,13 +19,7 @@ export function SGGrid() {
                     <Text>Cell {index + 1}</Text>
                     <Button
                         onClick={() => {
-                            // const commandString = 'console.log(`This is cool`)';
-                            const commandString = `
-                            console.log('\x07');
-                            const a = 2-5;
-                            console.log('a: ' + a);
-                            `;
-                            sendCommandStore(commandString);
+                            // TODO: send command to the server
                         }}
                     >
                         send command
