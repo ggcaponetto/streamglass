@@ -64,7 +64,7 @@
         "@mantine/modals": "^8.0.2",
         "@mantine/notifications": "^8.0.2",
         "@mantine/nprogress": "^8.0.2",
-        "@mantine/spotlight": "^8.0.2",
+        "@mantine/spotlight": "^8.1.1",
         "@mantine/tiptap": "^8.0.2",
         "@tabler/icons-react": "^3.34.0",
         "@tiptap/extension-link": "^2.14.0",
